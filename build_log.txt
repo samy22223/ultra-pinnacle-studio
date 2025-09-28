@@ -1,0 +1,315 @@
+🚀 Starting Ultra Pinnacle AI Studio Offline Build...
+🔍 Verifying prerequisites...
+❌ ffmpeg is required but not installed. Aborting.
+🚀 Starting Ultra Pinnacle AI Studio Offline Build...
+🔍 Verifying prerequisites...
+❌ Python 3.12 required, found 3.11.13. Aborting.
+🚀 Starting Ultra Pinnacle AI Studio Offline Build...
+🔍 Verifying prerequisites...
+📁 Creating directories...
+🍺 Installing missing deps via Homebrew...
+Warning: cmake 4.1.1 is already installed and up-to-date.
+To reinstall 4.1.1, run:
+  brew reinstall cmake
+Warning: You are using macOS 11.
+We (and Apple) do not provide support for this old version.
+
+This is a Tier 3 configuration:
+  https://docs.brew.sh/Support-Tiers#tier-3
+You can report Tier 3 unrelated issues to Homebrew/* repositories!
+Read the above document instead before opening any issues or PRs.
+
+==> Fetching downloads for: ffmpeg, jq and unzip
+==> Fetching dependencies for ffmpeg: llvm, rust, cargo-c, rav1e, libsamplerate, flac, mpg123, libsndfile, rubberband, sdl2, speex, srt, svt-av1, leptonica, libb2, libarchive, pango, tesseract, theora, x264, x265, xvid, libsodium, gnu-getopt, xmlto, zeromq and zimg
+==> Fetching llvm
+==> Downloading https://github.com/llvm/llvm-project/compare/1381ad497b9a6d3da630cbef53cbfa9ddf117bb6...40a8c7c0ff3f688b690e4c74db734de67f0f89e9.diff
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/373708817c634b56c0b875aba22b6d707aa53a17bb24ea9850a44bf2e00907a5--1381ad497b9a6d3da630cbef53cbfa9ddf117bb6...40a8c7c0ff3f688b690e4c74db734de67f0f89e9.diff
+==> Downloading https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.2/llvm-project-21.1.2.src.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/99ce111216cbf1aec6bbe4eba5617ae0a8722869bd2e933edc831754c254ea57--llvm-project-21.1.2.src.tar.xz
+==> Fetching rust
+==> Downloading https://github.com/rust-lang/cargo/archive/refs/tags/0.91.0.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/d333726cff9ed6c45aef838dcf442d74f5bb669cd147af959660dc1028ade151--cargo-0.91.0.tar.gz
+==> Downloading https://static.rust-lang.org/dist/2025-08-07/rustc-1.89.0-x86_64-apple-darwin.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/927fd5be669356732c3a4752e84ff30f157e14977b05d9b14a64916463957032--rustc-1.89.0-x86_64-apple-darwin.tar.xz
+==> Downloading https://static.rust-lang.org/dist/2025-08-07/cargo-1.89.0-x86_64-apple-darwin.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/a945b754cd00029069c278e06cada9bc3330b4cdaec706f208bdfe6bdddd865d--cargo-1.89.0-x86_64-apple-darwin.tar.xz
+==> Downloading https://static.rust-lang.org/dist/2025-08-07/rust-std-1.89.0-x86_64-apple-darwin.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/3a277be08f564b9b845972d79735dee126a816bdacd389e3d17a07c79d0f1f75--rust-std-1.89.0-x86_64-apple-darwin.tar.xz
+==> Downloading https://static.rust-lang.org/dist/rustc-1.90.0-src.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/f48649bede5c8ff27d6de8169672164c54922ae5936dce6b905deac2127b0a8d--rustc-1.90.0-src.tar.gz
+==> Fetching cargo-c
+==> Downloading https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.10.16.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/bae49273be99671da56ae324afe1833ce1efcc1f2ed6f176f802c54546cffa78--cargo-c-0.10.16.tar.gz
+==> Fetching rav1e
+==> Downloading https://github.com/xiph/rav1e/archive/refs/tags/v0.8.1.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/37954251a9927c8c255576febe864b3ec09404cec4557d0fbdd2eba6376a08e3--rav1e-0.8.1.tar.gz
+==> Fetching libsamplerate
+==> Downloading https://github.com/libsndfile/libsamplerate/commit/e4a0ab46887029e0f65f145ba3987cc592f18200.patch?full_index=1
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/2d1791c2b60ecb2aa95ba447c8470a2d9f4cd201fdb2f2626801f4029807789b--e4a0ab46887029e0f65f145ba3987cc592f18200.patch
+==> Downloading https://github.com/libsndfile/libsamplerate/commit/1abc639420b2df8b9ff2e0bdcc28cf6613c7c0d0.patch?full_index=1
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/6bce9856859374d7273feadba4f4c8899c5178df7ea070f6514e286bafd2cb2a--1abc639420b2df8b9ff2e0bdcc28cf6613c7c0d0.patch
+==> Downloading https://github.com/libsndfile/libsamplerate/archive/refs/tags/0.2.2.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/6323274cc11c27f26c135aad55e3c52a54cc9dfa8138f4388141887e29f71d4e--libsamplerate-0.2.2.tar.gz
+==> Fetching flac
+==> Downloading https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.5.0.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/bf078e8988391a6e02baa201cda6bbfa5932b51a2eeeec6c8d479c8a1dd77fa2--flac-1.5.0.tar.xz
+==> Fetching mpg123
+==> Downloading https://www.mpg123.de/download/mpg123-1.33.2.tar.bz2
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/8e93b8f18bbf42b45e185747a6832d39b80cf716f2aac9e63bb427762c4a0779--mpg123-1.33.2.tar.bz2
+==> Fetching libsndfile
+==> Downloading https://github.com/libsndfile/libsndfile/releases/download/1.2.2/libsndfile-1.2.2.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/3bcdc67f7059ca57e7d42bf5b0476c68afef2eabe769527d303fba1fa6c4409c--libsndfile-1.2.2.tar.xz
+==> Fetching rubberband
+==> Downloading https://breakfastquay.com/files/releases/rubberband-4.0.0.tar.bz2
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/e95652a9cf4c0de4ad6281000cb322d08ea1f7f975ee7b7b5c44edd035ed5d21--rubberband-4.0.0.tar.bz2
+==> Fetching sdl2
+==> Downloading https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-2.32.10.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/265586e39bbfaf40523b566d6d6bb998a7f030e1419a8b56d643ef0569cdeba6--SDL2-2.32.10.tar.gz
+==> Downloading https://ghcr.io/v2/homebrew/core/speex/manifests/1.2.1
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/483f702af62f72259facb50d3d47cd0bb25c8f0fb887029d30051a8cef860be5--speex-1.2.1.bottle_manifest.json
+==> Fetching speex
+==> Downloading https://ghcr.io/v2/homebrew/core/speex/blobs/sha256:45e58f000c17211a9624b247cf58d85ea6a191f8c5bfe0efaf6ba72b49a63fc1
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/60e8f2af415b4032a05f1fb3678fd4e999ad8d820ada951e159e8908034c1dea--speex--1.2.1.big_sur.bottle.tar.gz
+==> Fetching srt
+==> Downloading https://github.com/Haivision/srt/commit/7962936829e016295e5c570539eb2520b326da4c.patch?full_index=1
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/3c898e77e727f4768d08e7a9a0ecf6e78bbe94b19f440588b73e3a6db7d2224e--7962936829e016295e5c570539eb2520b326da4c.patch
+==> Downloading https://github.com/Haivision/srt/archive/refs/tags/v1.5.4.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/e27ae78144f4d201092b730df0b22e680bb20ae14a37f2fd6de79c5028a89a59--srt-1.5.4.tar.gz
+==> Fetching svt-av1
+==> Downloading https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v3.1.2/SVT-AV1-v3.1.2.tar.bz2
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/c928275e0d9c4085164e4ae1b707b7a8e58e97c7ffdcd57159632edd15cc410a--SVT-AV1-v3.1.2.tar.bz2
+==> Fetching leptonica
+==> Downloading https://github.com/DanBloomberg/leptonica/releases/download/1.85.0/leptonica-1.85.0.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/3f62ffe095053d7a3efff91527fe17b9af506cfb4deb70d3a05d9900ebcc7133--leptonica-1.85.0.tar.gz
+==> Downloading https://ghcr.io/v2/homebrew/core/libb2/manifests/0.98.1
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/9bb23dca331f0d74876fa5c769113885b92af8a741a851cdfe99f6dfd420b12d--libb2-0.98.1.bottle_manifest.json
+==> Fetching libb2
+==> Downloading https://ghcr.io/v2/homebrew/core/libb2/blobs/sha256:7e21b980288ef9449cb44a4b2d33a0d0772b0482165c9ee5f12d42b71b357bc0
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/5a8888ae8212d9c862613819c0da22157865231b6a741d011dd5846cc7a8fee3--libb2--0.98.1.big_sur.bottle.tar.gz
+==> Fetching libarchive
+==> Downloading https://www.libarchive.org/downloads/libarchive-3.8.1.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/1e39ebf07930dd0c2362f0c15a3a8537e1c5596977b0175b812ab36f68c2b460--libarchive-3.8.1.tar.xz
+==> Fetching pango
+==> Downloading https://download.gnome.org/sources/pango/1.57/pango-1.57.0.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/74f8a1293bb6330ee5b7ced0aeedd6f39084bb5d7559138e553b05a0ff660cdc--pango-1.57.0.tar.xz
+==> Fetching tesseract
+==> Downloading https://github.com/tesseract-ocr/tessdata_fast/raw/4.1.0/eng.traineddata
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/686b20f2cdb451fa94f3d62a06d34b3a9f7e15bb453cbcbaed660a64c903c6ad--eng.traineddata
+==> Downloading https://github.com/tesseract-ocr/tessdata_fast/raw/4.1.0/osd.traineddata
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/12957860949bc3c2f9ea3c61de3b812340455563cc48712e0d003c3b48989ad8--osd.traineddata
+==> Downloading https://github.com/USCDataScience/counterfeit-electronics-tesseract/raw/319a6eeacff181dad5c02f3e7a3aff804eaadeca/Training%20Tesseract/snum.traineddata
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/af723acced8e05eefe19f8b6a9a0c83eaf9d0099c86d61c3257e4b83b3572cdb--snum.traineddata
+==> Downloading https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.1.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/050ceae4a7a910f83a653f333d4385701cadad6ba25545da5cb24e37a0342e8a--tesseract-5.5.1.tar.gz
+==> Fetching theora
+==> Downloading https://ftp.osuosl.org/pub/xiph/releases/theora/libtheora-1.2.0.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/8813b281d8714e42164801e8eb4872b003c4d1b8e041399592d07acea8ef9d8b--libtheora-1.2.0.tar.gz
+==> Fetching x264
+==> Cloning https://code.videolan.org/videolan/x264.git
+Updating /Users/samoey/Library/Caches/Homebrew/x264--git
+==> Checking out revision b35605ace3ddf7c1a5d67a2eb553f034aef41d55
+HEAD is now at b35605ac i8mm & neon hpel_filter optimization
+HEAD is now at b35605ac i8mm & neon hpel_filter optimization
+==> Fetching x265
+==> Downloading https://api.bitbucket.org/2.0/repositories/multicoreware/x265_git/diff/b354c009a60bcd6d7fc04014e200a1ee9c45c167
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/e4a2dc573fe14cbe9d9ac66d67e6d487e27cfac07fc924cd0958f26f0fa8138a--b354c009a60bcd6d7fc04014e200a1ee9c45c167
+==> Downloading https://api.bitbucket.org/2.0/repositories/multicoreware/x265_git/diff/51ae8e922bcc4586ad4710812072289af91492a8
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/b6ff4fb8bf2e83146c270c424b8787da8629b9111d05f64906af596b51a49d6e--51ae8e922bcc4586ad4710812072289af91492a8
+==> Downloading https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/a1961a5b2441b05931d931025da6358e67b70c6ee884857aee149cf03c7f9350--x265_4.1.tar.gz
+==> Downloading https://ghcr.io/v2/homebrew/core/xvid/manifests/1.3.7
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/b5121b85b4f5dfe07f78abbcbe520ae4926d781af3342e318e588b62aba59fe0--xvid-1.3.7.bottle_manifest.json
+==> Fetching xvid
+==> Downloading https://ghcr.io/v2/homebrew/core/xvid/blobs/sha256:feabfa1a3df3b916654ba5eef30193b65cdba70a7a49cca6406ec0c214b50338
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/7577300dc775fb6b5a239597f04fa576d11abad8d1521c6276f50c52b3a4a468--xvid--1.3.7.big_sur.bottle.tar.gz
+==> Fetching libsodium
+==> Downloading https://download.libsodium.org/libsodium/releases/libsodium-1.0.20.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/42180c99fe7945bacc2cd79a0096df714ac3f4ca387735865a73493f8eeb150b--libsodium-1.0.20.tar.gz
+==> Fetching gnu-getopt
+==> Downloading https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.2.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/5f88b58572d92aa56ef00025652584e7787a4a9cfdfe7036b58ec8b11836ac46--util-linux-2.41.2.tar.xz
+==> Fetching xmlto
+==> Downloading https://pagure.io/xmlto/archive/0.0.29/xmlto-0.0.29.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/150380c726be66035ae91e9aa1a4e1d78019889dc1e678c4881674bf00b71445--xmlto-0.0.29.tar.gz
+==> Fetching zeromq
+==> Downloading https://github.com/zeromq/libzmq/releases/download/v4.3.5/zeromq-4.3.5.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/2c7bbae9590e8ea6d1b5f0850ee71f1a6bb13521d8792b01c3aa6c1c30940a7f--zeromq-4.3.5.tar.gz
+==> Fetching zimg
+==> Downloading https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.6.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/22a2dfddcd890eb1c87ed00f44e2a421ddf78f9b67854b6c7d6b5251ab9d0cc9--zimg-release-3.0.6.tar.gz
+==> Fetching ffmpeg
+==> Downloading https://gitlab.archlinux.org/archlinux/packaging/packages/ffmpeg/-/raw/5670ccd86d3b816f49ebc18cab878125eca2f81f/add-av_stream_get_first_dts-for-chromium.patch
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/89c5a789bbb2e059f601e58af1ca10f4db2a1939f591f896a0240cb1cfb2b8bb--add-av_stream_get_first_dts-for-chromium.patch
+==> Downloading https://ffmpeg.org/releases/ffmpeg-8.0.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/d4a8e66f9e562f06139fee9396881dd2926d0c7c4abdf3abde11063e69101236--ffmpeg-8.0.tar.xz
+==> Fetching dependencies for jq: oniguruma
+==> Fetching oniguruma
+==> Downloading https://github.com/kkos/oniguruma/releases/download/v6.9.10/onig-6.9.10.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/225d5684c06dfbcc380cbc1df70cf087f2a3a80a4d1938f352f656577b841612--onig-6.9.10.tar.gz
+==> Fetching jq
+==> Downloading https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-1.8.1.tar.gz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/2b05a6eda1a64914cd75ba3b8247a5076ffa371de80d7f360d0e46df4720cbd5--jq-1.8.1.tar.gz
+==> Fetching unzip
+==> Downloading http://archive.ubuntu.com/ubuntu/pool/main/u/unzip/unzip_6.0-28ubuntu4.1.debian.tar.xz
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/2f1b5d2cb4b00252c59cf030729e353e4e2b8ed3394a0cd6c9f079ff2a5ca5a2--unzip_6.0-28ubuntu4.1.debian.tar.xz
+==> Downloading https://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz
+Error: A `brew install cmake ffmpeg jq unzip` process has already locked /usr/local/Cellar/ffmpeg.
+Please wait for it to finish or terminate it to continue.
+Already downloaded: /Users/samoey/Library/Caches/Homebrew/downloads/d0f59184a257740ddd7fb7bd57265c587ddc952b01bb1d105e81a7c74df847d4--unzip60.tar.gz
+⚠️ Some deps may have failed, continuing...
+📥 Cloning repositories...
+Cloning into 'kilo_code'...
+fatal: could not read Username for 'https://github.com': Device not configured
+⚠️ Kilo Code clone failed, check network.
+Cloning into 'vscodium'...
+Updating files:  92% (320/347)Updating files:  93% (323/347)Updating files:  94% (327/347)Updating files:  95% (330/347)Updating files:  96% (334/347)Updating files:  97% (337/347)Updating files:  98% (341/347)Updating files:  99% (344/347)Updating files: 100% (347/347)Updating files: 100% (347/347), done.
+🐍 Setting up Python environment...
+Requirement already satisfied: pip in ./venv/lib/python3.12/site-packages (25.1.1)
+Collecting pip
+  Using cached pip-25.2-py3-none-any.whl.metadata (4.7 kB)
+Using cached pip-25.2-py3-none-any.whl (1.8 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 25.1.1
+    Uninstalling pip-25.1.1:
+      Successfully uninstalled pip-25.1.1
+Successfully installed pip-25.2
+Collecting fastapi
+  Using cached fastapi-0.117.1-py3-none-any.whl.metadata (28 kB)
+Collecting uvicorn
+  Using cached uvicorn-0.37.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting transformers
+  Using cached transformers-4.56.2-py3-none-any.whl.metadata (40 kB)
+Collecting torch
+  Downloading torch-2.2.2-cp312-none-macosx_10_9_x86_64.whl.metadata (25 kB)
+Collecting torchvision
+  Downloading torchvision-0.17.2-cp312-cp312-macosx_10_13_x86_64.whl.metadata (6.6 kB)
+Collecting torchaudio
+  Downloading torchaudio-2.2.2-cp312-cp312-macosx_10_13_x86_64.whl.metadata (6.4 kB)
+Collecting sentence-transformers
+  Using cached sentence_transformers-5.1.1-py3-none-any.whl.metadata (16 kB)
+Collecting huggingface-hub
+  Using cached huggingface_hub-0.35.1-py3-none-any.whl.metadata (14 kB)
+Collecting starlette<0.49.0,>=0.40.0 (from fastapi)
+  Using cached starlette-0.48.0-py3-none-any.whl.metadata (6.3 kB)
+Collecting pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4 (from fastapi)
+  Using cached pydantic-2.11.9-py3-none-any.whl.metadata (68 kB)
+Collecting typing-extensions>=4.8.0 (from fastapi)
+  Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting annotated-types>=0.6.0 (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi)
+  Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.33.2 (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi)
+  Downloading pydantic_core-2.33.2-cp312-cp312-macosx_10_12_x86_64.whl.metadata (6.8 kB)
+Collecting typing-inspection>=0.4.0 (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi)
+  Using cached typing_inspection-0.4.1-py3-none-any.whl.metadata (2.6 kB)
+Collecting anyio<5,>=3.6.2 (from starlette<0.49.0,>=0.40.0->fastapi)
+  Using cached anyio-4.11.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting idna>=2.8 (from anyio<5,>=3.6.2->starlette<0.49.0,>=0.40.0->fastapi)
+  Using cached idna-3.10-py3-none-any.whl.metadata (10 kB)
+Collecting sniffio>=1.1 (from anyio<5,>=3.6.2->starlette<0.49.0,>=0.40.0->fastapi)
+  Using cached sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting click>=7.0 (from uvicorn)
+  Using cached click-8.3.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting h11>=0.8 (from uvicorn)
+  Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting filelock (from transformers)
+  Using cached filelock-3.19.1-py3-none-any.whl.metadata (2.1 kB)
+Collecting numpy>=1.17 (from transformers)
+  Downloading numpy-2.3.3-cp312-cp312-macosx_10_13_x86_64.whl.metadata (62 kB)
+Collecting packaging>=20.0 (from transformers)
+  Using cached packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting pyyaml>=5.1 (from transformers)
+  Downloading pyyaml-6.0.3-cp312-cp312-macosx_10_13_x86_64.whl.metadata (2.4 kB)
+Collecting regex!=2019.12.17 (from transformers)
+  Downloading regex-2025.9.18-cp312-cp312-macosx_10_13_x86_64.whl.metadata (40 kB)
+Collecting requests (from transformers)
+  Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+Collecting tokenizers<=0.23.0,>=0.22.0 (from transformers)
+  Using cached tokenizers-0.22.1-cp39-abi3-macosx_10_12_x86_64.whl.metadata (6.8 kB)
+Collecting safetensors>=0.4.3 (from transformers)
+  Using cached safetensors-0.6.2-cp38-abi3-macosx_10_12_x86_64.whl.metadata (4.1 kB)
+Collecting tqdm>=4.27 (from transformers)
+  Using cached tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+Collecting fsspec>=2023.5.0 (from huggingface-hub)
+  Using cached fsspec-2025.9.0-py3-none-any.whl.metadata (10 kB)
+Collecting hf-xet<2.0.0,>=1.1.3 (from huggingface-hub)
+  Using cached hf_xet-1.1.10-cp37-abi3-macosx_10_12_x86_64.whl.metadata (4.7 kB)
+Collecting sympy (from torch)
+  Using cached sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx (from torch)
+  Using cached networkx-3.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting jinja2 (from torch)
+  Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting pillow!=8.3.*,>=5.3.0 (from torchvision)
+  Downloading pillow-11.3.0-cp312-cp312-macosx_10_13_x86_64.whl.metadata (9.0 kB)
+Collecting scikit-learn (from sentence-transformers)
+  Downloading scikit_learn-1.7.2-cp312-cp312-macosx_10_13_x86_64.whl.metadata (11 kB)
+Collecting scipy (from sentence-transformers)
+  Downloading scipy-1.16.2-cp312-cp312-macosx_10_14_x86_64.whl.metadata (62 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Downloading MarkupSafe-3.0.2-cp312-cp312-macosx_10_13_universal2.whl.metadata (4.0 kB)
+Collecting charset_normalizer<4,>=2 (from requests->transformers)
+  Downloading charset_normalizer-3.4.3-cp312-cp312-macosx_10_13_universal2.whl.metadata (36 kB)
+Collecting urllib3<3,>=1.21.1 (from requests->transformers)
+  Using cached urllib3-2.5.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting certifi>=2017.4.17 (from requests->transformers)
+  Using cached certifi-2025.8.3-py3-none-any.whl.metadata (2.4 kB)
+Collecting joblib>=1.2.0 (from scikit-learn->sentence-transformers)
+  Using cached joblib-1.5.2-py3-none-any.whl.metadata (5.6 kB)
+Collecting threadpoolctl>=3.1.0 (from scikit-learn->sentence-transformers)
+  Using cached threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy->torch)
+  Using cached mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Using cached fastapi-0.117.1-py3-none-any.whl (95 kB)
+Using cached pydantic-2.11.9-py3-none-any.whl (444 kB)
+Downloading pydantic_core-2.33.2-cp312-cp312-macosx_10_12_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 11.1 MB/s  0:00:00
+Using cached starlette-0.48.0-py3-none-any.whl (73 kB)
+Using cached anyio-4.11.0-py3-none-any.whl (109 kB)
+Using cached uvicorn-0.37.0-py3-none-any.whl (67 kB)
+Using cached transformers-4.56.2-py3-none-any.whl (11.6 MB)
+Using cached huggingface_hub-0.35.1-py3-none-any.whl (563 kB)
+Using cached hf_xet-1.1.10-cp37-abi3-macosx_10_12_x86_64.whl (2.8 MB)
+Using cached tokenizers-0.22.1-cp39-abi3-macosx_10_12_x86_64.whl (3.1 MB)
+Downloading torch-2.2.2-cp312-none-macosx_10_9_x86_64.whl (150.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 150.8/150.8 MB 18.3 MB/s  0:00:08
+Downloading torchvision-0.17.2-cp312-cp312-macosx_10_13_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 21.6 MB/s  0:00:00
+Downloading torchaudio-2.2.2-cp312-cp312-macosx_10_13_x86_64.whl (3.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 20.2 MB/s  0:00:00
+Using cached sentence_transformers-5.1.1-py3-none-any.whl (486 kB)
+Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Using cached click-8.3.0-py3-none-any.whl (107 kB)
+Using cached fsspec-2025.9.0-py3-none-any.whl (199 kB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using cached idna-3.10-py3-none-any.whl (70 kB)
+Downloading numpy-2.3.3-cp312-cp312-macosx_10_13_x86_64.whl (21.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 21.0/21.0 MB 24.2 MB/s  0:00:00
+Using cached packaging-25.0-py3-none-any.whl (66 kB)
+Downloading pillow-11.3.0-cp312-cp312-macosx_10_13_x86_64.whl (5.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 21.4 MB/s  0:00:00
+Downloading pyyaml-6.0.3-cp312-cp312-macosx_10_13_x86_64.whl (182 kB)
+Downloading regex-2025.9.18-cp312-cp312-macosx_10_13_x86_64.whl (289 kB)
+Using cached safetensors-0.6.2-cp38-abi3-macosx_10_12_x86_64.whl (454 kB)
+Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
+Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Using cached typing_inspection-0.4.1-py3-none-any.whl (14 kB)
+Using cached filelock-3.19.1-py3-none-any.whl (15 kB)
+Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading MarkupSafe-3.0.2-cp312-cp312-macosx_10_13_universal2.whl (14 kB)
+Using cached networkx-3.5-py3-none-any.whl (2.0 MB)
+Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+Downloading charset_normalizer-3.4.3-cp312-cp312-macosx_10_13_universal2.whl (205 kB)
+Using cached urllib3-2.5.0-py3-none-any.whl (129 kB)
+Using cached certifi-2025.8.3-py3-none-any.whl (161 kB)
+Downloading scikit_learn-1.7.2-cp312-cp312-macosx_10_13_x86_64.whl (9.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.3/9.3 MB 25.7 MB/s  0:00:00
+Using cached joblib-1.5.2-py3-none-any.whl (308 kB)
+Downloading scipy-1.16.2-cp312-cp312-macosx_10_14_x86_64.whl (36.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.6/36.6 MB 28.8 MB/s  0:00:01
+Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Using cached sympy-1.14.0-py3-none-any.whl (6.3 MB)
+Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)
+Installing collected packages: mpmath, urllib3, typing-extensions, tqdm, threadpoolctl, sympy, sniffio, safetensors, regex, pyyaml, pillow, packaging, numpy, networkx, MarkupSafe, joblib, idna, hf-xet, h11, fsspec, filelock, click, charset_normalizer, certifi, annotated-types, uvicorn, typing-inspection, scipy, requests, pydantic-core, jinja2, anyio, torch, starlette, scikit-learn, pydantic, huggingface-hub, torchvision, torchaudio, tokenizers, fastapi, transformers, sentence-transformers
+

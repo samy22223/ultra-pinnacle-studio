@@ -1,0 +1,44 @@
+{
+  "app": {
+    "name": "Ultra Pinnacle AI Studio",
+    "version": "1.0.0",
+    "host": "0.0.0.0",
+    "port": 8000,
+    "debug": false,
+    "log_level": "INFO"
+  },
+  "models": {
+    "default_model": "llama-2-7b-chat",
+    "llama-2-7b-chat": {
+      "path": "models/llama-2-7b-chat.ggmlv3.q4_0.bin",
+      "type": "llama",
+      "max_tokens": 2048,
+      "temperature": 0.7
+    },
+    "stable-diffusion": {
+      "path": "models/stable-diffusion-v1-5.ckpt",
+      "type": "diffusion",
+      "height": 512,
+      "width": 512,
+      "num_inference_steps": 50
+    }
+  },
+  "security": {
+    "secret_key": "your-secret-key-here",
+    "algorithm": "HS256",
+    "access_token_expire_minutes": 30
+  },
+  "paths": {
+    "models_dir": "models/",
+    "encyclopedia_dir": "encyclopedia/",
+    "uploads_dir": "uploads/",
+    "logs_dir": "logs/"
+  },
+  "features": {
+    "authentication": true,
+    "file_upload": true,
+    "chat_mode": true,
+    "code_generation": true,
+    "image_generation": false
+  }
+}
