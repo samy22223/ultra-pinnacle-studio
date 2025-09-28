@@ -8,7 +8,11 @@ import os
 import sys
 import json
 import subprocess
+import warnings
 from pathlib import Path
+
+# Suppress known deprecation warnings
+warnings.filterwarnings("ignore", message=".*pkg_resources.*", category=UserWarning)
 
 def check_result(name, success, details=''):
     """Format and display validation result"""

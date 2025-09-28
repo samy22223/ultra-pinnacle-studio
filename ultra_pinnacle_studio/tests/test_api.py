@@ -116,7 +116,7 @@ def test_enhance_prompt_authorized():
     assert response.status_code == 200
     data = response.json()
     assert "enhanced_prompt" in data
-    assert "Mock response" in data["enhanced_prompt"]  # Should get mock response
+    assert "Mock AI response" in data["enhanced_prompt"]  # Should get mock response
 
 def test_chat_unauthorized():
     response = client.post("/chat", json={"message": "Hello"})
@@ -131,7 +131,7 @@ def test_chat_authorized():
     data = response.json()
     assert "response" in data
     assert "conversation_id" in data
-    assert "Mock response" in data["response"]  # Should get mock response
+    assert "Mock AI response" in data["response"]  # Should get mock response
 
 def test_code_task_unauthorized():
     response = client.post("/code/analyze", json={"code": "print('hello')", "language": "python"})

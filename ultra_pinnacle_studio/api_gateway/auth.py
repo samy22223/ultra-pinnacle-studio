@@ -1,3 +1,4 @@
+import warnings
 from datetime import datetime, timedelta
 from typing import Optional
 from fastapi import HTTPException, Depends
@@ -6,6 +7,9 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 import json
+
+# Suppress bcrypt version warnings
+warnings.filterwarnings("ignore", message=".*bcrypt.*", category=UserWarning)
 
 # Load config
 with open("config.json", "r") as f:

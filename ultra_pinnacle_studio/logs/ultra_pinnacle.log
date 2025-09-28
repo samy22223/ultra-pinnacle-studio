@@ -131,3 +131,134 @@
 2025-09-28 03:16:52,907 - ultra_pinnacle - INFO - login:78 - User demo logged in
 2025-09-28 03:16:52,912 - ultra_pinnacle - INFO - chat:139 - Chat response for user demo
 2025-09-28 03:16:53,349 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:10,381 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 03:53:10,397 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 03:53:10,428 - ultra_pinnacle - WARNING - _load_model:58 - Unsupported model type: llama
+2025-09-28 03:53:10,430 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 03:53:10,430 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 03:53:10,430 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 03:53:12,775 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:18,222 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 03:53:18,224 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 03:53:18,227 - ultra_pinnacle - WARNING - _load_model:58 - Unsupported model type: llama
+2025-09-28 03:53:18,227 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 03:53:18,228 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 03:53:18,228 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 03:53:18,826 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:19,273 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:19,277 - ultra_pinnacle - INFO - enhance_prompt:123 - Enhanced prompt for user demo
+2025-09-28 03:53:19,670 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:19,674 - ultra_pinnacle - INFO - chat:139 - Chat response for user demo
+2025-09-28 03:53:20,069 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:20,079 - ultra_pinnacle - INFO - submit_task:31 - Submitted task 1432d3bf3d51df1823b238b73e2583b6 of type code_analysis
+2025-09-28 03:53:20,080 - ultra_pinnacle - INFO - _process_task:46 - Processing task 1432d3bf3d51df1823b238b73e2583b6
+2025-09-28 03:53:20,480 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:20,485 - ultra_pinnacle - ERROR - enhance_prompt:126 - Error enhancing prompt: Model invalid-model not loaded
+2025-09-28 03:53:20,878 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:53:20,883 - ultra_pinnacle - INFO - chat:139 - Chat response for user demo
+2025-09-28 03:53:21,281 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:45,807 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 03:59:45,815 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 03:59:45,942 - ultra_pinnacle - WARNING - _load_model:64 - Unsupported model type: llama (LLAMA_AVAILABLE: False, DIFFUSION_AVAILABLE: False)
+2025-09-28 03:59:45,942 - ultra_pinnacle - INFO - _load_model:68 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-28 03:59:45,943 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 03:59:45,943 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 03:59:45,945 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 03:59:47,730 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:54,849 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 03:59:54,850 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 03:59:54,852 - ultra_pinnacle - WARNING - _load_model:64 - Unsupported model type: llama (LLAMA_AVAILABLE: False, DIFFUSION_AVAILABLE: False)
+2025-09-28 03:59:54,852 - ultra_pinnacle - INFO - _load_model:68 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-28 03:59:54,852 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 03:59:54,853 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 03:59:54,853 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 03:59:55,425 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:55,864 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:55,869 - ultra_pinnacle - ERROR - enhance_prompt:126 - Error enhancing prompt: name 'Llama' is not defined
+2025-09-28 03:59:56,278 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:56,283 - ultra_pinnacle - ERROR - chat:145 - Error in chat: name 'Llama' is not defined
+2025-09-28 03:59:56,891 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:56,905 - ultra_pinnacle - INFO - submit_task:31 - Submitted task 6a60c5e34b2ed169bda445c7ae7a0978 of type code_analysis
+2025-09-28 03:59:56,905 - ultra_pinnacle - INFO - _process_task:46 - Processing task 6a60c5e34b2ed169bda445c7ae7a0978
+2025-09-28 03:59:57,352 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:57,356 - ultra_pinnacle - ERROR - enhance_prompt:126 - Error enhancing prompt: Model invalid-model not loaded
+2025-09-28 03:59:57,746 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 03:59:57,751 - ultra_pinnacle - ERROR - chat:145 - Error in chat: name 'Llama' is not defined
+2025-09-28 03:59:58,184 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:00:19,300 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 04:00:19,301 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 04:00:19,304 - ultra_pinnacle - WARNING - _load_model:64 - Unsupported model type: llama (LLAMA_AVAILABLE: False, DIFFUSION_AVAILABLE: False)
+2025-09-28 04:00:19,304 - ultra_pinnacle - INFO - _load_model:68 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-28 04:00:19,304 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 04:00:19,305 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 04:00:19,305 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 04:00:20,648 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:00:21,243 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:00:21,247 - ultra_pinnacle - ERROR - enhance_prompt:126 - Error enhancing prompt: name 'Llama' is not defined
+2025-09-28 04:00:22,295 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:00:22,361 - ultra_pinnacle - ERROR - chat:145 - Error in chat: name 'Llama' is not defined
+2025-09-28 04:00:22,871 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:00:22,877 - ultra_pinnacle - INFO - submit_task:31 - Submitted task 50423769d2ee9388e04674a8cddb3403 of type code_analysis
+2025-09-28 04:00:22,878 - ultra_pinnacle - INFO - _process_task:46 - Processing task 50423769d2ee9388e04674a8cddb3403
+2025-09-28 04:00:23,595 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:00:23,600 - ultra_pinnacle - ERROR - enhance_prompt:126 - Error enhancing prompt: Model invalid-model not loaded
+2025-09-28 04:00:24,170 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:00:24,175 - ultra_pinnacle - ERROR - chat:145 - Error in chat: name 'Llama' is not defined
+2025-09-28 04:00:24,713 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:02:34,633 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 04:02:34,635 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 04:02:34,642 - ultra_pinnacle - WARNING - _load_model:64 - Unsupported model type: llama (LLAMA_AVAILABLE: False, DIFFUSION_AVAILABLE: False)
+2025-09-28 04:02:34,645 - ultra_pinnacle - INFO - _load_model:68 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-28 04:02:34,645 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 04:02:34,646 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 04:02:34,646 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 04:02:36,376 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:02:36,401 - ultra_pinnacle - INFO - enhance_prompt:123 - Enhanced prompt for user demo
+2025-09-28 04:06:12,232 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 04:06:12,234 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 04:06:12,236 - ultra_pinnacle - WARNING - _load_model:64 - Unsupported model type: llama (LLAMA_AVAILABLE: False, DIFFUSION_AVAILABLE: False)
+2025-09-28 04:06:12,237 - ultra_pinnacle - INFO - _load_model:68 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-28 04:06:12,237 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 04:06:12,237 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 04:06:12,238 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 04:06:14,337 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:06:15,120 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:06:15,146 - ultra_pinnacle - INFO - enhance_prompt:123 - Enhanced prompt for user demo
+2025-09-28 04:06:16,299 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:06:16,353 - ultra_pinnacle - INFO - chat:139 - Chat response for user demo
+2025-09-28 04:06:17,489 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:06:17,583 - ultra_pinnacle - INFO - submit_task:31 - Submitted task eee5576874b393ac3218974afea2a89d of type code_analysis
+2025-09-28 04:06:17,584 - ultra_pinnacle - INFO - _process_task:46 - Processing task eee5576874b393ac3218974afea2a89d
+2025-09-28 04:06:19,839 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:06:19,852 - ultra_pinnacle - ERROR - enhance_prompt:126 - Error enhancing prompt: Model invalid-model not loaded
+2025-09-28 04:06:20,914 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:06:20,917 - ultra_pinnacle - INFO - chat:139 - Chat response for user demo
+2025-09-28 04:06:22,633 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:31,897 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 04:07:31,906 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 04:07:32,078 - ultra_pinnacle - WARNING - _load_model:64 - Unsupported model type: llama (LLAMA_AVAILABLE: False, DIFFUSION_AVAILABLE: False)
+2025-09-28 04:07:32,079 - ultra_pinnacle - INFO - _load_model:68 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-28 04:07:32,080 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 04:07:32,081 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 04:07:32,081 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 04:07:34,128 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:39,473 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-28 04:07:39,474 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-28 04:07:39,478 - ultra_pinnacle - WARNING - _load_model:64 - Unsupported model type: llama (LLAMA_AVAILABLE: False, DIFFUSION_AVAILABLE: False)
+2025-09-28 04:07:39,479 - ultra_pinnacle - INFO - _load_model:68 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-28 04:07:39,479 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-28 04:07:39,479 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-28 04:07:39,479 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-28 04:07:40,091 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:40,564 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:40,570 - ultra_pinnacle - INFO - enhance_prompt:123 - Enhanced prompt for user demo
+2025-09-28 04:07:41,039 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:41,043 - ultra_pinnacle - INFO - chat:139 - Chat response for user demo
+2025-09-28 04:07:41,478 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:41,483 - ultra_pinnacle - INFO - submit_task:31 - Submitted task 8ca351b996877fa56ce9bab10cc5cba5 of type code_analysis
+2025-09-28 04:07:41,484 - ultra_pinnacle - INFO - _process_task:46 - Processing task 8ca351b996877fa56ce9bab10cc5cba5
+2025-09-28 04:07:41,912 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:41,917 - ultra_pinnacle - ERROR - enhance_prompt:126 - Error enhancing prompt: Model invalid-model not loaded
+2025-09-28 04:07:42,350 - ultra_pinnacle - INFO - login:78 - User demo logged in
+2025-09-28 04:07:42,356 - ultra_pinnacle - INFO - chat:139 - Chat response for user demo
+2025-09-28 04:07:42,772 - ultra_pinnacle - INFO - login:78 - User demo logged in
