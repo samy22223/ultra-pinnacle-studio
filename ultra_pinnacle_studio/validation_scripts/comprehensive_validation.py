@@ -46,34 +46,45 @@ def validate_python_compilation():
 def validate_imports():
     """Check module imports"""
     print('\n📦 IMPORT VALIDATION')
-    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    # Add the project root to Python path
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.insert(0, project_root)
 
-    modules_to_test = [
-        ('api_gateway.main', 'from api_gateway.main import app'),
-        ('api_gateway.auth', 'from api_gateway.auth import authenticate_user'),
-        ('api_gateway.models', 'from api_gateway.models import ModelManager'),
-        ('api_gateway.workers', 'from api_gateway.workers import WorkerManager'),
-        ('api_gateway.logging_config', 'from api_gateway.logging_config import logger')
-    ]
+    # Change to project root directory for imports
+    original_cwd = os.getcwd()
+    os.chdir(project_root)
 
-    passed = True
-    for module_name, import_stmt in modules_to_test:
-        try:
-            exec(import_stmt)
-            check_result(f'{module_name} import', True)
-        except Exception as e:
-            check_result(f'{module_name} import', False, str(e))
-            passed = False
+    try:
+        modules_to_test = [
+            ('api_gateway.main', 'from api_gateway.main import app'),
+            ('api_gateway.auth', 'from api_gateway.auth import authenticate_user'),
+            ('api_gateway.models', 'from api_gateway.models import ModelManager'),
+            ('api_gateway.workers', 'from api_gateway.workers import WorkerManager'),
+            ('api_gateway.logging_config', 'from api_gateway.logging_config import logger')
+        ]
 
-    return check_result('All core modules import successfully', passed)
+        passed = True
+        for module_name, import_stmt in modules_to_test:
+            try:
+                exec(import_stmt)
+                check_result(f'{module_name} import', True)
+            except Exception as e:
+                check_result(f'{module_name} import', False, str(e))
+                passed = False
+
+        return check_result('All core modules import successfully', passed)
+    finally:
+        # Restore original working directory
+        os.chdir(original_cwd)
 
 def validate_configuration():
     """Check configuration files"""
     print('\n⚙️ CONFIGURATION VALIDATION')
 
     # Check config.json
+    config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'config.json')
     try:
-        with open('../config.json', 'r') as f:
+        with open(config_path, 'r') as f:
             config = json.load(f)
 
         required_keys = ['app', 'models', 'security', 'paths', 'features']
@@ -91,7 +102,8 @@ def validate_configuration():
         return False
 
     # Check requirements.txt exists
-    if os.path.exists('../requirements.txt'):
+    req_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'requirements.txt')
+    if os.path.exists(req_path):
         check_result('requirements.txt exists', True)
     else:
         check_result('requirements.txt exists', False)
@@ -104,7 +116,8 @@ def validate_dependencies():
     print('\n📋 DEPENDENCIES VALIDATION')
     try:
         import pkg_resources
-        with open('../requirements.txt', 'r') as f:
+        req_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'requirements.txt')
+        with open(req_path, 'r') as f:
             deps = [line.strip() for line in f if line.strip() and not line.startswith('#')]
 
         passed = True
@@ -124,7 +137,7 @@ def validate_web_ui():
     """Check web UI structure"""
     print('\n🌐 WEB UI VALIDATION')
     try:
-        web_ui_path = '../web_ui/index.html'
+        web_ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'web_ui', 'index.html')
         if os.path.exists(web_ui_path):
             with open(web_ui_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -149,7 +162,7 @@ def validate_encyclopedia():
     """Check encyclopedia files"""
     print('\n📚 ENCYCLOPEDIA VALIDATION')
     try:
-        encyclopedia_dir = '../encyclopedia'
+        encyclopedia_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'encyclopedia')
         if os.path.exists(encyclopedia_dir):
             files = [f for f in os.listdir(encyclopedia_dir) if f.endswith('.md')]
 
@@ -181,14 +194,16 @@ def validate_encyclopedia():
 def validate_directory_structure():
     """Check required directories exist"""
     print('\n📁 DIRECTORY STRUCTURE')
-    required_dirs = ['../api_gateway', '../encyclopedia', '../models', '../web_ui', '../tests', '../logs', '../uploads']
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    required_dirs = ['api_gateway', 'encyclopedia', 'models', 'web_ui', 'tests', 'logs', 'uploads']
 
     passed = True
     for dir_name in required_dirs:
-        if os.path.exists(dir_name):
-            check_result(f'Directory {os.path.basename(dir_name)}', True)
+        full_path = os.path.join(project_root, dir_name)
+        if os.path.exists(full_path):
+            check_result(f'Directory {dir_name}', True)
         else:
-            check_result(f'Directory {os.path.basename(dir_name)}', False, 'Missing')
+            check_result(f'Directory {dir_name}', False, 'Missing')
             passed = False
 
     return check_result('All required directories present', passed)
@@ -197,7 +212,12 @@ def validate_server_startup():
     """Check server can start"""
     print('\n🚀 SERVER STARTUP VALIDATION')
     try:
-        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        # Change to project root for proper imports
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        original_cwd = os.getcwd()
+        os.chdir(project_root)
+
+        sys.path.insert(0, project_root)
         from api_gateway.main import app
         from fastapi.testclient import TestClient
 
@@ -209,12 +229,19 @@ def validate_server_startup():
 
     except Exception as e:
         return check_result('Server startup', False, str(e))
+    finally:
+        os.chdir(original_cwd)
 
 def validate_api_endpoints():
     """Check API endpoints are accessible"""
     print('\n🔗 API ENDPOINTS VALIDATION')
     try:
-        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        # Change to project root for proper imports
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        original_cwd = os.getcwd()
+        os.chdir(project_root)
+
+        sys.path.insert(0, project_root)
         from api_gateway.main import app
         from fastapi.testclient import TestClient
 
@@ -251,21 +278,30 @@ def validate_api_endpoints():
 
     except Exception as e:
         return check_result('API endpoints validation', False, str(e))
+    finally:
+        os.chdir(original_cwd)
 
 def validate_test_suite():
     """Check test suite runs"""
     print('\n🧪 TEST SUITE VALIDATION')
     try:
-        result = subprocess.run([sys.executable, '-m', 'pytest', '../tests/test_api.py', '--tb=no', '-q'],
+        # Change to project root for proper test execution
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        original_cwd = os.getcwd()
+        os.chdir(project_root)
+
+        result = subprocess.run([sys.executable, '-m', 'pytest', 'tests/test_api.py', '--tb=no', '-q'],
                               capture_output=True, text=True, cwd='.')
 
         if result.returncode == 0:
             return check_result('Test suite execution', True, 'All tests passed')
         else:
-            return check_result('Test suite execution', False, 'Some tests failed')
+            return check_result('Test suite execution', False, f'Some tests failed: {result.stderr.strip()}')
 
     except Exception as e:
         return check_result('Test suite validation', False, str(e))
+    finally:
+        os.chdir(original_cwd)
 
 def main():
     """Run comprehensive validation"""
