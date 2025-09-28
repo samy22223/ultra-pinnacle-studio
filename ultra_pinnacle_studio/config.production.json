@@ -1,0 +1,77 @@
+{
+  "app": {
+    "name": "Ultra Pinnacle AI Studio",
+    "version": "1.0.0",
+    "host": "0.0.0.0",
+    "port": 8000,
+    "debug": false,
+    "log_level": "WARNING",
+    "cors_origins": ["https://yourdomain.com", "https://studio.yourdomain.com"]
+  },
+  "models": {
+    "default_model": "llama-2-7b-chat",
+    "llama-2-7b-chat": {
+      "path": "models/llama-2-7b-chat.ggmlv3.q4_0.bin",
+      "type": "llama",
+      "max_tokens": 2048,
+      "temperature": 0.7
+    },
+    "stable-diffusion": {
+      "path": "models/stable-diffusion-v1-5.ckpt",
+      "type": "diffusion",
+      "height": 512,
+      "width": 512,
+      "num_inference_steps": 50
+    }
+  },
+  "security": {
+    "secret_key": "${JWT_SECRET_KEY}",
+    "algorithm": "HS256",
+    "access_token_expire_minutes": 30,
+    "rate_limit_requests": 100,
+    "rate_limit_window": 60,
+    "cors_enabled": true,
+    "security_headers": true
+  },
+  "database": {
+    "type": "postgresql",
+    "url": "${DATABASE_URL}",
+    "pool_size": 10,
+    "max_overflow": 20,
+    "pool_timeout": 30
+  },
+  "cache": {
+    "type": "redis",
+    "url": "${REDIS_URL}",
+    "ttl": 3600
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics_port": 9090,
+    "health_check_interval": 30,
+    "log_requests": false
+  },
+  "paths": {
+    "models_dir": "models/",
+    "encyclopedia_dir": "encyclopedia/",
+    "uploads_dir": "uploads/",
+    "logs_dir": "logs/",
+    "backups_dir": "backups/"
+  },
+  "features": {
+    "authentication": true,
+    "file_upload": true,
+    "chat_mode": true,
+    "code_generation": true,
+    "image_generation": false,
+    "backup_enabled": true,
+    "metrics_enabled": true
+  },
+  "backup": {
+    "enabled": true,
+    "schedule": "0 2 * * *",
+    "retention_days": 30,
+    "compression": true,
+    "encryption": true
+  }
+}
