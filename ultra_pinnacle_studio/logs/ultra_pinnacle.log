@@ -3821,3 +3821,120 @@ TypeError: 'datetime.datetime' object is not callable
 2025-09-29 09:04:57,701 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: stable-diffusion
 2025-09-29 09:04:57,771 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed
 2025-09-29 09:04:57,856 - ultra_pinnacle - INFO - lifespan:123 - Starting Ultra Pinnacle AI Studio
+2025-09-29 23:32:54,125 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 23:32:56,342 - ultra_pinnacle - INFO - <module>:15 - llama-cpp-python available
+2025-09-29 23:32:56,717 - ultra_pinnacle - INFO - <module>:189 - Metrics module initialized
+2025-09-29 23:32:56,956 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: llama-2-7b-chat
+2025-09-29 23:32:56,956 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: stable-diffusion
+2025-09-29 23:32:57,960 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed
+2025-09-29 23:32:58,138 - ultra_pinnacle - INFO - <module>:21 - Diffusion models available (deferred import)
+2025-09-29 23:32:59,236 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 23:33:00,251 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 1.02s
+2025-09-29 23:33:00,617 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 23:33:01,633 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 1.02s
+2025-09-29 23:33:01,859 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 23:33:01,916 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.06s
+2025-09-29 23:33:01,921 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 23:33:01,923 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.00s
+2025-09-29 23:33:01,928 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 23:33:01,932 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.00s
+2025-09-29 23:33:01,936 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:02,103 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:02,109 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.17s
+2025-09-29 23:33:02,118 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from testclient
+2025-09-29 23:33:02,131 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.01s
+2025-09-29 23:33:08,310 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 23:33:09,098 - ultra_pinnacle - INFO - <module>:15 - llama-cpp-python available
+2025-09-29 23:33:09,118 - ultra_pinnacle - INFO - <module>:189 - Metrics module initialized
+2025-09-29 23:33:09,204 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: llama-2-7b-chat
+2025-09-29 23:33:09,204 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: stable-diffusion
+2025-09-29 23:33:09,267 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed
+2025-09-29 23:33:09,480 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 23:33:10,487 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 1.01s
+2025-09-29 23:33:10,501 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 23:33:10,505 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.00s
+2025-09-29 23:33:10,516 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 23:33:10,519 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.00s
+2025-09-29 23:33:10,533 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 23:33:10,537 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.00s
+2025-09-29 23:33:10,544 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:10,577 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:10,580 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.04s
+2025-09-29 23:33:10,586 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:10,591 - ultra_pinnacle - INFO - dispatch:58 - Response: 401 in 0.01s
+2025-09-29 23:33:10,598 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:10,608 - ultra_pinnacle - INFO - dispatch:58 - Response: 422 in 0.01s
+2025-09-29 23:33:10,616 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from testclient
+2025-09-29 23:33:10,618 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.00s
+2025-09-29 23:33:10,623 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/math_sequences from testclient
+2025-09-29 23:33:10,626 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.00s
+2025-09-29 23:33:10,632 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/nonexistent_topic from testclient
+2025-09-29 23:33:10,634 - ultra_pinnacle - INFO - dispatch:58 - Response: 404 in 0.00s
+2025-09-29 23:33:10,640 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /encyclopedia/search from testclient
+2025-09-29 23:33:10,649 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.01s
+2025-09-29 23:33:10,656 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /encyclopedia/search from testclient
+2025-09-29 23:33:10,662 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.01s
+2025-09-29 23:33:10,668 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 23:33:10,671 - ultra_pinnacle - INFO - dispatch:58 - Response: 403 in 0.00s
+2025-09-29 23:33:10,676 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:10,706 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:10,708 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.03s
+2025-09-29 23:33:10,713 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 23:33:10,719 - ultra_pinnacle - ERROR - _load_model:76 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 23:33:10,720 - ultra_pinnacle - WARNING - _load_model:80 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 23:33:10,720 - ultra_pinnacle - INFO - get_model:136 - Lazy loaded model: llama-2-7b-chat
+2025-09-29 23:33:10,720 - ultra_pinnacle - INFO - enhance_prompt:649 - Enhanced prompt for user demo
+2025-09-29 23:33:10,722 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.01s
+2025-09-29 23:33:10,728 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 23:33:10,731 - ultra_pinnacle - INFO - dispatch:58 - Response: 403 in 0.00s
+2025-09-29 23:33:10,739 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:10,776 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:10,778 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.04s
+2025-09-29 23:33:10,785 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 23:33:10,809 - ultra_pinnacle - INFO - chat:753 - Chat response for user demo in conversation c824e51e-f155-41c0-ab81-506d4a0c99f4
+2025-09-29 23:33:10,827 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.04s
+2025-09-29 23:33:10,837 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /code/analyze from testclient
+2025-09-29 23:33:10,841 - ultra_pinnacle - INFO - dispatch:58 - Response: 403 in 0.00s
+2025-09-29 23:33:10,850 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:10,886 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:10,888 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.04s
+2025-09-29 23:33:10,893 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /code/analyze from testclient
+2025-09-29 23:33:10,900 - ultra_pinnacle - INFO - submit_task:56 - Submitted task b20064982f4084ac8d78d2578d2c42f5 of type code_analysis with priority 1
+2025-09-29 23:33:10,901 - ultra_pinnacle - INFO - _process_task:76 - Processing task b20064982f4084ac8d78d2578d2c42f5
+2025-09-29 23:33:10,902 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.01s
+2025-09-29 23:33:10,909 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /upload from testclient
+2025-09-29 23:33:10,920 - ultra_pinnacle - INFO - dispatch:58 - Response: 403 in 0.01s
+2025-09-29 23:33:10,947 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /tasks/test-task-id from testclient
+2025-09-29 23:33:10,950 - ultra_pinnacle - INFO - dispatch:58 - Response: 403 in 0.00s
+2025-09-29 23:33:10,958 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:11,033 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:11,035 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.08s
+2025-09-29 23:33:11,039 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 23:33:11,049 - ultra_pinnacle - ERROR - enhance_prompt:652 - Error enhancing prompt: Model invalid-model not loaded
+2025-09-29 23:33:11,051 - ultra_pinnacle - INFO - dispatch:58 - Response: 500 in 0.01s
+2025-09-29 23:33:11,059 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:11,085 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:11,086 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.03s
+2025-09-29 23:33:11,091 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 23:33:11,103 - ultra_pinnacle - INFO - chat:753 - Chat response for user demo in conversation f25684d9-b5f4-4b08-94f5-d3242285acba
+2025-09-29 23:33:11,105 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.01s
+2025-09-29 23:33:11,112 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 23:33:11,139 - ultra_pinnacle - INFO - login:228 - User demo logged in
+2025-09-29 23:33:11,141 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.03s
+2025-09-29 23:33:11,145 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /code/invalid_task from testclient
+2025-09-29 23:33:11,152 - ultra_pinnacle - INFO - dispatch:58 - Response: 422 in 0.01s
+2025-09-29 23:35:57,965 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 23:36:00,760 - ultra_pinnacle - INFO - <module>:15 - llama-cpp-python available
+2025-09-29 23:36:00,944 - ultra_pinnacle - INFO - <module>:189 - Metrics module initialized
+2025-09-29 23:36:01,218 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: llama-2-7b-chat
+2025-09-29 23:36:01,219 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: stable-diffusion
+2025-09-29 23:36:01,280 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed
+2025-09-29 23:36:01,622 - ultra_pinnacle - INFO - lifespan:123 - Starting Ultra Pinnacle AI Studio
+2025-09-30 00:11:03,144 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from 127.0.0.1
+2025-09-30 00:11:04,174 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 1.03s
+2025-09-30 00:14:25,972 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from 127.0.0.1
+2025-09-30 00:14:26,271 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.30s
+2025-09-30 00:14:42,625 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from 127.0.0.1
+2025-09-30 00:14:42,663 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.04s
+2025-09-30 00:14:50,636 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from 127.0.0.1
+2025-09-30 00:14:50,666 - ultra_pinnacle - INFO - dispatch:58 - Response: 200 in 0.03s
