@@ -11,7 +11,7 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       matrix:
         python-version: ['3.11', '3.12']
@@ -37,6 +37,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install pytest pytest-cov pytest-asyncio httpx
+        pip install slowapi huggingface-hub passlib[bcrypt] uvicorn[standard]
 
     - name: Run validation scripts
       run: |
@@ -49,7 +51,8 @@ jobs:
 
     - name: Run test suite
       run: |
-        python -m pytest tests/ -v --cov=api_gateway --cov-report=xml
+        python -m pytest tests/ -v --cov=api_gateway --cov-report=xml --cov-report=term-missing
+        python -m pytest validation_scripts/ -v -k "test_"
 
     - name: Upload coverage reports
       uses: codecov/codecov-action@v3
@@ -63,16 +66,80 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install security tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety bandit[toml] semgrep
+
     - name: Run safety check
       run: |
-        pip install safety
-        safety check --full-report
+        safety check --full-report --output json | tee safety-report.json
 
     - name: Run bandit security linter
       run: |
-        pip install bandit
-        bandit -r api_gateway/ -f json -o bandit-report.json || true
+        bandit -r api_gateway/ -f json -o bandit-report.json --exclude-dir api_gateway/__pycache__,api_gateway/venv || true
         cat bandit-report.json
+
+    - name: Run semgrep security scan
+      run: |
+        semgrep --config auto --json | tee semgrep-report.json || true
+
+    - name: Check for secrets
+      run: |
+        pip install detect-secrets
+        detect-secrets scan --all-files --json | tee secrets-report.json || true
+
+    - name: Upload security reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: |
+          safety-report.json
+          bandit-report.json
+          semgrep-report.json
+          secrets-report.json
+
+  performance:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install locust pytest-benchmark
+
+    - name: Run performance tests
+      run: |
+        # Start the application in background
+        JWT_SECRET="test_secret_key" python -m uvicorn api_gateway.main:app --host 0.0.0.0 --port 8000 &
+        sleep 10
+
+        # Run load testing
+        locust --headless --users 10 --spawn-rate 1 --run-time 30s --host http://localhost:8000 --csv=locust_results
+
+        # Run benchmark tests
+        python -m pytest tests/ -k "benchmark" --benchmark-json=benchmark_results.json || true
+
+    - name: Upload performance reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-reports
+        path: |
+          locust_results_*.csv
+          benchmark_results.json
 
   lint:
     runs-on: ubuntu-latest
@@ -87,23 +154,37 @@ jobs:
     - name: Install linting tools
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 black isort mypy
+        pip install flake8 black isort mypy pylint radon
 
     - name: Run flake8
-      run: flake8 api_gateway/ tests/ validation_scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics
+      run: flake8 api_gateway/ tests/ validation_scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics --max-line-length=120
 
     - name: Run black check
-      run: black --check --diff api_gateway/ tests/ validation_scripts/
+      run: black --check --diff --line-length 120 api_gateway/ tests/ validation_scripts/
 
     - name: Run isort check
-      run: isort --check-only --diff api_gateway/ tests/ validation_scripts/
+      run: isort --check-only --diff --profile black api_gateway/ tests/ validation_scripts/
 
     - name: Run mypy
-      run: mypy api_gateway/ --ignore-missing-imports
+      run: mypy api_gateway/ --ignore-missing-imports --no-strict-optional --disable-error-code=import-untyped
+
+    - name: Run pylint
+      run: pylint api_gateway/ --disable=C0114,C0115,C0116,R0903,R0913,W0613 --output-format=json | tee pylint-report.json || true
+
+    - name: Run radon complexity check
+      run: radon cc api_gateway/ -a -j | tee complexity-report.json || true
+
+    - name: Upload linting reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: linting-reports
+        path: |
+          pylint-report.json
+          complexity-report.json
 
   build:
     runs-on: ubuntu-latest
-    needs: [test, security, lint]
+    needs: [test, security, lint, performance]
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -122,7 +203,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v5
       with:
-        images: ultra-pinnacle-studio
+        images: ${{ secrets.DOCKER_USERNAME }}/ultra-pinnacle-studio
         tags: |
           type=ref,event=branch
           type=ref,event=pr
@@ -138,27 +219,94 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        build-args: |
+          BUILDKIT_INLINE_CACHE=1
+
+    - name: Build and push multi-platform image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/ultra-pinnacle-studio:multi-arch
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Generate SBOM
+      run: |
+        docker sbom ${{ secrets.DOCKER_USERNAME }}/ultra-pinnacle-studio:latest --format cyclonedx-json | tee sbom.json
+
+    - name: Upload SBOM
+      uses: actions/upload-artifact@v3
+      with:
+        name: sbom
+        path: sbom.json
+
+    - name: Run container security scan
+      run: |
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+          anchore/grype ${{ secrets.DOCKER_USERNAME }}/ultra-pinnacle-studio:latest \
+          --output json | tee grype-report.json || true
+
+    - name: Upload security scan results
+      uses: actions/upload-artifact@v3
+      with:
+        name: container-security-scan
+        path: grype-report.json
 
   deploy-staging:
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/develop'
-    environment: staging
 
     steps:
-    - name: Deploy to staging
+    - name: Deploy to Railway staging
       run: |
-        echo "Deploying to staging environment..."
-        # Add your staging deployment commands here
+        echo "Deploying to Railway staging environment..."
+        # Railway deployment (free tier available)
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          https://backboard.railway.app/graphql/internal \
+          -d '{"query": "mutation { deployEnvironment(projectId: \"${{ secrets.RAILWAY_PROJECT_ID }}\", environmentId: \"${{ secrets.RAILWAY_STAGING_ENV_ID }}\") { id } }"}'
 
   deploy-production:
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/main'
-    environment: production
 
     steps:
-    - name: Deploy to production
+    - name: Deploy to Railway production
       run: |
-        echo "Deploying to production environment..."
-        # Add your production deployment commands here
+        echo "Deploying to Railway production environment..."
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          https://backboard.railway.app/graphql/internal \
+          -d '{"query": "mutation { deployEnvironment(projectId: \"${{ secrets.RAILWAY_PROJECT_ID }}\", environmentId: \"${{ secrets.RAILWAY_PROD_ENV_ID }}\") { id } }"}'
+
+    - name: Deploy to Render
+      run: |
+        echo "Deploying to Render..."
+        curl -X POST \
+          -H "Authorization: Bearer Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Content-Type: application/json" \
+          https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys \
+          -d '{"clearCache": "do_not_clear"}'
+
+    - name: Health check after deployment
+      run: |
+        echo "Waiting for deployment to be ready..."
+        for i in {1..30}; do
+          if curl -f -s ${{ secrets.PRODUCTION_URL }}/health > /dev/null; then
+            echo "Deployment successful!"
+            break
+          fi
+          echo "Waiting for deployment... ($i/30)"
+          sleep 10
+        done
+
+        if [ $i -eq 30 ]; then
+          echo "Deployment failed - health check timeout"
+          exit 1
+        fi

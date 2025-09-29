@@ -2,3 +2,294 @@
 2025-09-28 03:28:49,074 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
 2025-09-28 03:40:06,687 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
 2025-09-28 03:40:06,689 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 00:39:49,703 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 00:39:50,268 - ultra_pinnacle - INFO - init_database:172 - Default admin user created
+2025-09-29 00:39:50,413 - ultra_pinnacle - INFO - init_database:187 - Default demo user created
+2025-09-29 00:39:50,489 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 00:39:50,490 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 00:39:50,751 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 00:39:50,752 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 00:39:50,752 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 00:39:50,753 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 00:39:50,761 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 00:39:59,867 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 00:40:00,435 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 00:40:00,435 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 00:40:01,519 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 00:40:01,520 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 00:40:01,520 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 00:40:01,520 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 00:40:01,609 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 00:40:02,006 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 00:40:02,012 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:40:02,034 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 00:40:02,038 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:40:02,049 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 00:40:02,051 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:40:02,067 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 00:40:02,070 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:40:02,080 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 00:40:02,272 - ultra_pinnacle - INFO - login:174 - User demo logged in
+2025-09-29 00:40:02,282 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:40:02,308 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 00:40:02,313 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:41:49,669 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 00:41:50,119 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 00:41:50,120 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 00:41:50,407 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 00:41:50,418 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 00:41:50,422 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 00:41:50,430 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 00:41:50,626 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 00:41:50,703 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 00:41:50,707 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:41:50,721 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 00:41:50,726 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:41:50,734 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 00:41:50,737 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:41:50,747 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 00:41:50,751 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:41:50,760 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 00:41:50,799 - ultra_pinnacle - INFO - login:174 - User demo logged in
+2025-09-29 00:41:50,813 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:41:50,831 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 00:41:50,835 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:41:50,844 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 00:41:50,851 - ultra_pinnacle - ERROR - chat:610 - Error in chat: Model llama-2-7b-chat not loaded
+2025-09-29 00:41:50,853 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:03,426 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 00:43:03,942 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 00:43:03,945 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 00:43:04,537 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 00:43:04,538 - ultra_pinnacle - INFO - _load_model:48 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 00:43:04,538 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 00:43:04,540 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 00:43:04,558 - ultra_pinnacle - INFO - _load_model:52 - Registered diffusion model: stable-diffusion
+2025-09-29 00:43:04,559 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 00:43:04,883 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 00:43:05,495 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 00:43:05,516 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:05,746 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 00:43:05,750 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:05,787 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 00:43:05,792 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:05,867 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 00:43:05,903 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:06,100 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 00:43:07,281 - ultra_pinnacle - INFO - login:174 - User demo logged in
+2025-09-29 00:43:07,429 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:07,601 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 00:43:07,612 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:07,622 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 00:43:07,681 - ultra_pinnacle - INFO - chat:600 - Chat response for user demo in conversation 2683bfa8-1609-4402-8fab-975ce478a931
+2025-09-29 00:43:07,825 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:07,908 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 00:43:07,915 - ultra_pinnacle - INFO - enhance_prompt:520 - Enhanced prompt for user demo
+2025-09-29 00:43:07,918 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:43:07,927 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from testclient
+2025-09-29 00:43:07,928 - ultra_pinnacle - ERROR - list_encyclopedia:640 - Error listing encyclopedia: [Errno 2] No such file or directory: 'encyclopedia/'
+2025-09-29 00:43:07,932 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:45,317 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 00:44:46,343 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 00:44:46,346 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 00:44:48,217 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 00:44:48,218 - ultra_pinnacle - INFO - _load_model:48 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 00:44:48,218 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 00:44:48,219 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 00:44:48,219 - ultra_pinnacle - INFO - _load_model:52 - Registered diffusion model: stable-diffusion
+2025-09-29 00:44:48,219 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 00:44:48,311 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 00:44:48,804 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 00:44:48,822 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:48,855 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 00:44:48,864 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:48,881 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 00:44:48,886 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:48,901 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 00:44:48,907 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:48,919 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 00:44:49,047 - ultra_pinnacle - INFO - login:180 - User demo logged in
+2025-09-29 00:44:49,052 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,071 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 00:44:49,078 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,091 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 00:44:49,125 - ultra_pinnacle - INFO - chat:606 - Chat response for user demo in conversation e7623af2-518c-46f9-b385-eecb606d13cc
+2025-09-29 00:44:49,132 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,146 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 00:44:49,155 - ultra_pinnacle - INFO - enhance_prompt:526 - Enhanced prompt for user demo
+2025-09-29 00:44:49,160 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,172 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from testclient
+2025-09-29 00:44:49,177 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,189 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/machine_learning from testclient
+2025-09-29 00:44:49,249 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,294 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /encyclopedia/search from testclient
+2025-09-29 00:44:49,372 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,394 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /code/analyze from testclient
+2025-09-29 00:44:49,407 - ultra_pinnacle - INFO - submit_task:31 - Submitted task b785b38a82e20f09e671b1f86b989237 of type code_analysis
+2025-09-29 00:44:49,408 - ultra_pinnacle - INFO - _process_task:46 - Processing task b785b38a82e20f09e671b1f86b989237
+2025-09-29 00:44:49,410 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:44:49,437 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /tasks/b785b38a82e20f09e671b1f86b989237 from testclient
+2025-09-29 00:44:49,598 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 00:57:14,052 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 00:57:14,730 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 00:57:14,731 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 00:57:15,922 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 00:57:15,923 - ultra_pinnacle - INFO - _load_model:48 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 00:57:15,924 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 00:57:15,924 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 00:57:15,925 - ultra_pinnacle - INFO - _load_model:52 - Registered diffusion model: stable-diffusion
+2025-09-29 00:57:15,926 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 00:57:15,953 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 01:00:30,649 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 01:00:30,914 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 01:00:30,924 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 01:00:31,380 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 01:00:31,381 - ultra_pinnacle - INFO - _load_model:48 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 01:00:31,381 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 01:00:31,381 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 01:00:31,381 - ultra_pinnacle - INFO - _load_model:52 - Registered diffusion model: stable-diffusion
+2025-09-29 01:00:31,382 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 01:00:31,396 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 01:02:40,707 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 01:02:41,101 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 01:02:41,104 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 01:02:41,626 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 01:02:41,626 - ultra_pinnacle - INFO - _load_model:48 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 01:02:41,629 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 01:02:41,636 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 01:02:41,638 - ultra_pinnacle - INFO - _load_model:52 - Registered diffusion model: stable-diffusion
+2025-09-29 01:02:41,679 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 01:02:41,792 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 01:03:32,564 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 01:03:32,978 - ultra_pinnacle - WARNING - <module>:11 - llama-cpp-python not available
+2025-09-29 01:03:32,978 - ultra_pinnacle - WARNING - <module>:19 - diffusers not available
+2025-09-29 01:03:33,230 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 01:03:33,230 - ultra_pinnacle - INFO - _load_model:48 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 01:03:33,244 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: llama-2-7b-chat
+2025-09-29 01:03:33,245 - ultra_pinnacle - WARNING - _load_model:44 - Model file not found: models/stable-diffusion-v1-5.ckpt
+2025-09-29 01:03:33,268 - ultra_pinnacle - INFO - _load_model:52 - Registered diffusion model: stable-diffusion
+2025-09-29 01:03:33,270 - ultra_pinnacle - INFO - _load_models:34 - Loaded model: stable-diffusion
+2025-09-29 01:03:33,430 - ultra_pinnacle - INFO - setup_middleware:166 - Middleware setup completed
+2025-09-29 01:03:33,630 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 01:03:33,633 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:33,647 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 01:03:33,651 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:33,660 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 01:03:33,663 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:33,670 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 01:03:33,679 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:33,686 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 01:03:33,726 - ultra_pinnacle - INFO - login:170 - User demo logged in
+2025-09-29 01:03:33,752 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:33,979 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 01:03:33,986 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:34,001 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 01:03:34,043 - ultra_pinnacle - INFO - chat:596 - Chat response for user demo in conversation 35d7ffbf-1fcd-43dc-8d3b-bbb94496c489
+2025-09-29 01:03:34,060 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:34,080 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 01:03:34,090 - ultra_pinnacle - INFO - enhance_prompt:516 - Enhanced prompt for user demo
+2025-09-29 01:03:34,093 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:34,108 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from testclient
+2025-09-29 01:03:34,119 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:34,130 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/machine_learning from testclient
+2025-09-29 01:03:34,133 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:34,143 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /encyclopedia/search from testclient
+2025-09-29 01:03:34,156 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:34,188 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /code/analyze from testclient
+2025-09-29 01:03:34,199 - ultra_pinnacle - INFO - submit_task:31 - Submitted task 121fcbcccd291467899c4e803899d9b9 of type code_analysis
+2025-09-29 01:03:34,200 - ultra_pinnacle - INFO - _process_task:46 - Processing task 121fcbcccd291467899c4e803899d9b9
+2025-09-29 01:03:34,202 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:03:34,212 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /tasks/121fcbcccd291467899c4e803899d9b9 from testclient
+2025-09-29 01:03:34,220 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:12:27,379 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 01:12:27,790 - ultra_pinnacle - WARNING - <module>:12 - llama-cpp-python not available
+2025-09-29 01:12:27,811 - ultra_pinnacle - WARNING - <module>:20 - diffusers not available
+2025-09-29 01:12:28,244 - ultra_pinnacle - INFO - _load_model_configs:35 - Registered model config: llama-2-7b-chat
+2025-09-29 01:12:28,246 - ultra_pinnacle - INFO - _load_model_configs:35 - Registered model config: stable-diffusion
+2025-09-29 01:12:28,381 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed
+2025-09-29 01:13:05,494 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 01:13:06,000 - ultra_pinnacle - WARNING - <module>:12 - llama-cpp-python not available
+2025-09-29 01:13:06,001 - ultra_pinnacle - WARNING - <module>:20 - diffusers not available
+2025-09-29 01:13:06,268 - ultra_pinnacle - INFO - _load_model_configs:35 - Registered model config: llama-2-7b-chat
+2025-09-29 01:13:06,269 - ultra_pinnacle - INFO - _load_model_configs:35 - Registered model config: stable-diffusion
+2025-09-29 01:13:06,319 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed
+2025-09-29 01:13:06,553 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 01:13:06,571 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:06,601 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 01:13:06,608 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:06,633 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 01:13:06,639 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:06,655 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 01:13:06,661 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:06,676 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 01:13:06,778 - ultra_pinnacle - INFO - login:170 - User demo logged in
+2025-09-29 01:13:06,915 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:06,937 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 01:13:06,942 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:06,966 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 01:13:06,976 - ultra_pinnacle - WARNING - _load_model:43 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 01:13:06,977 - ultra_pinnacle - INFO - _load_model:47 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 01:13:06,977 - ultra_pinnacle - INFO - get_model:89 - Lazy loaded model: llama-2-7b-chat
+2025-09-29 01:13:07,068 - ultra_pinnacle - INFO - chat:596 - Chat response for user demo in conversation 58bde0d5-27b7-4e0b-b0b4-325584ab83d2
+2025-09-29 01:13:07,077 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:07,108 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 01:13:07,119 - ultra_pinnacle - INFO - enhance_prompt:516 - Enhanced prompt for user demo
+2025-09-29 01:13:07,123 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:07,165 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from testclient
+2025-09-29 01:13:07,169 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:07,184 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/machine_learning from testclient
+2025-09-29 01:13:07,191 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:07,201 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /encyclopedia/search from testclient
+2025-09-29 01:13:07,217 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:07,225 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /code/analyze from testclient
+2025-09-29 01:13:07,232 - ultra_pinnacle - INFO - submit_task:31 - Submitted task f55e3f31167f91fae3f9b6be74a807cc of type code_analysis
+2025-09-29 01:13:07,232 - ultra_pinnacle - INFO - _process_task:46 - Processing task f55e3f31167f91fae3f9b6be74a807cc
+2025-09-29 01:13:07,235 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:13:07,245 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /tasks/f55e3f31167f91fae3f9b6be74a807cc from testclient
+2025-09-29 01:13:07,251 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:43,066 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 01:22:43,206 - ultra_pinnacle - WARNING - <module>:12 - llama-cpp-python not available
+2025-09-29 01:22:43,211 - ultra_pinnacle - WARNING - <module>:20 - diffusers not available
+2025-09-29 01:22:43,648 - ultra_pinnacle - INFO - _load_model_configs:35 - Registered model config: llama-2-7b-chat
+2025-09-29 01:22:43,649 - ultra_pinnacle - INFO - _load_model_configs:35 - Registered model config: stable-diffusion
+2025-09-29 01:22:43,707 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed
+2025-09-29 01:22:43,963 - ultra_pinnacle - INFO - dispatch:51 - Request: GET / from testclient
+2025-09-29 01:22:43,971 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:43,983 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /health from testclient
+2025-09-29 01:22:43,986 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:43,996 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /models from testclient
+2025-09-29 01:22:44,000 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,009 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /workers from testclient
+2025-09-29 01:22:44,012 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,026 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /auth/login from testclient
+2025-09-29 01:22:44,222 - ultra_pinnacle - INFO - login:170 - User demo logged in
+2025-09-29 01:22:44,228 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,256 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 01:22:44,260 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,284 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /chat from testclient
+2025-09-29 01:22:44,292 - ultra_pinnacle - WARNING - _load_model:43 - Model file not found: models/llama-2-7b-chat.ggmlv3.q4_0.bin
+2025-09-29 01:22:44,293 - ultra_pinnacle - INFO - _load_model:47 - Created mock Llama model for development: llama-2-7b-chat
+2025-09-29 01:22:44,293 - ultra_pinnacle - INFO - get_model:89 - Lazy loaded model: llama-2-7b-chat
+2025-09-29 01:22:44,337 - ultra_pinnacle - INFO - chat:596 - Chat response for user demo in conversation a22ab50c-2194-4f45-9545-f2d5cf59e2df
+2025-09-29 01:22:44,348 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,361 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /enhance_prompt from testclient
+2025-09-29 01:22:44,376 - ultra_pinnacle - INFO - enhance_prompt:516 - Enhanced prompt for user demo
+2025-09-29 01:22:44,390 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,542 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/list from testclient
+2025-09-29 01:22:44,548 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,566 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /encyclopedia/machine_learning from testclient
+2025-09-29 01:22:44,576 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,593 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /encyclopedia/search from testclient
+2025-09-29 01:22:44,604 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,610 - ultra_pinnacle - INFO - dispatch:51 - Request: POST /code/analyze from testclient
+2025-09-29 01:22:44,617 - ultra_pinnacle - INFO - submit_task:56 - Submitted task 3ff367042d103208937383616593fa6a of type code_analysis with priority 1
+2025-09-29 01:22:44,617 - ultra_pinnacle - INFO - _process_task:76 - Processing task 3ff367042d103208937383616593fa6a
+2025-09-29 01:22:44,618 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 01:22:44,643 - ultra_pinnacle - INFO - dispatch:51 - Request: GET /tasks/3ff367042d103208937383616593fa6a from testclient
+2025-09-29 01:22:44,653 - ultra_pinnacle - INFO - dispatch:58 - .2f
+2025-09-29 08:24:17,770 - ultra_pinnacle - INFO - init_database:149 - Database initialized successfully
+2025-09-29 08:24:21,218 - ultra_pinnacle - INFO - <module>:15 - llama-cpp-python available
+2025-09-29 08:24:21,331 - ultra_pinnacle - INFO - <module>:189 - Metrics module initialized
+2025-09-29 08:24:21,539 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: llama-2-7b-chat
+2025-09-29 08:24:21,540 - ultra_pinnacle - INFO - _load_model_configs:68 - Registered model config: stable-diffusion
+2025-09-29 08:24:21,620 - ultra_pinnacle - INFO - setup_middleware:162 - Middleware setup completed

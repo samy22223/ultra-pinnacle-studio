@@ -1,27 +1,56 @@
+"""
+Safe model management that avoids segmentation faults
+"""
 from typing import Dict, Any, Optional
 import json
 from pathlib import Path
 from functools import lru_cache
 from .logging_config import logger
 
+# Safe imports with error handling
+LLAMA_AVAILABLE = False
 try:
     from llama_cpp import Llama
     LLAMA_AVAILABLE = True
-except ImportError:
-    LLAMA_AVAILABLE = False
-    logger.warning("llama-cpp-python not available")
-
-try:
-    # Handle NumPy compatibility issues - only import when needed
-    import warnings
-    warnings.filterwarnings("ignore", message=".*numpy.*", category=UserWarning)
-
-    # Defer torch/diffusers imports to avoid segmentation faults
-    DIFFUSION_AVAILABLE = True
-    logger.info("Diffusion models available (deferred import)")
+    logger.info("llama-cpp-python available")
 except Exception as e:
-    DIFFUSION_AVAILABLE = False
-    logger.warning(f"diffusers/torch not available: {e}")
+    logger.warning(f"llama-cpp-python not available: {e}")
+
+# Only import torch/diffusers if explicitly enabled and safe
+DIFFUSION_AVAILABLE = False
+TORCH_AVAILABLE = False
+
+def _enable_torch_diffusion():
+    """Enable torch/diffusion imports only when explicitly requested"""
+    global DIFFUSION_AVAILABLE, TORCH_AVAILABLE
+    
+    if not TORCH_AVAILABLE:
+        try:
+            # Set environment variable to avoid numpy issues
+            import os
+            os.environ['NUMPY_EXPERIMENTAL_ARRAY_FUNCTION'] = '0'
+            
+            import warnings
+            warnings.filterwarnings("ignore", category=UserWarning)
+            warnings.filterwarnings("ignore", message=".*numpy.*")
+            
+            import torch
+            TORCH_AVAILABLE = True
+            logger.info("PyTorch imported successfully")
+        except Exception as e:
+            logger.warning(f"PyTorch not available: {e}")
+            return False
+    
+    if not DIFFUSION_AVAILABLE:
+        try:
+            from diffusers import StableDiffusionPipeline
+            DIFFUSION_AVAILABLE = True
+            logger.info("Diffusers imported successfully")
+        except Exception as e:
+            logger.warning(f"Diffusers not available: {e}")
+            return False
+    
+    return True
 
 class ModelManager:
     def __init__(self, config: Dict[str, Any]):
@@ -73,21 +102,22 @@ class ModelManager:
                 self.models[name] = {"type": "mock_llama", "config": config}
                 logger.warning(f"Using mock Llama model as fallback: {name}")
                 return
-        elif model_type == "diffusion" and DIFFUSION_AVAILABLE:
-            try:
-                # Only import torch/diffusers when actually loading a diffusion model
-                from diffusers import StableDiffusionPipeline
-                import torch
-                # Note: This would require significant resources
-                # For now, just store config
+        elif model_type == "diffusion":
+            # Only enable torch/diffusion when actually needed
+            if _enable_torch_diffusion():
+                try:
+                    # Note: This would require significant resources
+                    # For now, just store config
+                    self.models[name] = {"type": "diffusion", "config": config}
+                    logger.info(f"Registered diffusion model: {name}")
+                except Exception as e:
+                    logger.error(f"Failed to load diffusion model {name}: {e}")
+                    self.models[name] = {"type": "diffusion", "config": config}
+            else:
                 self.models[name] = {"type": "diffusion", "config": config}
-                logger.info(f"Registered diffusion model: {name}")
-            except Exception as e:
-                logger.error(f"Failed to import torch/diffusers for diffusion model {name}: {e}")
-                self.models[name] = {"type": "diffusion", "config": config}
-                logger.warning(f"Diffusion model {name} registered without torch/diffusers")
+                logger.warning(f"Diffusion not available, using config-only model: {name}")
         else:
-            logger.warning(f"Unsupported model type: {model_type} (LLAMA_AVAILABLE: {LLAMA_AVAILABLE}, DIFFUSION_AVAILABLE: {DIFFUSION_AVAILABLE})")
+            logger.warning(f"Unsupported model type: {model_type} (LLAMA_AVAILABLE: {LLAMA_AVAILABLE})")
             # For development/testing, create a mock model entry
             if model_type == "llama":
                 self.models[name] = {"type": "mock_llama", "config": config}

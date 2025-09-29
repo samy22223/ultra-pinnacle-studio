@@ -1,277 +1,202 @@
 """
-Security enhancements for Ultra Pinnacle AI Studio
-Includes rate limiting, CORS, security headers, and input validation
+Security module for Ultra Pinnacle AI Studio
+Implements rate limiting, CORS, security headers, and input validation
 """
-
-from fastapi import Request, HTTPException, status
+import time
+import hashlib
+import hmac
+from typing import Dict, List, Optional, Tuple
+from fastapi import Request, HTTPException
 from fastapi.responses import JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
-from slowapi.middleware import SlowAPIMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 import re
-import bleach
-from typing import Dict, List, Optional
-import json
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("ultra_pinnacle")
 
-class SecurityManager:
-    """Manages security configurations and validations"""
+class RateLimiter:
+    """Simple in-memory rate limiter"""
 
-    def __init__(self, config: Dict):
-        self.config = config
-        self.security_config = config.get('security', {})
+    def __init__(self, requests_per_minute: int = 60):
+        self.requests_per_minute = requests_per_minute
+        self.requests: Dict[str, List[float]] = {}
 
-        # Rate limiting settings
-        self.rate_limit_requests = self.security_config.get('rate_limit_requests', 100)
-        self.rate_limit_window = self.security_config.get('rate_limit_window', 60)
+    def is_allowed(self, client_ip: str) -> bool:
+        """Check if request is allowed under rate limit"""
+        current_time = time.time()
+        window_start = current_time - 60  # 1 minute window
 
-        # CORS settings
-        self.cors_origins = config.get('app', {}).get('cors_origins', ["*"])
-        self.cors_enabled = self.security_config.get('cors_enabled', True)
+        # Clean old requests
+        if client_ip in self.requests:
+            self.requests[client_ip] = [t for t in self.requests[client_ip] if t > window_start]
 
-        # Security headers
-        self.security_headers_enabled = self.security_config.get('security_headers', True)
-
-        # Input validation patterns
-        self.input_patterns = {
-            'username': re.compile(r'^[a-zA-Z0-9_-]{3,30}$'),
-            'email': re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
-            'filename': re.compile(r'^[a-zA-Z0-9._\-\s]{1,255}$'),
-            'task_type': re.compile(r'^(analyze|generate|refactor|debug)$'),
-            'model_name': re.compile(r'^[a-zA-Z0-9_-]{1,50}$')
-        }
-
-        # File upload restrictions
-        self.allowed_extensions = {
-            'images': ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
-            'documents': ['.txt', '.md', '.pdf', '.doc', '.docx'],
-            'code': ['.py', '.js', '.java', '.cpp', '.c', '.h', '.html', '.css'],
-            'data': ['.json', '.csv', '.xml', '.yaml', '.yml']
-        }
-        self.max_file_size = 10 * 1024 * 1024  # 10MB
-
-    def get_cors_middleware(self):
-        """Get CORS middleware configuration"""
-        if not self.cors_enabled:
-            return None
-
-        return CORSMiddleware(
-            allow_origins=self.cors_origins,
-            allow_credentials=True,
-            allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            allow_headers=["*"],
-            max_age=86400  # 24 hours
-        )
-
-    def get_rate_limiter(self):
-        """Get rate limiter configuration"""
-        limiter = Limiter(
-            key_func=get_remote_address,
-            default_limits=[f"{self.rate_limit_requests} per {self.rate_limit_window} seconds"]
-        )
-        return limiter
-
-    def get_security_headers_middleware(self):
-        """Get security headers middleware"""
-        if not self.security_headers_enabled:
-            return None
-
-        async def add_security_headers(request: Request, call_next):
-            response = await call_next(request)
-
-            # Security headers
-            response.headers['X-Content-Type-Options'] = 'nosniff'
-            response.headers['X-Frame-Options'] = 'DENY'
-            response.headers['X-XSS-Protection'] = '1; mode=block'
-            response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
-            response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-            response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
-
-            # Custom headers
-            response.headers['X-API-Version'] = self.config.get('app', {}).get('version', '1.0.0')
-            response.headers['X-Powered-By'] = 'Ultra Pinnacle AI Studio'
-
-            return response
-
-        return add_security_headers
-
-    def validate_input(self, field: str, value: str) -> bool:
-        """Validate input against security patterns"""
-        if field not in self.input_patterns:
-            return True  # No validation rule for this field
-
-        pattern = self.input_patterns[field]
-        return bool(pattern.match(str(value)))
-
-    def sanitize_html(self, content: str) -> str:
-        """Sanitize HTML content to prevent XSS"""
-        allowed_tags = ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-        allowed_attributes = {}
-
-        return bleach.clean(content, tags=allowed_tags, attributes=allowed_attributes, strip=True)
-
-    def validate_file_upload(self, filename: str, file_size: int, content_type: str) -> bool:
-        """Validate file upload parameters"""
-        # Check filename
-        if not self.validate_input('filename', filename):
-            logger.warning(f"Invalid filename: {filename}")
+        # Check rate limit
+        if client_ip in self.requests and len(self.requests[client_ip]) >= self.requests_per_minute:
             return False
 
-        # Check file size
-        if file_size > self.max_file_size:
-            logger.warning(f"File too large: {file_size} bytes")
-            return False
-
-        # Check file extension
-        file_ext = '.' + filename.split('.')[-1].lower() if '.' in filename else ''
-        allowed_exts = []
-        for category in self.allowed_extensions.values():
-            allowed_exts.extend(category)
-
-        if file_ext not in allowed_exts:
-            logger.warning(f"Disallowed file extension: {file_ext}")
-            return False
-
-        # Check content type (basic validation)
-        dangerous_types = ['application/x-executable', 'application/x-msdownload']
-        if content_type.lower() in dangerous_types:
-            logger.warning(f"Dangerous content type: {content_type}")
-            return False
+        # Record request
+        if client_ip not in self.requests:
+            self.requests[client_ip] = []
+        self.requests[client_ip].append(current_time)
 
         return True
 
-    def log_security_event(self, event_type: str, details: Dict, request: Optional[Request] = None):
-        """Log security-related events"""
-        log_data = {
-            'event_type': event_type,
-            'timestamp': json.dumps(details, default=str),
-            'ip_address': request.client.host if request and request.client else 'unknown',
-            'user_agent': request.headers.get('user-agent', 'unknown') if request else 'unknown'
-        }
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Add security headers to all responses"""
 
-        logger.warning(f"SECURITY EVENT: {event_type} - {log_data}")
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
 
-    def create_error_response(self, message: str, status_code: int = 400) -> JSONResponse:
-        """Create standardized error response"""
-        return JSONResponse(
-            status_code=status_code,
-            content={
-                'error': {
-                    'message': message,
-                    'type': 'security_error',
-                    'timestamp': json.dumps({'timestamp': str(datetime.now())})
-                }
-            }
-        )
+        # Security headers
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
 
-# Rate limiting error handler
-def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
-    """Handle rate limit exceeded errors"""
-    return JSONResponse(
-        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-        content={
-            'error': {
-                'message': 'Rate limit exceeded. Please try again later.',
-                'type': 'rate_limit_error',
-                'retry_after': exc.retry_after
-            }
-        },
-        headers={'Retry-After': str(exc.retry_after)}
-    )
+        # Remove server header for security
+        if "server" in response.headers:
+            del response.headers["server"]
 
-# Input validation decorators
-def validate_username(func):
-    """Decorator to validate username parameter"""
-    async def wrapper(*args, **kwargs):
-        if 'username' in kwargs:
-            username = kwargs['username']
-            security_manager = kwargs.get('security_manager')
-            if security_manager and not security_manager.validate_input('username', username):
-                raise HTTPException(status_code=400, detail="Invalid username format")
-        return await func(*args, **kwargs)
-    return wrapper
+        return response
 
-def validate_email(func):
-    """Decorator to validate email parameter"""
-    async def wrapper(*args, **kwargs):
-        if 'email' in kwargs:
-            email = kwargs['email']
-            security_manager = kwargs.get('security_manager')
-            if security_manager and not security_manager.validate_input('email', email):
-                raise HTTPException(status_code=400, detail="Invalid email format")
-        return await func(*args, **kwargs)
-    return wrapper
+class CORSMiddleware(BaseHTTPMiddleware):
+    """CORS middleware with configurable origins"""
 
-def sanitize_input(func):
-    """Decorator to sanitize HTML input"""
-    async def wrapper(*args, **kwargs):
-        security_manager = kwargs.get('security_manager')
-        if security_manager:
-            # Sanitize text inputs that might contain HTML
-            text_fields = ['prompt', 'message', 'code', 'content']
-            for field in text_fields:
-                if field in kwargs and isinstance(kwargs[field], str):
-                    kwargs[field] = security_manager.sanitize_html(kwargs[field])
-        return await func(*args, **kwargs)
-    return wrapper
+    def __init__(self, app, allow_origins: List[str] = None, allow_credentials: bool = True,
+                 allow_methods: List[str] = None, allow_headers: List[str] = None):
+        super().__init__(app)
+        self.allow_origins = allow_origins or ["*"]
+        self.allow_credentials = allow_credentials
+        self.allow_methods = allow_methods or ["*"]
+        self.allow_headers = allow_headers or ["*"]
 
-# Security monitoring middleware
-async def security_monitoring_middleware(request: Request, call_next):
-    """Monitor requests for security threats"""
-    # Log suspicious patterns
-    suspicious_patterns = [
-        ('sql_injection', ['union', 'select', 'drop', 'delete', 'update', 'insert']),
-        ('xss_attempt', ['<script', 'javascript:', 'onload=', 'onerror=']),
-        ('path_traversal', ['../', '..\\', '/etc/', 'c:\\']),
+    async def dispatch(self, request: Request, call_next):
+        # Handle preflight requests
+        if request.method == "OPTIONS":
+            response = JSONResponse(content={}, status_code=200)
+        else:
+            response = await call_next(request)
+
+        # Set CORS headers
+        if "*" in self.allow_origins:
+            response.headers["Access-Control-Allow-Origin"] = "*"
+        elif request.headers.get("origin") in self.allow_origins:
+            response.headers["Access-Control-Allow-Origin"] = request.headers.get("origin")
+
+        if self.allow_credentials:
+            response.headers["Access-Control-Allow-Credentials"] = "true"
+
+        response.headers["Access-Control-Allow-Methods"] = ", ".join(self.allow_methods)
+        response.headers["Access-Control-Allow-Headers"] = ", ".join(self.allow_headers)
+
+        return response
+
+class RateLimitMiddleware(BaseHTTPMiddleware):
+    """Rate limiting middleware"""
+
+    def __init__(self, app, rate_limiter: RateLimiter = None):
+        super().__init__(app)
+        self.rate_limiter = rate_limiter or RateLimiter()
+
+    async def dispatch(self, request: Request, call_next):
+        client_ip = request.client.host if request.client else "unknown"
+
+        if not self.rate_limiter.is_allowed(client_ip):
+            logger.warning(f"Rate limit exceeded for {client_ip}")
+            return JSONResponse(
+                status_code=429,
+                content={"detail": "Too many requests. Please try again later."}
+            )
+
+        response = await call_next(request)
+        return response
+
+def validate_input_safety(text: str) -> bool:
+    """Validate input for common security issues"""
+    if not text:
+        return True
+
+    # Check for SQL injection patterns
+    sql_patterns = [
+        r';\s*(select|insert|update|delete|drop|create|alter)',
+        r'union\s+select',
+        r'--\s*$',
+        r'/\*.*\*/'
     ]
 
-    request_body = await request.body()
-    request_text = request_body.decode('utf-8', errors='ignore').lower()
+    for pattern in sql_patterns:
+        if re.search(pattern, text, re.IGNORECASE):
+            logger.warning("Potential SQL injection detected")
+            return False
 
-    for threat_type, patterns in suspicious_patterns:
-        for pattern in patterns:
-            if pattern in request_text:
-                logger.warning(f"Potential {threat_type} detected in request from {request.client.host}")
-                break
+    # Check for XSS patterns
+    xss_patterns = [
+        r'<script[^>]*>.*?</script>',
+        r'javascript:',
+        r'on\w+\s*=',
+        r'<iframe[^>]*>.*?</iframe>'
+    ]
 
-    response = await call_next(request)
-    return response
+    for pattern in xss_patterns:
+        if re.search(pattern, text, re.IGNORECASE):
+            logger.warning("Potential XSS attack detected")
+            return False
 
-def setup_security(app, config: Dict):
-    """Setup all security middleware and configurations"""
-    security_manager = SecurityManager(config)
+    # Check for path traversal
+    if '..' in text or '../' in text or '..\\' in text:
+        logger.warning("Potential path traversal detected")
+        return False
 
-    # Add CORS middleware
-    cors_middleware = security_manager.get_cors_middleware()
-    if cors_middleware:
-        app.add_middleware(type(cors_middleware))
+    return True
 
-    # Add rate limiting
-    limiter = security_manager.get_rate_limiter()
-    app.state.limiter = limiter
-    app.add_exception_handler(RateLimitExceeded, rate_limit_exceeded_handler)
-    app.add_middleware(SlowAPIMiddleware)
+def sanitize_input(text: str) -> str:
+    """Sanitize user input"""
+    if not text:
+        return text
 
-    # Add security headers
-    security_headers = security_manager.get_security_headers_middleware()
-    if security_headers:
-        app.middleware('http')(security_headers)
+    # Remove potentially dangerous characters
+    text = re.sub(r'[<>"\'`]', '', text)
 
-    # Add security monitoring
-    app.middleware('http')(security_monitoring_middleware)
+    # Normalize whitespace
+    text = ' '.join(text.split())
 
-    # Add trusted host middleware (for production)
-    if config.get('app', {}).get('environment') == 'production':
-        app.add_middleware(
-            TrustedHostMiddleware,
-            allowed_hosts=config.get('app', {}).get('allowed_hosts', ['*'])
-        )
+    return text.strip()
 
-    return security_manager
+def hash_password(password: str, salt: Optional[str] = None) -> Tuple[str, str]:
+    """Hash password with salt"""
+    if salt is None:
+        salt = hashlib.sha256(str(time.time()).encode()).hexdigest()[:16]
+
+    # Use PBKDF2 for password hashing
+    hash_obj = hashlib.pbkdf2_hmac(
+        'sha256',
+        password.encode(),
+        salt.encode(),
+        100000  # Number of iterations
+    )
+
+    return hash_obj.hex(), salt
+
+def verify_password(password: str, hashed: str, salt: str) -> bool:
+    """Verify password against hash"""
+    hash_obj = hashlib.pbkdf2_hmac(
+        'sha256',
+        password.encode(),
+        salt.encode(),
+        100000
+    )
+
+    return hmac.compare_digest(hash_obj.hex(), hashed)
+
+def generate_secure_token(length: int = 32) -> str:
+    """Generate a secure random token"""
+    return hashlib.sha256(str(time.time()).encode() + str(id(length)).encode()).hexdigest()[:length]
+
+# Global instances
+rate_limiter = RateLimiter()
+security_headers = SecurityHeadersMiddleware
+cors_middleware = CORSMiddleware
+rate_limit_middleware = RateLimitMiddleware
+
+logger.info("Security module initialized")

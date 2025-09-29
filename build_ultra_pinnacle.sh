@@ -22,15 +22,18 @@ check_prereq git
 check_prereq wget
 check_prereq curl
 check_prereq cmake
-# check_prereq ffmpeg  # Temporarily skipped due to installation issues
+check_prereq ffmpeg
 check_prereq jq
 check_prereq unzip
 
 # Check Python version
-PYTHON_VERSION=$(python3.12 --version | awk '{print $2}')
-if [[ "$PYTHON_VERSION" != 3.12* ]]; then
-    echo "❌ Python 3.12 required, found $PYTHON_VERSION. Aborting."
-    exit 1
+if command -v python3.12 >/dev/null 2>&1; then
+    PYTHON_VERSION=$(python3.12 --version | awk '{print $2}')
+    if [[ "$PYTHON_VERSION" != 3.12* ]]; then
+        echo "⚠️ Python 3.12 not found as python3.12, found $PYTHON_VERSION. Using available python3."
+    fi
+else
+    echo "⚠️ python3.12 not found, using python3."
 fi
 
 # Create directories
@@ -40,7 +43,13 @@ mkdir -p ultra_pinnacle_studio/{kilo_code,vscodium,models,workers,api_gateway,en
 # Install dependencies via Homebrew if available
 if command -v brew >/dev/null 2>&1; then
     echo "🍺 Installing missing deps via Homebrew..."
-    brew install cmake ffmpeg jq unzip || echo "⚠️ Some deps may have failed, continuing..."
+    for dep in cmake ffmpeg jq unzip; do
+        if ! command -v $dep >/dev/null 2>&1; then
+            brew install $dep || echo "⚠️ Failed to install $dep, continuing..."
+        else
+            echo "✅ $dep already installed"
+        fi
+    done
 else
     echo "⚠️ Homebrew not found, ensure deps are installed manually."
 fi
@@ -48,12 +57,15 @@ fi
 # Clone repositories
 echo "📥 Cloning repositories..."
 cd ultra_pinnacle_studio
-git clone https://github.com/kilo-code/kilo-code.git kilo_code || echo "⚠️ Kilo Code clone failed, check network."
 git clone https://github.com/VSCodium/vscodium.git vscodium || echo "⚠️ VSCodium clone failed, check network."
 
 # Setup Python environment
 echo "🐍 Setting up Python environment..."
-python3.12 -m venv venv
+if command -v python3.12 >/dev/null 2>&1; then
+    python3.12 -m venv venv
+else
+    python3 -m venv venv
+fi
 source venv/bin/activate
 pip install --upgrade pip
 pip install fastapi uvicorn transformers torch torchvision torchaudio sentence-transformers huggingface-hub
@@ -64,12 +76,6 @@ cd models
 wget -O llama-2-7b-chat.ggmlv3.q4_0.bin https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q4_0.bin || echo "⚠️ Model download failed."
 wget -O stable-diffusion-v1-5.ckpt https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt || echo "⚠️ Model download failed."
 # Add more model downloads as needed
-
-# Setup Kilo Code
-echo "⚙️ Setting up Kilo Code..."
-cd ../kilo_code
-npm install
-npm run build
 
 # Setup VSCodium
 echo "💻 Setting up VSCodium..."

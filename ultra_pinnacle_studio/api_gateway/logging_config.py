@@ -3,15 +3,20 @@ import logging.handlers
 import json
 from pathlib import Path
 
-def setup_logging(config_path: str = "config.json"):
+def setup_logging(config_path: str = None):
     """Setup logging configuration from config file"""
 
     # Load config
+    if config_path is None:
+        import os
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config.json')
+
     try:
         with open(config_path, 'r') as f:
             config = json.load(f)
     except FileNotFoundError:
         config = {"app": {"log_level": "INFO"}}
+        print(f"Warning: Config file not found at {config_path}, using defaults")
 
     log_level = getattr(logging, config.get("app", {}).get("log_level", "INFO").upper())
     logs_dir = Path(config.get("paths", {}).get("logs_dir", "logs/"))

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Pinnacle AI Studio - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .status-healthy {
+            color: #28a745;
+        }
+
+        .status-warning {
+            color: #ffc107;
+        }
+
+        .status-unhealthy {
+            color: #dc3545;
+        }
+
+        .logs-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logs-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .log-entry {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            padding: 5px 0;
+            border-bottom: 1px solid #f8f9fa;
+            white-space: pre-wrap;
+        }
+
+        .log-error {
+            color: #dc3545;
+            background: #fff5f5;
+        }
+
+        .log-warning {
+            color: #856404;
+            background: #fffbf0;
+        }
+
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: #5a67d8;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Ultra Pinnacle AI Studio</h1>
+            <p>Real-time System Dashboard</p>
+        </div>
+
+        <button class="refresh-btn" onclick="refreshDashboard()">🔄 Refresh Dashboard</button>
+
+        <div id="loading" class="loading">Loading dashboard data...</div>
+
+        <div id="dashboard-content" style="display: none;">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>📊 System Metrics</h3>
+                    <div id="system-metrics"></div>
+                </div>
+
+                <div class="card">
+                    <h3>⚡ Performance</h3>
+                    <div id="performance-metrics"></div>
+                </div>
+
+                <div class="card">
+                    <h3>👥 Application</h3>
+                    <div id="application-metrics"></div>
+                </div>
+
+                <div class="card">
+                    <h3>❤️ Health Status</h3>
+                    <div id="health-status"></div>
+                </div>
+            </div>
+
+            <div class="logs-section">
+                <h3>📝 Recent Logs</h3>
+                <div id="logs-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let apiBaseUrl = window.location.origin;
+
+        async function fetchData(endpoint) {
+            try {
+                const response = await fetch(`${apiBaseUrl}${endpoint}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${endpoint}:`, error);
+                return null;
+            }
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function formatUptime(seconds) {
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${days}d ${hours}h ${minutes}m`;
+        }
+
+        function createMetricElement(label, value, unit = '') {
+            return `<div class="metric">
+                <span>${label}</span>
+                <span class="metric-value">${value}${unit}</span>
+            </div>`;
+        }
+
+        function updateSystemMetrics(data) {
+            const container = document.getElementById('system-metrics');
+            container.innerHTML = `
+                ${createMetricElement('CPU Usage', data.cpu_percent.toFixed(1), '%')}
+                ${createMetricElement('Memory Usage', data.memory_percent.toFixed(1), '%')}
+                ${createMetricElement('Memory Used', formatBytes(data.memory_used_mb * 1024 * 1024))}
+                ${createMetricElement('Disk Usage', data.disk_percent.toFixed(1), '%')}
+                ${createMetricElement('Uptime', formatUptime(data.uptime_seconds))}
+            `;
+        }
+
+        function updatePerformanceMetrics(data) {
+            const container = document.getElementById('performance-metrics');
+            container.innerHTML = `
+                ${createMetricElement('Total Requests', data.total_requests)}
+                ${createMetricElement('Avg Response Time', data.avg_response_time.toFixed(3), 's')}
+                ${createMetricElement('Error Rate', (data.error_rate * 100).toFixed(2), '%')}
+                ${createMetricElement('Requests/Min', data.requests_per_minute.toFixed(1))}
+            `;
+        }
+
+        function updateApplicationMetrics(data) {
+            const container = document.getElementById('application-metrics');
+            container.innerHTML = `
+                ${createMetricElement('Total Users', data.total_users)}
+                ${createMetricElement('Active Users', data.active_users)}
+                ${createMetricElement('Conversations', data.total_conversations)}
+                ${createMetricElement('Active Tasks', data.active_tasks)}
+                ${createMetricElement('Completed Tasks', data.completed_tasks)}
+                ${createMetricElement('Failed Tasks', data.failed_tasks)}
+                ${createMetricElement('Recent Logins (24h)', data.recent_logins_24h)}
+            `;
+        }
+
+        function updateHealthStatus(data) {
+            const container = document.getElementById('health-status');
+            let statusHtml = '';
+
+            for (const [component, status] of Object.entries(data.checks || {})) {
+                const statusClass = status.status === 'healthy' ? 'status-healthy' :
+                                  status.status === 'warning' ? 'status-warning' : 'status-unhealthy';
+                statusHtml += `<div class="metric">
+                    <span>${component.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                    <span class="metric-value ${statusClass}">${status.status.toUpperCase()}</span>
+                </div>`;
+            }
+
+            container.innerHTML = statusHtml;
+        }
+
+        function updateLogs(data) {
+            const container = document.getElementById('logs-container');
+            if (!data.logs || data.logs.length === 0) {
+                container.innerHTML = '<div class="log-entry">No logs available</div>';
+                return;
+            }
+
+            container.innerHTML = data.logs.map(log => {
+                let className = 'log-entry';
+                if (log.includes('ERROR') || log.includes('CRITICAL')) {
+                    className += ' log-error';
+                } else if (log.includes('WARNING')) {
+                    className += ' log-warning';
+                }
+                return `<div class="${className}">${log}</div>`;
+            }).join('');
+        }
+
+        async function refreshDashboard() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('dashboard-content').style.display = 'none';
+
+            try {
+                const [dashboardData, healthData, logsData] = await Promise.all([
+                    fetchData('/metrics/dashboard'),
+                    fetchData('/health'),
+                    fetchData('/metrics/dashboard/logs?lines=20')
+                ]);
+
+                if (dashboardData) {
+                    updateSystemMetrics(dashboardData.system);
+                    updatePerformanceMetrics(dashboardData.performance);
+                    updateApplicationMetrics(dashboardData.application);
+                }
+
+                if (healthData) {
+                    updateHealthStatus(healthData);
+                }
+
+                if (logsData) {
+                    updateLogs(logsData);
+                }
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error refreshing dashboard:', error);
+                document.getElementById('loading').innerHTML = 'Error loading dashboard. Check console for details.';
+            }
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(refreshDashboard, 30000);
+
+        // Initial load
+        refreshDashboard();
+    </script>
+</body>
+</html>

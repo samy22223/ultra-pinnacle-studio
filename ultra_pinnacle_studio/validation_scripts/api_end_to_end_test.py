@@ -74,7 +74,7 @@ def test_api_end_to_end():
         # Test 6: Protected endpoints (should fail without token)
         print("\n6. Testing protected endpoints (unauthorized)...")
         response = client.post('/chat', json={'message': 'Hello'})
-        assert response.status_code == 401  # Unauthorized
+        assert response.status_code == 403  # Forbidden (FastAPI returns 403 for missing auth)
         print("✅ Protected endpoints correctly secured")
 
         # Test 7: Protected endpoints (with token)

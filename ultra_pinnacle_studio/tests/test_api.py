@@ -1,6 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 from api_gateway.main import app
+from api_gateway.database import SessionLocal, User
+from api_gateway.auth import get_password_hash
 import json
 
 client = TestClient(app)
@@ -8,6 +10,26 @@ client = TestClient(app)
 # Test data
 VALID_USER = {"username": "demo", "password": "demo123"}
 INVALID_USER = {"username": "invalid", "password": "invalid"}
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_test_database():
+    """Setup test database with demo user"""
+    db = SessionLocal()
+    try:
+        # Create demo user if it doesn't exist
+        demo_user = db.query(User).filter(User.username == "demo").first()
+        if not demo_user:
+            demo_user = User(
+                username="demo",
+                email="demo@example.com",
+                full_name="Demo User",
+                hashed_password=get_password_hash("demo123"),
+                is_active=True
+            )
+            db.add(demo_user)
+            db.commit()
+    finally:
+        db.close()
 
 def get_auth_token():
     """Helper function to get authentication token"""

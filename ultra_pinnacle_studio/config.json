@@ -5,7 +5,8 @@
     "host": "0.0.0.0",
     "port": 8000,
     "debug": false,
-    "log_level": "INFO"
+    "log_level": "INFO",
+    "env": "development"
   },
   "models": {
     "default_model": "llama-2-7b-chat",
@@ -24,9 +25,12 @@
     }
   },
   "security": {
-    "secret_key": "your-secret-key-here",
+    "secret_key": "${JWT_SECRET}",
     "algorithm": "HS256",
-    "access_token_expire_minutes": 30
+    "access_token_expire_minutes": 30,
+    "cors_origins": ["http://localhost:3000", "http://localhost:8080", "http://127.0.0.1:3000"],
+    "allowed_hosts": ["*"],
+    "rate_limit_per_minute": 60
   },
   "paths": {
     "models_dir": "models/",
@@ -34,11 +38,16 @@
     "uploads_dir": "uploads/",
     "logs_dir": "logs/"
   },
+  "database": {
+    "url": "sqlite:///./ultra_pinnacle.db",
+    "echo": false
+  },
   "features": {
     "authentication": true,
     "file_upload": true,
     "chat_mode": true,
     "code_generation": true,
-    "image_generation": false
+    "image_generation": false,
+    "database_persistence": true
   }
 }
