@@ -1,0 +1,370 @@
+# Ultra Pinnacle Studio GitLab CI/CD Pipeline
+# Comprehensive CI/CD workflow with automated testing, linting, building, and deployment
+
+stages:
+  - lint
+  - test
+  - security
+  - performance
+  - build
+  - deploy_staging
+  - deploy_production
+
+variables:
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+  # Railway deployment variables (set in GitLab CI/CD settings)
+  RAILWAY_TOKEN: $RAILWAY_TOKEN
+  RAILWAY_PROJECT_ID: $RAILWAY_PROJECT_ID
+  # Production deployment variables
+  PRODUCTION_DEPLOY_URL: $PRODUCTION_DEPLOY_URL
+  PRODUCTION_API_KEY: $PRODUCTION_API_KEY
+
+# Global cache configuration
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .cache/pip
+    - web_ui/node_modules/
+    - .npm/
+
+# Pipeline triggers
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_TAG
+
+# Lint Stage
+lint:python:
+  stage: lint
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y git
+    - pip install flake8 black isort
+  script:
+    - echo "Running Python linting..."
+    - flake8 api_gateway/ tests/ validation_scripts/ scripts/ --max-line-length=88 --extend-ignore=E203,W503
+    - black --check --diff api_gateway/ tests/ validation_scripts/ scripts/
+    - isort --check-only --diff api_gateway/ tests/ validation_scripts/ scripts/
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+lint:javascript:
+  stage: lint
+  image: node:18-alpine
+  before_script:
+    - cd web_ui
+    - npm ci
+  script:
+    - echo "Running JavaScript linting..."
+    - npx eslint src/ --ext .js,.jsx,.ts,.tsx
+  allow_failure: true
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-node
+    paths:
+      - web_ui/node_modules/
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# Test Stage
+test:unit:
+  stage: test
+  image: python:3.12-slim
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - apt-get update && apt-get install -y git curl docker.io
+    - pip install -r requirements.txt
+    - pip install pytest pytest-cov pytest-asyncio httpx coverage
+  script:
+    - echo "Running unit tests..."
+    - pytest tests/ -v --cov=api_gateway --cov-report=xml --cov-report=term
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    expire_in: 1 week
+  only:
+    - merge_requests
+    - main
+    - develop
+
+test:integration:
+  stage: test
+  image: python:3.12-slim
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - apt-get update && apt-get install -y git curl docker.io
+    - pip install -r requirements.txt
+    - pip install pytest pytest-asyncio httpx
+  script:
+    - echo "Running integration tests..."
+    - python validation_scripts/server_startup_test.py
+    - python validation_scripts/api_end_to_end_test.py
+    - python validation_scripts/comprehensive_validation.py
+  artifacts:
+    paths:
+      - validation_scripts/logs/
+    expire_in: 1 week
+  only:
+    - merge_requests
+    - main
+    - develop
+
+test:web_ui:
+  stage: test
+  image: node:18-alpine
+  before_script:
+    - cd web_ui
+    - npm ci
+  script:
+    - echo "Running web UI tests..."
+    - npm run build
+    - npm run preview &
+    - sleep 10
+    - curl -f http://localhost:3000 || exit 1
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-node
+    paths:
+      - web_ui/node_modules/
+  artifacts:
+    paths:
+      - web_ui/dist/
+    expire_in: 1 week
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# Security Stage
+security:python:
+  stage: security
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y git curl
+    - pip install bandit safety semgrep
+  script:
+    - echo "Running Python security scans..."
+    - bandit -r api_gateway/ tests/ validation_scripts/ scripts/ -f json -o bandit-report.json
+    - safety check --json > safety-report.json
+    - semgrep --config=auto api_gateway/ tests/ validation_scripts/ scripts/
+  artifacts:
+    paths:
+      - bandit-report.json
+      - safety-report.json
+    expire_in: 1 week
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+security:dependencies:
+  stage: security
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y git
+    - pip install pip-audit
+  script:
+    - echo "Running dependency security audit..."
+    - pip-audit --format json > pip-audit-report.json
+  artifacts:
+    paths:
+      - pip-audit-report.json
+    expire_in: 1 week
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# Performance Stage
+performance:load_test:
+  stage: performance
+  image: python:3.12-slim
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - apt-get update && apt-get install -y git curl docker.io
+    - pip install locust pytest-benchmark
+  script:
+    - echo "Running load tests..."
+    - locust --headless --users 10 --spawn-rate 1 --run-time 30s --host http://localhost:8000
+  artifacts:
+    paths:
+      - locust_stats.csv
+      - locust_stats_history.csv
+    expire_in: 1 week
+  allow_failure: true
+  only:
+    - main
+    - develop
+    - schedules
+
+performance:benchmark:
+  stage: performance
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y git
+    - pip install -r requirements.txt
+    - pip install pytest-benchmark
+  script:
+    - echo "Running performance benchmarks..."
+    - pytest tests/ --benchmark-only --benchmark-json benchmark-results.json
+  artifacts:
+    paths:
+      - benchmark-results.json
+    expire_in: 1 week
+  allow_failure: true
+  only:
+    - main
+    - develop
+    - schedules
+
+# Build Stage
+build:docker:
+  stage: build
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker info
+  script:
+    - echo "Building Docker image with multi-stage build..."
+    - docker build --target production --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-docker
+    paths:
+      - /tmp/.buildx-cache
+  artifacts:
+    paths:
+      - Dockerfile
+    expire_in: 1 week
+  only:
+    - main
+    - develop
+
+# Deploy Staging
+deploy_staging:
+  stage: deploy_staging
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y curl jq
+    - pip install railway
+  script:
+    - echo "Deploying to Railway staging..."
+    - railway login --token $RAILWAY_TOKEN
+    - railway link $RAILWAY_PROJECT_ID
+    - railway up --detach
+    - echo "Waiting for staging deployment..."
+    - sleep 60
+    - railway status
+    - echo "Running health checks on staging..."
+    - curl -f https://ultra-pinnacle-studio-staging.up.railway.app/health || exit 1
+  environment:
+    name: staging
+    url: https://ultra-pinnacle-studio-staging.up.railway.app
+  only:
+    - develop
+  when: manual
+
+# Deploy Production
+deploy_production:
+  stage: deploy_production
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y curl jq
+    - pip install railway
+  script:
+    - echo "Deploying to Railway production..."
+    - railway login --token $RAILWAY_TOKEN
+    - railway link $RAILWAY_PROJECT_ID
+    - railway up --detach --environment production
+    - echo "Waiting for production deployment..."
+    - sleep 120
+    - railway status
+    - echo "Running health checks on production..."
+    - curl -f https://ultra-pinnacle-studio-production.up.railway.app/health || exit 1
+    - echo "Running post-deployment validation..."
+    - python validation_scripts/api_end_to_end_test.py --url https://ultra-pinnacle-studio-production.up.railway.app
+  environment:
+    name: production
+    url: https://ultra-pinnacle-studio-production.up.railway.app
+  only:
+    - main
+    - tags
+  when: manual
+
+# Scheduled nightly builds
+nightly:
+  stage: build
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker info
+  script:
+    - echo "Running nightly build..."
+    - docker build --target production --tag $CI_REGISTRY_IMAGE:nightly-$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:nightly-$CI_COMMIT_SHA
+  only:
+    - schedules
+
+# Notifications
+notify:success:
+  stage: .post
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y curl
+  script:
+    - echo "Pipeline completed successfully!"
+    - |
+      curl -X POST -H 'Content-type: application/json' \
+      --data '{"text":"✅ Ultra Pinnacle Studio CI/CD Pipeline Succeeded\nBranch: '$CI_COMMIT_REF_NAME'\nCommit: '$CI_COMMIT_SHA'\nPipeline: '$CI_PIPELINE_URL'"}' \
+      $SLACK_WEBHOOK_URL || true
+  only:
+    - main
+    - develop
+  when: on_success
+
+notify:failure:
+  stage: .post
+  image: python:3.12-slim
+  before_script:
+    - apt-get update && apt-get install -y curl
+  script:
+    - echo "Pipeline failed!"
+    - |
+      curl -X POST -H 'Content-type: application/json' \
+      --data '{"text":"❌ Ultra Pinnacle Studio CI/CD Pipeline Failed\nBranch: '$CI_COMMIT_REF_NAME'\nCommit: '$CI_COMMIT_SHA'\nPipeline: '$CI_PIPELINE_URL'"}' \
+      $SLACK_WEBHOOK_URL || true
+  only:
+    - main
+    - develop
+  when: on_failure

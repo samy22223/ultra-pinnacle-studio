@@ -138,12 +138,43 @@ ultra_pinnacle_studio/
 ## 🔒 Security
 
 - JWT-based authentication
-- Rate limiting (configurable)
+- **Advanced Rate Limiting**: Sliding window algorithm with user-based and endpoint-specific limits
 - Input sanitization and validation
 - SQL injection protection
 - XSS prevention
 - Secure file upload handling
 - CORS configuration
+
+### Rate Limiting
+
+Ultra Pinnacle AI Studio implements comprehensive API rate limiting to protect against abuse while ensuring fair access:
+
+**Features:**
+- **Sliding Window Algorithm**: More accurate than fixed windows, prevents burst attacks
+- **User-Based Limits**: Different limits for different user types
+- **Endpoint-Specific Limits**: Custom limits for sensitive endpoints
+- **Burst Allowance**: Short-term high usage allowance
+- **Redis Support**: Distributed rate limiting with Redis fallback to in-memory
+- **Auto-Adjustment**: Dynamic limit adjustment based on system load
+- **Rate Limit Headers**: Standard headers (X-RateLimit-Remaining, X-RateLimit-Reset)
+- **Admin Interface**: Web-based management of rate limits
+- **Monitoring**: Real-time analytics and reporting
+
+**Default Limits:**
+- **Per Minute**: 60 requests
+- **Per Hour**: 1000 requests
+- **Per Day**: 5000 requests
+- **Burst**: 10 requests (10-second window)
+
+**Rate Limit Headers:**
+```
+X-RateLimit-Remaining: 59
+X-RateLimit-Reset: 1640995200
+X-RateLimit-Limit: 60
+```
+
+**Admin Management:**
+Access rate limit management at `/admin/rate-limits` (admin users only).
 
 ## 📊 Monitoring
 

@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "Ultra Pinnacle Studio",
+    "version": "2.0.0",
+    "host": "0.0.0.0",
+    "port": 8000,
+    "debug": false,
+    "log_level": "INFO",
+    "env": "production"
+  },
+  "security": {
+    "secret_key": "REPLACE_WITH_YOUR_SECRET_KEY",
+    "algorithm": "HS256",
+    "access_token_expire_minutes": 30,
+    "refresh_token_expire_days": 7,
+    "ssl_enabled": true,
+    "ssl_cert_path": "ssl/cert.pem",
+    "ssl_key_path": "ssl/key.pem",
+    "cors_origins": ["http://localhost:3000", "http://localhost:8000", "https://yourdomain.com"]
+  },
+  "database": {
+    "url": "sqlite:///./ultra_pinnacle.db",
+    "echo": false
+  },
+  "api_keys": {
+    "openai": "sk-your-openai-api-key-here",
+    "anthropic": "sk-ant-your-anthropic-api-key-here",
+    "stripe": "sk_test_your_stripe_secret_key_here",
+    "paypal": "your_paypal_client_id_here",
+    "google_maps": "your_google_maps_api_key_here",
+    "sendgrid": "SG.your_sendgrid_api_key_here",
+    "twilio": "your_twilio_account_sid_here"
+  },
+  "features": {
+    "authentication": true,
+    "file_upload": true,
+    "chat_mode": true,
+    "code_generation": true,
+    "image_generation": true,
+    "video_generation": true,
+    "ecommerce": true,
+    "social_media": true,
+    "productivity": true,
+    "monitoring": true,
+    "advanced_features": true,
+    "community_marketplace": true
+  },
+  "domain": {
+    "primary_domain": "your-domain.com",
+    "subdomains": ["app.your-domain.com", "api.your-domain.com"],
+    "ssl_auto_renewal": true
+  },
+  "hosting": {
+    "mode": "hybrid",
+    "cloud_provider": "auto",
+    "cdn_enabled": true,
+    "backup_enabled": true
+  },
+  "setup_completed": false,
+  "setup_timestamp": null
+}

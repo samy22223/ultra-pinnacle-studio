@@ -1,0 +1,87 @@
+{
+  "logs": {
+    "files": {
+      "auto_upgrader.log": {
+        "size": 0,
+        "modified": "2025-09-30T23:50:20.921398"
+      },
+      "ultra_pinnacle.log": {
+        "size": 1571105,
+        "modified": "2025-10-02T17:14:35.600426"
+      },
+      "ultra_pinnacle.json": {
+        "size": 3519772,
+        "modified": "2025-10-02T17:14:35.600252"
+      },
+      "errors.log": {
+        "size": 285400,
+        "modified": "2025-10-01T21:00:37.014671"
+      },
+      "auto_healer.log": {
+        "size": 0,
+        "modified": "2025-09-30T23:50:20.779326"
+      }
+    }
+  },
+  "encyclopedia": {
+    "files": {
+      "machine_learning.md": {
+        "size": 1378,
+        "modified": "2025-09-28T02:39:26.413836"
+      },
+      "math_sequences.md": {
+        "size": 1386,
+        "modified": "2025-09-28T02:50:47.056247"
+      },
+      "ai_algorithms.md": {
+        "size": 2869,
+        "modified": "2025-09-28T02:51:04.637458"
+      },
+      "fashion_design.md": {
+        "size": 5033,
+        "modified": "2025-09-30T03:21:59.536193"
+      },
+      "blockchain_cryptography.md": {
+        "size": 1407,
+        "modified": "2025-09-28T02:39:38.088229"
+      },
+      "dev_tools.md": {
+        "size": 3688,
+        "modified": "2025-09-28T00:01:56.576375"
+      },
+      "cross_domain.md": {
+        "size": 1051,
+        "modified": "2025-09-27T19:16:30.271684"
+      },
+      "software_architecture.md": {
+        "size": 1201,
+        "modified": "2025-09-28T02:39:09.923147"
+      },
+      "fashion/pattern_making.md": {
+        "size": 6464,
+        "modified": "2025-09-30T03:25:58.586746"
+      },
+      "fashion/color_theory.md": {
+        "size": 4567,
+        "modified": "2025-09-30T03:24:33.166987"
+      }
+    }
+  },
+  "config.json": {
+    "files": {
+      "config.json": {
+        "size": 5775,
+        "modified": "2025-10-01T17:15:19.380531"
+      }
+    }
+  },
+  "ultra_pinnacle.db": {
+    "files": {
+      "ultra_pinnacle.db": {
+        "size": 946176,
+        "modified": "2025-10-02T17:14:31.136333"
+      }
+    }
+  },
+  "last_full_backup": "test_debug_backup"
+}

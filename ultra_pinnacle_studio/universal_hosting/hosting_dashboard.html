@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Pinnacle Studio - Universal Hosting Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .hosting-dashboard {
+            padding: 40px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .status-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .status-card.active {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .status-card.inactive {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        }
+
+        .status-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .status-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .status-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .hosting-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .mode-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mode-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .mode-card.selected {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .mode-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .mode-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .mode-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .mode-features {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .feature-check {
+            color: #28a745;
+            margin-right: 8px;
+        }
+
+        .endpoints-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .endpoint-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint-card.active {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .endpoint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .endpoint-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .endpoint-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-inactive {
+            background: #dc3545;
+            color: white;
+        }
+
+        .endpoint-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .endpoint-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .sync-status {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .sync-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sync-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .sync-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #28a745;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .sync-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .sync-item {
+            text-align: center;
+        }
+
+        .sync-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .sync-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .deployment-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .deployment-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .deployment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .deployment-option {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .deployment-option:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .deployment-option-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .deployment-option-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .deployment-option-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .deploy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .deploy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .log-container {
+            background: #000;
+            color: #0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+        }
+
+        .back-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Universal Hosting Dashboard</h1>
+            <p>Cloud & local hybrid hosting with edge synchronization</p>
+        </div>
+
+        <div class="hosting-dashboard">
+            <div class="back-links">
+                <a href="../auto_install/setup_interface.html" class="back-link">← Auto-Install</a>
+                <a href="../domain_builder/domain_builder_ui.html" class="back-link">← Domain Builder</a>
+            </div>
+
+            <div class="status-overview">
+                <div class="status-card active" id="localStatus">
+                    <div class="status-icon">🏠</div>
+                    <div class="status-title">Local Hosting</div>
+                    <div class="status-value" id="localStatusValue">Active</div>
+                </div>
+
+                <div class="status-card" id="cloudStatus">
+                    <div class="status-icon">☁️</div>
+                    <div class="status-title">Cloud Hosting</div>
+                    <div class="status-value" id="cloudStatusValue">Ready</div>
+                </div>
+
+                <div class="status-card" id="syncStatus">
+                    <div class="status-icon">🔄</div>
+                    <div class="status-title">Edge Sync</div>
+                    <div class="status-value" id="syncStatusValue">Enabled</div>
+                </div>
+            </div>
+
+            <div class="hosting-modes">
+                <div class="mode-card selected" data-mode="hybrid">
+                    <div class="mode-icon">🔗</div>
+                    <div class="mode-title">Hybrid Hosting</div>
+                    <div class="mode-description">Best of both worlds - local development with cloud deployment</div>
+                    <div class="mode-features">
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Local development</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Cloud deployment</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Edge synchronization</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Load balancing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mode-card" data-mode="local">
+                    <div class="mode-icon">💻</div>
+                    <div class="mode-title">Local Only</div>
+                    <div class="mode-description">Development and testing on local machine</div>
+                    <div class="mode-features">
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Fast development</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>No external dependencies</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Full control</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Offline capable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mode-card" data-mode="cloud">
+                    <div class="mode-icon">🚀</div>
+                    <div class="mode-title">Cloud Only</div>
+                    <div class="mode-description">Production deployment on cloud platforms</div>
+                    <div class="mode-features">
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>High availability</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Auto-scaling</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Global CDN</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-check">✓</span>
+                            <span>Managed services</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deployment-section">
+                <div class="deployment-title">🚀 Quick Deployment</div>
+                <div class="deployment-options">
+                    <div class="deployment-option" onclick="deployTo('docker')">
+                        <div class="deployment-option-icon">🐳</div>
+                        <div class="deployment-option-title">Docker</div>
+                        <div class="deployment-option-description">Containerized deployment</div>
+                    </div>
+
+                    <div class="deployment-option" onclick="deployTo('railway')">
+                        <div class="deployment-option-icon">🚂</div>
+                        <div class="deployment-option-title">Railway</div>
+                        <div class="deployment-option-description">Simple cloud deployment</div>
+                    </div>
+
+                    <div class="deployment-option" onclick="deployTo('render')">
+                        <div class="deployment-option-icon">🎨</div>
+                        <div class="deployment-option-title">Render</div>
+                        <div class="deployment-option-description">Modern cloud platform</div>
+                    </div>
+
+                    <div class="deployment-option" onclick="deployTo('local')">
+                        <div class="deployment-option-icon">💻</div>
+                        <div class="deployment-option-title">Local</div>
+                        <div class="deployment-option-description">Development environment</div>
+                    </div>
+                </div>
+
+                <button class="deploy-btn" onclick="startDeployment()">🚀 Deploy Universal Hosting</button>
+            </div>
+
+            <div class="sync-status">
+                <div class="sync-header">
+                    <div class="sync-title">🔄 Edge Synchronization</div>
+                    <div class="sync-toggle">
+                        <span>Disabled</span>
+                        <div class="toggle-switch" onclick="toggleSync()">
+                            <div class="toggle-slider"></div>
+                        </div>
+                        <span>Enabled</span>
+                    </div>
+                </div>
+
+                <div class="sync-info">
+                    <div class="sync-item">
+                        <div class="sync-label">Sync Interval</div>
+                        <div class="sync-value" id="syncInterval">5 minutes</div>
+                    </div>
+                    <div class="sync-item">
+                        <div class="sync-label">Last Sync</div>
+                        <div class="sync-value" id="lastSync">Never</div>
+                    </div>
+                    <div class="sync-item">
+                        <div class="sync-label">Files Synced</div>
+                        <div class="sync-value" id="filesSynced">0</div>
+                    </div>
+                    <div class="sync-item">
+                        <div class="sync-label">Bandwidth Used</div>
+                        <div class="sync-value" id="bandwidthUsed">0 MB</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="endpointsContainer" class="endpoints-grid" style="display: none;">
+                <!-- Hosting endpoints will appear here -->
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Setting up universal hosting...</p>
+            </div>
+
+            <div class="log-container" id="logContainer" style="display: none;">
+                <!-- Deployment logs will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class UniversalHostingDashboard {
+            constructor() {
+                this.selectedMode = 'hybrid';
+                this.syncEnabled = false;
+                this.endpoints = [];
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadCurrentStatus();
+            }
+
+            setupEventListeners() {
+                // Mode selection
+                document.querySelectorAll('.mode-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        this.selectMode(card.dataset.mode);
+                    });
+                });
+
+                // Sync toggle
+                document.querySelector('.toggle-switch').addEventListener('click', () => {
+                    this.toggleSync();
+                });
+            }
+
+            selectMode(mode) {
+                this.selectedMode = mode;
+                document.querySelectorAll('.mode-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                document.querySelector(`[data-mode="${mode}"]`).classList.add('selected');
+            }
+
+            async loadCurrentStatus() {
+                try {
+                    // In a real implementation, this would fetch from the hosting API
+                    const status = await this.getMockStatus();
+                    this.updateStatusDisplay(status);
+                } catch (error) {
+                    console.error('Failed to load status:', error);
+                }
+            }
+
+            async getMockStatus() {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                return {
+                    local: { status: 'active', uptime: '2h 15m', connections: 12 },
+                    cloud: { status: 'ready', provider: 'Docker', region: 'local' },
+                    sync: { enabled: false, lastSync: null, filesSynced: 0 }
+                };
+            }
+
+            updateStatusDisplay(status) {
+                // Update local status
+                const localStatus = document.getElementById('localStatus');
+                const localStatusValue = document.getElementById('localStatusValue');
+
+                if (status.local.status === 'active') {
+                    localStatus.className = 'status-card active';
+                    localStatusValue.textContent = 'Active';
+                } else {
+                    localStatus.className = 'status-card inactive';
+                    localStatusValue.textContent = 'Inactive';
+                }
+
+                // Update cloud status
+                const cloudStatus = document.getElementById('cloudStatus');
+                const cloudStatusValue = document.getElementById('cloudStatusValue');
+
+                cloudStatusValue.textContent = status.cloud.status === 'ready' ? 'Ready' : 'Inactive';
+
+                // Update sync status
+                const syncStatus = document.getElementById('syncStatus');
+                const syncStatusValue = document.getElementById('syncStatusValue');
+
+                if (status.sync.enabled) {
+                    syncStatus.className = 'status-card active';
+                    syncStatusValue.textContent = 'Enabled';
+                } else {
+                    syncStatus.className = 'status-card inactive';
+                    syncStatusValue.textContent = 'Disabled';
+                }
+            }
+
+            toggleSync() {
+                this.syncEnabled = !this.syncEnabled;
+                const toggleSwitch = document.querySelector('.toggle-switch');
+                const syncStatus = document.getElementById('syncStatus');
+
+                if (this.syncEnabled) {
+                    toggleSwitch.classList.add('active');
+                    syncStatus.className = 'status-card active';
+                    document.getElementById('syncStatusValue').textContent = 'Enabled';
+                    this.startSync();
+                } else {
+                    toggleSwitch.classList.remove('active');
+                    syncStatus.className = 'status-card inactive';
+                    document.getElementById('syncStatusValue').textContent = 'Disabled';
+                    this.stopSync();
+                }
+            }
+
+            startSync() {
+                this.log('🔄 Edge synchronization started');
+                this.log('📡 Syncing every 5 minutes...');
+
+                // Update sync info
+                document.getElementById('syncInterval').textContent = '5 minutes';
+                document.getElementById('lastSync').textContent = new Date().toLocaleTimeString();
+                document.getElementById('filesSynced').textContent = '24';
+                document.getElementById('bandwidthUsed').textContent = '2.4 MB';
+            }
+
+            stopSync() {
+                this.log('⏹️  Edge synchronization stopped');
+            }
+
+            async startDeployment() {
+                const loading = document.getElementById('loading');
+                const logContainer = document.getElementById('logContainer');
+
+                loading.style.display = 'block';
+                logContainer.style.display = 'block';
+
+                try {
+                    await this.deployUniversalHosting();
+                } catch (error) {
+                    console.error('Deployment failed:', error);
+                    this.log('❌ Deployment failed: ' + error.message);
+                } finally {
+                    loading.style.display = 'none';
+                }
+            }
+
+            async deployUniversalHosting() {
+                const deploymentSteps = [
+                    { message: 'Initializing universal hosting engine...', delay: 1000 },
+                    { message: 'Setting up local hosting environment...', delay: 1500 },
+                    { message: 'Configuring cloud deployment (Docker)...', delay: 2000 },
+                    { message: 'Setting up edge synchronization...', delay: 1500 },
+                    { message: 'Configuring load balancer...', delay: 1000 },
+                    { message: 'Enabling CDN and SSL...', delay: 1500 },
+                    { message: 'Starting hybrid services...', delay: 1000 },
+                    { message: '✅ Universal hosting deployment completed!', delay: 500 }
+                ];
+
+                for (const step of deploymentSteps) {
+                    this.log(step.message);
+                    await new Promise(resolve => setTimeout(resolve, step.delay));
+                }
+
+                // Update endpoints display
+                await this.loadEndpoints();
+            }
+
+            async loadEndpoints() {
+                const endpoints = await this.getMockEndpoints();
+                this.displayEndpoints(endpoints);
+            }
+
+            async getMockEndpoints() {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                return [
+                    {
+                        name: 'Local Development',
+                        provider: 'Localhost',
+                        url: 'http://127.0.0.1:8000',
+                        status: 'active',
+                        ssl: true,
+                        region: 'local',
+                        lastSync: new Date().toISOString()
+                    },
+                    {
+                        name: 'Docker Container',
+                        provider: 'Docker',
+                        url: 'http://localhost:8000',
+                        status: 'ready',
+                        ssl: false,
+                        region: 'local',
+                        lastSync: new Date().toISOString()
+                    }
+                ];
+            }
+
+            displayEndpoints(endpoints) {
+                const container = document.getElementById('endpointsContainer');
+                container.innerHTML = '';
+
+                endpoints.forEach(endpoint => {
+                    const endpointCard = this.createEndpointCard(endpoint);
+                    container.appendChild(endpointCard);
+                });
+
+                container.style.display = 'grid';
+            }
+
+            createEndpointCard(endpoint) {
+                const card = document.createElement('div');
+                card.className = `endpoint-card ${endpoint.status}`;
+
+                const statusClass = endpoint.status === 'active' ? 'status-active' : 'status-inactive';
+                const statusText = endpoint.status === 'active' ? 'Active' : 'Ready';
+
+                card.innerHTML = `
+                    <div class="endpoint-header">
+                        <div class="endpoint-name">${endpoint.name}</div>
+                        <span class="endpoint-status ${statusClass}">${statusText}</span>
+                    </div>
+
+                    <div class="endpoint-info">
+                        <div class="info-item">
+                            <div class="info-label">Provider</div>
+                            <div class="info-value">${endpoint.provider}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">URL</div>
+                            <div class="info-value">${endpoint.url}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Region</div>
+                            <div class="info-value">${endpoint.region}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">SSL</div>
+                            <div class="info-value">${endpoint.ssl ? 'Enabled' : 'Disabled'}</div>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-actions">
+                        <button class="btn btn-secondary">Configure</button>
+                        <button class="btn btn-primary">Access</button>
+                    </div>
+                `;
+
+                return card;
+            }
+
+            log(message) {
+                const logContainer = document.getElementById('logContainer');
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+
+                logContainer.appendChild(logEntry);
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+
+            deployTo(provider) {
+                this.log(`🚀 Initiating deployment to ${provider}...`);
+
+                // Visual feedback
+                const options = document.querySelectorAll('.deployment-option');
+                options.forEach(option => {
+                    if (option.onclick.toString().includes(provider)) {
+                        option.style.background = 'linear-gradient(135deg, #e8f2ff 0%, #f8f9ff 100%)';
+                        option.style.borderColor = '#667eea';
+                    } else {
+                        option.style.background = '';
+                        option.style.borderColor = '';
+                    }
+                });
+            }
+        }
+
+        // Initialize dashboard when page loads
+        let hostingDashboard;
+        document.addEventListener('DOMContentLoaded', () => {
+            hostingDashboard = new UniversalHostingDashboard();
+        });
+
+        // Make globally available for onclick handlers
+        window.deployTo = function(provider) {
+            hostingDashboard.deployTo(provider);
+        };
+
+        window.startDeployment = function() {
+            hostingDashboard.startDeployment();
+        };
+
+        window.toggleSync = function() {
+            hostingDashboard.toggleSync();
+        };
+    </script>
+</body>
+</html>

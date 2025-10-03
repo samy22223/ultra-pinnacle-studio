@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Ultra Pinnacle Studio",
+    "welcome": "Welcome to Ultra Pinnacle Studio"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "chat": "Chat",
+    "analytics": "Analytics",
+    "aiFeatures": "AI Features",
+    "plugins": "Plugins",
+    "backup": "Backup",
+    "collaborative": "Collaborative",
+    "auth": "Auth",
+    "navigation": "Navigation"
+  },
+  "dashboard": {
+    "aiChat": {
+      "title": "AI Chat",
+      "description": "Collaborative AI-powered conversations",
+      "link": "Open Chat"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "Comprehensive system analytics and insights",
+      "link": "View Analytics"
+    },
+    "aiFeatures": {
+      "title": "AI Features",
+      "description": "Advanced AI tools for image generation, code assistance, and more",
+      "link": "Explore AI"
+    },
+    "collaborativeTools": {
+      "title": "Collaborative Tools",
+      "description": "Real-time collaboration features",
+      "link": "Start Collaborating"
+    },
+    "pluginManager": {
+      "title": "Plugin Manager",
+      "description": "Install and manage plugins to extend functionality",
+      "link": "Manage Plugins"
+    },
+    "backupManagement": {
+      "title": "Backup Management",
+      "description": "Create, restore, and manage system backups",
+      "link": "Manage Backups"
+    },
+    "authentication": {
+      "title": "Authentication",
+      "description": "Manage your account and security",
+      "link": "Login/Register"
+    }
+  },
+  "buttons": {
+    "logout": "Logout",
+    "close": "Close",
+    "changeLanguage": "Change Language"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ar": "العربية",
+    "zh": "中文"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "next": "Next",
+    "previous": "Previous",
+    "page": "Page",
+    "of": "of",
+    "items": "items"
+  }
+}

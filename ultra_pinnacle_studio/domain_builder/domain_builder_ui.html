@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Pinnacle Studio - Free Domain Auto-Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .domain-builder {
+            padding: 40px;
+        }
+
+        .generation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .option-card.selected {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .option-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .option-description {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .control-input {
+            padding: 8px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .domains-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .domain-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .domain-card.available {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .domain-card.taken {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        }
+
+        .domain-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .domain-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .domain-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-available {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-taken {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .domain-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .availability-score {
+            margin-bottom: 20px;
+        }
+
+        .score-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #ffc107 50%, #dc3545 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .domain-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .registration-form {
+            display: none;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .tld-legend {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tld-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .tld-category {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tld-badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tld-free {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .tld-premium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .tld-international {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Free Domain Auto-Builder</h1>
+            <p>Generate custom domains, subdomains, and international TLDs instantly</p>
+        </div>
+
+        <div class="domain-builder">
+            <a href="../auto_install/setup_interface.html" class="back-link">← Back to Auto-Install</a>
+
+            <div class="tld-legend">
+                <h3>TLD Categories</h3>
+                <div class="tld-categories">
+                    <div class="tld-category">
+                        <span class="tld-badge tld-free">FREE</span>
+                        <span>No cost registration (.tk, .ml, .ga)</span>
+                    </div>
+                    <div class="tld-category">
+                        <span class="tld-badge tld-premium">PREMIUM</span>
+                        <span>Popular TLDs (.com, .net, .org, .io)</span>
+                    </div>
+                    <div class="tld-category">
+                        <span class="tld-badge tld-international">INTERNATIONAL</span>
+                        <span>Country-specific TLDs (.fr, .de, .co.uk)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="generation-options">
+                <div class="option-card selected" data-type="mixed">
+                    <div class="option-icon">🎲</div>
+                    <div class="option-title">Mixed Generation</div>
+                    <div class="option-description">Generate a variety of domain types including standard, brand-enhanced, and international options</div>
+                </div>
+
+                <div class="option-card" data-type="brand">
+                    <div class="option-icon">🏷️</div>
+                    <div class="option-title">Brand Enhanced</div>
+                    <div class="option-description">Generate domains that incorporate your brand name with creative prefixes and suffixes</div>
+                </div>
+
+                <div class="option-card" data-type="international">
+                    <div class="option-icon">🌍</div>
+                    <div class="option-title">International</div>
+                    <div class="option-description">Focus on international TLDs for global reach and localization</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label class="control-label">Brand Name:</label>
+                    <input type="text" class="control-input" id="brandName" placeholder="Enter your brand name" value="pinnacle">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Number of Options:</label>
+                    <select class="control-input" id="domainCount">
+                        <option value="5">5 domains</option>
+                        <option value="10" selected>10 domains</option>
+                        <option value="15">15 domains</option>
+                        <option value="20">20 domains</option>
+                    </select>
+                </div>
+
+                <button class="generate-btn" onclick="generateDomains()">🚀 Generate Domains</button>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Generating amazing domain names...</p>
+            </div>
+
+            <div id="domainsContainer" class="domains-grid" style="display: none;">
+                <!-- Generated domains will appear here -->
+            </div>
+
+            <div class="registration-form" id="registrationForm">
+                <h3>Register Domain</h3>
+                <form id="domainRegistrationForm">
+                    <div class="form-group">
+                        <label class="form-label">Email Address:</label>
+                        <input type="email" class="form-input" id="userEmail" required placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="cancelRegistration()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Register Domain</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class DomainBuilder {
+            constructor() {
+                this.selectedType = 'mixed';
+                this.selectedDomain = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                // Generation type selection
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        this.selectGenerationType(card.dataset.type);
+                    });
+                });
+
+                // Registration form
+                document.getElementById('domainRegistrationForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.registerDomain();
+                });
+            }
+
+            selectGenerationType(type) {
+                this.selectedType = type;
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                document.querySelector(`[data-type="${type}"]`).classList.add('selected');
+            }
+
+            async generateDomains() {
+                const loading = document.getElementById('loading');
+                const container = document.getElementById('domainsContainer');
+
+                loading.style.display = 'block';
+                container.style.display = 'none';
+                container.innerHTML = '';
+
+                try {
+                    const brandName = document.getElementById('brandName').value;
+                    const domainCount = document.getElementById('domainCount').value;
+
+                    // In a real implementation, this would call the API
+                    const domains = await this.mockDomainGeneration(brandName, parseInt(domainCount));
+
+                    this.displayDomains(domains);
+
+                } catch (error) {
+                    console.error('Domain generation failed:', error);
+                    this.showError('Failed to generate domains. Please try again.');
+                } finally {
+                    loading.style.display = 'none';
+                }
+            }
+
+            async mockDomainGeneration(brandName, count) {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                const domains = [];
+                const tlds = {
+                    free: ['.tk', '.ml', '.ga', '.cf', '.gq'],
+                    premium: ['.com', '.net', '.org', '.io', '.ai', '.app'],
+                    international: ['.fr', '.de', '.es', '.it', '.nl', '.co.uk']
+                };
+
+                const prefixes = ['ultra', 'pinnacle', 'ai', 'smart', 'next', 'future', 'quantum'];
+                const suffixes = ['studio', 'platform', 'system', 'engine', 'hub', 'network'];
+
+                for (let i = 0; i < count; i++) {
+                    let domainName, tld, isInternational = false;
+
+                    if (Math.random() < 0.6) {
+                        // Brand enhanced domain
+                        const usePrefix = Math.random() < 0.5;
+                        if (usePrefix) {
+                            domainName = `${prefixes[Math.floor(Math.random() * prefixes.length)]}-${brandName}`;
+                        } else {
+                            domainName = `${brandName}-${suffixes[Math.floor(Math.random() * suffixes.length)]}`;
+                        }
+                    } else {
+                        // Random domain
+                        domainName = this.generateRandomName(8, 12);
+                    }
+
+                    // Select TLD
+                    const tldType = Math.random();
+                    if (tldType < 0.5) {
+                        tld = tlds.premium[Math.floor(Math.random() * tlds.premium.length)];
+                    } else if (tldType < 0.8) {
+                        tld = tlds.international[Math.floor(Math.random() * tlds.international.length)];
+                        isInternational = true;
+                    } else {
+                        tld = tlds.free[Math.floor(Math.random() * tlds.free.length)];
+                    }
+
+                    const fullDomain = `${domainName}${tld}`;
+                    const isAvailable = Math.random() < 0.7; // 70% available
+                    const score = Math.random();
+
+                    domains.push({
+                        domain_name: domainName,
+                        tld: tld,
+                        full_domain: fullDomain,
+                        status: isAvailable ? 'available' : 'taken',
+                        is_international: isInternational,
+                        availability_score: score,
+                        expiry_date: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+                    });
+                }
+
+                return domains.sort((a, b) => b.availability_score - a.availability_score);
+            }
+
+            generateRandomName(minLength, maxLength) {
+                const length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+                const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+
+                for (let i = 0; i < length; i++) {
+                    if (Math.random() < 0.2 && i > 0 && i < length - 1) {
+                        result += '-';
+                    } else {
+                        result += chars[Math.floor(Math.random() * chars.length)];
+                    }
+                }
+
+                return result;
+            }
+
+            displayDomains(domains) {
+                const container = document.getElementById('domainsContainer');
+                container.innerHTML = '';
+
+                if (domains.length === 0) {
+                    container.innerHTML = '<p>No domains generated. Please try again.</p>';
+                    container.style.display = 'block';
+                    return;
+                }
+
+                domains.forEach((domain, index) => {
+                    const domainCard = this.createDomainCard(domain, index);
+                    container.appendChild(domainCard);
+                });
+
+                container.style.display = 'grid';
+            }
+
+            createDomainCard(domain, index) {
+                const card = document.createElement('div');
+                card.className = `domain-card ${domain.status}`;
+
+                const statusClass = domain.status === 'available' ? 'status-available' : 'status-taken';
+                const statusText = domain.status === 'available' ? 'Available' : 'Taken';
+                const internationalFlag = domain.is_international ? ' 🌍' : '';
+
+                card.innerHTML = `
+                    <div class="domain-header">
+                        <div class="domain-name">${domain.full_domain}${internationalFlag}</div>
+                        <span class="domain-status ${statusClass}">${statusText}</span>
+                    </div>
+
+                    <div class="domain-info">
+                        <div class="info-item">
+                            <div class="info-label">TLD Type</div>
+                            <div class="info-value">${this.getTLDType(domain.tld)}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Expires</div>
+                            <div class="info-value">${new Date(domain.expiry_date).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+
+                    <div class="availability-score">
+                        <div class="info-label">Availability Score</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${domain.availability_score * 100}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="domain-actions">
+                        ${domain.status === 'available' ?
+                            `<button class="btn btn-primary" onclick="domainBuilder.selectDomain('${domain.full_domain}', ${index})">Register</button>` :
+                            `<button class="btn btn-secondary" disabled>Taken</button>`
+                        }
+                    </div>
+                `;
+
+                return card;
+            }
+
+            getTLDType(tld) {
+                const freeTlds = ['.tk', '.ml', '.ga', '.cf', '.gq'];
+                const internationalTlds = ['.fr', '.de', '.es', '.it', '.nl', '.co.uk'];
+
+                if (freeTlds.includes(tld)) return 'Free TLD';
+                if (internationalTlds.includes(tld)) return 'International TLD';
+                return 'Premium TLD';
+            }
+
+            selectDomain(domainName, index) {
+                this.selectedDomain = domainName;
+
+                // Highlight selected domain
+                document.querySelectorAll('.domain-card').forEach((card, i) => {
+                    if (i === index) {
+                        card.style.borderColor = '#667eea';
+                        card.style.background = 'linear-gradient(135deg, #e8f2ff 0%, #f8f9ff 100%)';
+                    } else {
+                        card.style.borderColor = '';
+                        card.style.background = '';
+                    }
+                });
+
+                // Show registration form
+                document.getElementById('registrationForm').style.display = 'block';
+            }
+
+            async registerDomain() {
+                if (!this.selectedDomain) {
+                    this.showError('Please select a domain first');
+                    return;
+                }
+
+                const userEmail = document.getElementById('userEmail').value;
+
+                if (!userEmail) {
+                    this.showError('Please enter your email address');
+                    return;
+                }
+
+                try {
+                    // In a real implementation, this would call the registration API
+                    await this.mockDomainRegistration(this.selectedDomain, userEmail);
+
+                    this.showSuccess(`Domain ${this.selectedDomain} registered successfully!`);
+                    document.getElementById('registrationForm').style.display = 'none';
+
+                } catch (error) {
+                    console.error('Registration failed:', error);
+                    this.showError('Domain registration failed. Please try again.');
+                }
+            }
+
+            async mockDomainRegistration(domainName, userEmail) {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Simulate occasional registration failure
+                if (Math.random() < 0.1) {
+                    throw new Error('Registration service temporarily unavailable');
+                }
+
+                console.log(`Registered domain ${domainName} for ${userEmail}`);
+            }
+
+            cancelRegistration() {
+                this.selectedDomain = null;
+                document.getElementById('registrationForm').style.display = 'none';
+
+                // Remove selection highlighting
+                document.querySelectorAll('.domain-card').forEach(card => {
+                    card.style.borderColor = '';
+                    card.style.background = '';
+                });
+            }
+
+            showError(message) {
+                this.showNotification(message, 'error');
+            }
+
+            showSuccess(message) {
+                this.showNotification(message, 'success');
+            }
+
+            showNotification(message, type) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 1000;
+                    ${type === 'error' ?
+                        'background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);' :
+                        'background: linear-gradient(135deg, #28a745 0%, #20c997 100%);'
+                    }
+                `;
+                notification.textContent = message;
+
+                document.body.appendChild(notification);
+
+                // Remove after 5 seconds
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 5000);
+            }
+        }
+
+        // Initialize domain builder when page loads
+        let domainBuilder;
+        document.addEventListener('DOMContentLoaded', () => {
+            domainBuilder = new DomainBuilder();
+        });
+
+        // Make domainBuilder globally available for onclick handlers
+        window.domainBuilder = DomainBuilder;
+    </script>
+</body>
+</html>

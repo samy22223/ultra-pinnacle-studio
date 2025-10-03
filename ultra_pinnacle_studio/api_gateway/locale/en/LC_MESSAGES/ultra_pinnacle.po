@@ -1,0 +1,218 @@
+# English translations for Ultra Pinnacle AI Studio
+# Copyright (C) 2024 Ultra Pinnacle
+# This file is distributed under the same license as the Ultra Pinnacle package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Ultra Pinnacle AI Studio\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-01 00:00+0000\n"
+"PO-Revision-Date: 2024-10-01 00:00+0000\n"
+"Last-Translator: Ultra Pinnacle Team\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "healthy"
+msgstr "healthy"
+
+msgid "System is running normally"
+msgstr "System is running normally"
+
+msgid "Invalid credentials"
+msgstr "Invalid credentials"
+
+msgid "Model '{model}' not available"
+msgstr "Model '{model}' not available"
+
+msgid "Conversation not found or access denied"
+msgstr "Conversation not found or access denied"
+
+msgid "Only conversation owners can delete conversations"
+msgstr "Only conversation owners can delete conversations"
+
+msgid "Conversation deleted successfully"
+msgstr "Conversation deleted successfully"
+
+msgid "Already a participant in this conversation"
+msgstr "Already a participant in this conversation"
+
+msgid "Successfully joined conversation"
+msgstr "Successfully joined conversation"
+
+msgid "Not a participant in this conversation"
+msgstr "Not a participant in this conversation"
+
+msgid "Owners cannot leave conversations. Delete the conversation instead."
+msgstr "Owners cannot leave conversations. Delete the conversation instead."
+
+msgid "Successfully left conversation"
+msgstr "Successfully left conversation"
+
+msgid "Only owners can manage permissions"
+msgstr "Only owners can manage permissions"
+
+msgid "Invalid permission level"
+msgstr "Invalid permission level"
+
+msgid "Cannot demote the last owner"
+msgstr "Cannot demote the last owner"
+
+msgid "User is not a participant in this conversation"
+msgstr "User is not a participant in this conversation"
+
+msgid "User permissions updated to {permission}"
+msgstr "User permissions updated to {permission}"
+
+msgid "Insufficient permissions to create documents"
+msgstr "Insufficient permissions to create documents"
+
+msgid "Invalid document type"
+msgstr "Invalid document type"
+
+msgid "Document created successfully"
+msgstr "Document created successfully"
+
+msgid "Document not found or access denied"
+msgstr "Document not found or access denied"
+
+msgid "Insufficient permissions to edit documents"
+msgstr "Insufficient permissions to edit documents"
+
+msgid "Document updated successfully"
+msgstr "Document updated successfully"
+
+msgid "Plugin {plugin_id} loaded successfully"
+msgstr "Plugin {plugin_id} loaded successfully"
+
+msgid "Failed to load plugin {plugin_id}"
+msgstr "Failed to load plugin {plugin_id}"
+
+msgid "Plugin {plugin_id} unloaded successfully"
+msgstr "Plugin {plugin_id} unloaded successfully"
+
+msgid "Plugin {plugin_id} not found"
+msgstr "Plugin {plugin_id} not found"
+
+msgid "Plugin {plugin_id} enabled successfully"
+msgstr "Plugin {plugin_id} enabled successfully"
+
+msgid "Failed to enable plugin {plugin_id}"
+msgstr "Failed to enable plugin {plugin_id}"
+
+msgid "Plugin {plugin_id} disabled successfully"
+msgstr "Plugin {plugin_id} disabled successfully"
+
+msgid "Failed to disable plugin {plugin_id}"
+msgstr "Failed to disable plugin {plugin_id}"
+
+msgid "Settings updated for plugin {plugin_id}"
+msgstr "Settings updated for plugin {plugin_id}"
+
+msgid "Plugin {plugin_id} installed successfully"
+msgstr "Plugin {plugin_id} installed successfully"
+
+msgid "Failed to install plugin {plugin_name}"
+msgstr "Failed to install plugin {plugin_name}"
+
+msgid "Plugin {plugin_name} uninstalled successfully"
+msgstr "Plugin {plugin_name} uninstalled successfully"
+
+msgid "Plugin {plugin_name} not found"
+msgstr "Plugin {plugin_name} not found"
+
+msgid "Plugin {plugin_name} updated successfully"
+msgstr "Plugin {plugin_name} updated successfully"
+
+msgid "Failed to update plugin {plugin_name}"
+msgstr "Failed to update plugin {plugin_name}"
+
+msgid "Auto-healing service not available"
+msgstr "Auto-healing service not available"
+
+msgid "Service {service_name} restarted successfully"
+msgstr "Service {service_name} restarted successfully"
+
+msgid "Failed to restart service {service_name}"
+msgstr "Failed to restart service {service_name}"
+
+msgid "Auto-upgrade service not available"
+msgstr "Auto-upgrade service not available"
+
+msgid "Upgrade completed successfully: {component} to {version}"
+msgstr "Upgrade completed successfully: {component} to {version}"
+
+msgid "Upgrade failed for {component}"
+msgstr "Upgrade failed for {component}"
+
+msgid "Missing required parameters: component, version, download_url"
+msgstr "Missing required parameters: component, version, download_url"
+
+msgid "Error uploading file"
+msgstr "Error uploading file"
+
+msgid "Project saved successfully"
+msgstr "Project saved successfully"
+
+msgid "Error saving canvas project"
+msgstr "Error saving canvas project"
+
+msgid "Project not found"
+msgstr "Project not found"
+
+msgid "Access denied"
+msgstr "Access denied"
+
+msgid "Project deleted successfully"
+msgstr "Project deleted successfully"
+
+msgid "Error deleting canvas project"
+msgstr "Error deleting canvas project"
+
+msgid "Backup system not available"
+msgstr "Backup system not available"
+
+msgid "Invalid backup type"
+msgstr "Invalid backup type"
+
+msgid "Backup created successfully"
+msgstr "Backup created successfully"
+
+msgid "Error creating backup"
+msgstr "Error creating backup"
+
+msgid "Backup restored successfully"
+msgstr "Backup restored successfully"
+
+msgid "Backup restoration failed"
+msgstr "Backup restoration failed"
+
+msgid "Cleanup completed: {removed} old backups removed"
+msgstr "Cleanup completed: {removed} old backups removed"
+
+msgid "Error cleaning up backups"
+msgstr "Error cleaning up backups"
+
+msgid "Backup scheduler started"
+msgstr "Backup scheduler started"
+
+msgid "Backup scheduler stopped"
+msgstr "Backup scheduler stopped"
+
+msgid "Error starting backup scheduler"
+msgstr "Error starting backup scheduler"
+
+msgid "Error stopping backup scheduler"
+msgstr "Error stopping backup scheduler"
+
+msgid "Backup integrity verified"
+msgstr "Backup integrity verified"
+
+msgid "Backup integrity check failed"
+msgstr "Backup integrity check failed"
+
+msgid "Error verifying backup"
+msgstr "Error verifying backup"

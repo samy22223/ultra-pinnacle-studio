@@ -1,0 +1,416 @@
+.onboarding-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(2px);
+}
+
+.onboarding-modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin-left: 16px;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  margin-left: 16px;
+}
+
+.close-button:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.modal-body {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+  transition: opacity 0.3s ease;
+}
+
+.modal-body.animating {
+  opacity: 0.7;
+}
+
+.onboarding-step-content {
+  min-height: 200px;
+}
+
+.step-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.step-header p {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+.step-body {
+  margin-top: 16px;
+}
+
+.step-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+.step-text h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 20px 0 12px 0;
+  color: #111827;
+}
+
+.step-text ul, .step-text ol {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.step-text li {
+  margin: 8px 0;
+}
+
+.step-image {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.step-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.step-video {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.step-video video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.step-highlight-notice {
+  display: flex;
+  align-items: center;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 20px 0;
+}
+
+.highlight-icon {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+.step-interactive {
+  margin-top: 20px;
+}
+
+.interactive-instructions {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.interactive-instructions h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.interactive-instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.interactive-instructions li {
+  margin: 8px 0;
+  color: #475569;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-center {
+  flex: 1;
+  text-align: center;
+}
+
+.footer-right {
+  flex: 1;
+  text-align: right;
+}
+
+.skip-button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.skip-button:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.nav-button {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-button.prev {
+  margin-right: 8px;
+}
+
+.complete-button {
+  background: #3b82f6;
+  border: 1px solid #3b82f6;
+  color: white;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.complete-button:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.modal-actions {
+  padding: 12px 24px 20px;
+  text-align: center;
+  border-top: 1px solid #f3f4f6;
+}
+
+.skip-all-button {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.skip-all-button:hover {
+  color: #6b7280;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .onboarding-modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .modal-header {
+    padding: 16px 20px 12px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-footer {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    flex: none;
+    text-align: center;
+  }
+
+  .nav-button {
+    width: 100%;
+    margin: 4px 0;
+  }
+
+  .complete-button {
+    width: 100%;
+  }
+
+  .step-header h2 {
+    font-size: 20px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .onboarding-modal {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+
+  .modal-header {
+    border-bottom-color: #374151;
+  }
+
+  .progress-text {
+    color: #9ca3af;
+  }
+
+  .close-button {
+    color: #9ca3af;
+  }
+
+  .close-button:hover {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .step-header h2 {
+    color: #f9fafb;
+  }
+
+  .step-header p {
+    color: #9ca3af;
+  }
+
+  .step-text {
+    color: #d1d5db;
+  }
+
+  .step-highlight-notice {
+    background: #1e3a8a;
+    border-color: #1e40af;
+  }
+
+  .interactive-instructions {
+    background: #111827;
+    border-color: #374151;
+  }
+
+  .modal-footer {
+    background: #111827;
+    border-top-color: #374151;
+  }
+
+  .skip-button:hover {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .nav-button {
+    background: #374151;
+    border-color: #4b5563;
+    color: #d1d5db;
+  }
+
+  .nav-button:hover:not(:disabled) {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+}

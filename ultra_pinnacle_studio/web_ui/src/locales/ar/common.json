@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Ultra Pinnacle Studio",
+    "welcome": "مرحباً بك في Ultra Pinnacle Studio"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "chat": "الدردشة",
+    "analytics": "التحليلات",
+    "aiFeatures": "ميزات الذكاء الاصطناعي",
+    "plugins": "الإضافات",
+    "backup": "النسخ الاحتياطي",
+    "collaborative": "التعاوني",
+    "auth": "المصادقة",
+    "navigation": "التنقل"
+  },
+  "dashboard": {
+    "aiChat": {
+      "title": "دردشة الذكاء الاصطناعي",
+      "description": "محادثات تعاونية مدعومة بالذكاء الاصطناعي",
+      "link": "فتح الدردشة"
+    },
+    "analytics": {
+      "title": "التحليلات",
+      "description": "تحليلات شاملة ورؤى للنظام",
+      "link": "عرض التحليلات"
+    },
+    "aiFeatures": {
+      "title": "ميزات الذكاء الاصطناعي",
+      "description": "أدوات ذكاء اصطناعي متقدمة لتوليد الصور ومساعدة الكود والمزيد",
+      "link": "استكشف الذكاء الاصطناعي"
+    },
+    "collaborativeTools": {
+      "title": "أدوات التعاون",
+      "description": "ميزات التعاون في الوقت الفعلي",
+      "link": "ابدأ التعاون"
+    },
+    "pluginManager": {
+      "title": "مدير الإضافات",
+      "description": "تثبيت وإدارة الإضافات لتوسيع الوظائف",
+      "link": "إدارة الإضافات"
+    },
+    "backupManagement": {
+      "title": "إدارة النسخ الاحتياطي",
+      "description": "إنشاء واسترجاع وإدارة نسخ النظام الاحتياطية",
+      "link": "إدارة النسخ الاحتياطية"
+    },
+    "authentication": {
+      "title": "المصادقة",
+      "description": "إدارة حسابك والأمان",
+      "link": "تسجيل الدخول/التسجيل"
+    }
+  },
+  "buttons": {
+    "logout": "تسجيل الخروج",
+    "close": "إغلاق",
+    "changeLanguage": "تغيير اللغة"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ar": "العربية",
+    "zh": "中文"
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تحرير",
+    "add": "إضافة",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "next": "التالي",
+    "previous": "السابق",
+    "page": "صفحة",
+    "of": "من",
+    "items": "عناصر"
+  }
+}

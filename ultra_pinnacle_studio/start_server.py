@@ -50,11 +50,19 @@ def main():
         print("=" * 60)
         
         # Start uvicorn with the app
+        port = os.environ.get('PORT', '8000')
+        print(f"🔧 Starting server with mocked AI models (development mode)...")
+        print(f"📡 Server will be available at: http://localhost:{port}")
+        print(f"📖 API documentation at: http://localhost:{port}/docs")
+        print(f"📊 Dashboard at: http://localhost:{port}/dashboard")
+        print("⏹️  Press Ctrl+C to stop the server")
+        print("=" * 60)
+
         cmd = [
             sys.executable, '-m', 'uvicorn',
             'api_gateway.main:app',
             '--host', '0.0.0.0',
-            '--port', '8000',
+            '--port', port,
             '--reload',
             '--log-level', 'info'
         ]

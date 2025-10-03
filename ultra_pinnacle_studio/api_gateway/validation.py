@@ -146,6 +146,90 @@ class ValidatedConversationCreate(BaseModel):
     def validate_title(cls, v):
         return sanitize_text(v) if v else "New Conversation"
 
+class ValidatedImageGenerationRequest(BaseModel):
+    """Validated image generation request"""
+    prompt: str = Field(..., min_length=1, max_length=1000)
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+    width: Optional[int] = Field(512, ge=64, le=2048)
+    height: Optional[int] = Field(512, ge=64, le=2048)
+    steps: Optional[int] = Field(20, ge=1, le=100)
+    guidance_scale: Optional[float] = Field(7.5, ge=1.0, le=20.0)
+    negative_prompt: Optional[str] = Field("", max_length=500)
+
+    @field_validator('prompt', 'negative_prompt')
+    def validate_prompts(cls, v):
+        return sanitize_text(v) if v else ""
+
+class ValidatedCodeCompletionRequest(BaseModel):
+    """Validated code completion request"""
+    code: str = Field(..., min_length=1, max_length=10000)
+    language: str = Field(..., pattern=r'^[a-zA-Z0-9+#_-]+$')
+    cursor_position: int = Field(0, ge=0)
+    context: Optional[str] = Field("", max_length=5000)
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+
+    @field_validator('code', 'context')
+    def validate_code_content(cls, v):
+        return v  # Code content doesn't need HTML sanitization
+
+class ValidatedPromptEngineeringRequest(BaseModel):
+    """Validated prompt engineering request"""
+    base_prompt: str = Field(..., min_length=1, max_length=2000)
+    task_type: str = Field(..., pattern=r'^(creative|technical|business|educational|other)$')
+    style: Optional[str] = Field("balanced", pattern=r'^(creative|formal|casual|technical|balanced)$')
+    length: Optional[str] = Field("medium", pattern=r'^(short|medium|long|detailed)$')
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+
+    @field_validator('base_prompt')
+    def validate_base_prompt(cls, v):
+        return sanitize_text(v)
+
+class ValidatedMultiModalRequest(BaseModel):
+    """Validated multi-modal interaction request"""
+    text_prompt: str = Field("", max_length=2000)
+    image_data: Optional[str] = Field(None, pattern=r'^data:image/(png|jpeg|jpg|gif|webp);base64,')
+    code_content: Optional[str] = Field("", max_length=10000)
+    task: str = Field(..., pattern=r'^(analyze|generate|convert|describe|combine)$')
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+
+    @field_validator('text_prompt')
+    def validate_text_prompt(cls, v):
+        return sanitize_text(v) if v else ""
+
+class ValidatedCodeRefactoringRequest(BaseModel):
+    """Validated code refactoring request"""
+    code: str = Field(..., min_length=1, max_length=50000)
+    language: str = Field(..., pattern=r'^[a-zA-Z0-9+#_-]+$')
+    refactoring_type: str = Field(..., pattern=r'^(optimize|simplify|modernize|security|performance)$')
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+
+class ValidatedConversionRequest(BaseModel):
+    """Validated conversion request"""
+    input_type: str = Field(..., pattern=r'^(text|image)$')
+    output_type: str = Field(..., pattern=r'^(text|image)$')
+    content: str = Field(..., min_length=1, max_length=10000)
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+
+class ValidatedCodeExplanationRequest(BaseModel):
+    """Validated code explanation request"""
+    code: str = Field(..., min_length=1, max_length=50000)
+    language: str = Field(..., pattern=r'^[a-zA-Z0-9+#_-]+$')
+    explanation_level: str = Field("intermediate", pattern=r'^(beginner|intermediate|advanced)$')
+    include_examples: Optional[bool] = Field(True)
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+
+class ValidatedDebugRequest(BaseModel):
+    """Validated debugging request"""
+    code: str = Field(..., min_length=1, max_length=50000)
+    language: str = Field(..., pattern=r'^[a-zA-Z0-9+#_-]+$')
+    error_message: Optional[str] = Field("", max_length=2000)
+    stack_trace: Optional[str] = Field("", max_length=10000)
+    model: Optional[str] = Field(None, pattern=r'^[a-zA-Z0-9_-]+$')
+
+    @field_validator('error_message', 'stack_trace')
+    def validate_debug_info(cls, v):
+        return v  # Debug info doesn't need HTML sanitization
+
 def sanitize_text(text: str) -> str:
     """Sanitize text input to prevent XSS and injection attacks"""
     if not text:

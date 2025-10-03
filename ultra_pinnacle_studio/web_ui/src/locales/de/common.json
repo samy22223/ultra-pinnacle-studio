@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Ultra Pinnacle Studio",
+    "welcome": "Willkommen bei Ultra Pinnacle Studio"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "chat": "Chat",
+    "analytics": "Analysen",
+    "aiFeatures": "KI-Funktionen",
+    "plugins": "Plugins",
+    "backup": "Sicherung",
+    "collaborative": "Kollaborativ",
+    "auth": "Authentifizierung",
+    "navigation": "Navigation"
+  },
+  "dashboard": {
+    "aiChat": {
+      "title": "KI-Chat",
+      "description": "Kollaborative KI-gestützte Konversationen",
+      "link": "Chat öffnen"
+    },
+    "analytics": {
+      "title": "Analysen",
+      "description": "Umfassende Systemanalysen und Einblicke",
+      "link": "Analysen anzeigen"
+    },
+    "aiFeatures": {
+      "title": "KI-Funktionen",
+      "description": "Erweiterte KI-Tools für Bildgenerierung, Code-Unterstützung und mehr",
+      "link": "KI erkunden"
+    },
+    "collaborativeTools": {
+      "title": "Kollaborative Tools",
+      "description": "Echtzeit-Kollaborationsfunktionen",
+      "link": "Kollaboration starten"
+    },
+    "pluginManager": {
+      "title": "Plugin-Manager",
+      "description": "Plugins installieren und verwalten, um Funktionalität zu erweitern",
+      "link": "Plugins verwalten"
+    },
+    "backupManagement": {
+      "title": "Sicherungsverwaltung",
+      "description": "System-Sicherungen erstellen, wiederherstellen und verwalten",
+      "link": "Sicherungen verwalten"
+    },
+    "authentication": {
+      "title": "Authentifizierung",
+      "description": "Ihr Konto und Sicherheit verwalten",
+      "link": "Anmelden/Registrieren"
+    }
+  },
+  "buttons": {
+    "logout": "Abmelden",
+    "close": "Schließen",
+    "changeLanguage": "Sprache ändern"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ar": "العربية",
+    "zh": "中文"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "page": "Seite",
+    "of": "von",
+    "items": "Elemente"
+  }
+}

@@ -28,7 +28,9 @@ class WorkerManager:
             "code_analysis": 1,
             "model_training": 3,
             "data_processing": 2,
-            "file_processing": 1
+            "file_processing": 1,
+            "image_generation": 2,
+            "text_to_image": 2
         }
 
     async def submit_task(self, task_type: str, data: Dict[str, Any], priority: int = None) -> str:
@@ -82,6 +84,10 @@ class WorkerManager:
                 result = await self._run_cpu_task(self._train_model_sync, task["data"])
             elif task["type"] == "data_processing":
                 result = await self._process_data(task["data"])
+            elif task["type"] == "image_generation":
+                result = await self._generate_image(task["data"])
+            elif task["type"] == "text_to_image":
+                result = await self._text_to_image(task["data"])
             else:
                 result = {"error": f"Unknown task type: {task['type']}"}
 
@@ -121,6 +127,40 @@ class WorkerManager:
         return {
             "processed_items": len(data.get("items", [])),
             "status": "Data processing completed"
+        }
+
+    async def _generate_image(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate image using diffusion model"""
+        # Simulate image generation time (30-120 seconds)
+        await asyncio.sleep(5)  # Placeholder - would be much longer for real generation
+
+        prompt = data.get("prompt", "")
+        model = data.get("model", "stable-diffusion")
+        width = data.get("width", 512)
+        height = data.get("height", 512)
+
+        # Placeholder result - in real implementation, this would save actual image
+        return {
+            "image_url": f"/generated_images/{data.get('user_id', 'anonymous')}/generated_{asyncio.get_event_loop().time()}.png",
+            "prompt": prompt,
+            "model": model,
+            "dimensions": f"{width}x{height}",
+            "status": "Image generated successfully"
+        }
+
+    async def _text_to_image(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Convert text to image"""
+        # Similar to image generation but for text-to-image conversion
+        await asyncio.sleep(3)
+
+        text = data.get("text", "")
+        model = data.get("model", "stable-diffusion")
+
+        return {
+            "image_url": f"/converted_images/{data.get('user_id', 'anonymous')}/text_to_image_{asyncio.get_event_loop().time()}.png",
+            "original_text": text[:100] + "..." if len(text) > 100 else text,
+            "model": model,
+            "status": "Text converted to image successfully"
         }
 
     async def _run_cpu_task(self, func, *args, **kwargs):

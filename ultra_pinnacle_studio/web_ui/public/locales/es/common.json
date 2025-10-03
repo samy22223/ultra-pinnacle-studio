@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Ultra Pinnacle Studio",
+    "welcome": "Bienvenido a Ultra Pinnacle Studio"
+  },
+  "navigation": {
+    "dashboard": "Panel de Control",
+    "chat": "Chat",
+    "analytics": "Analíticas",
+    "aiFeatures": "Características de IA",
+    "plugins": "Complementos",
+    "backup": "Copia de Seguridad",
+    "collaborative": "Colaborativo",
+    "auth": "Autenticación",
+    "navigation": "Navegación"
+  },
+  "dashboard": {
+    "aiChat": {
+      "title": "Chat de IA",
+      "description": "Conversaciones colaborativas impulsadas por IA",
+      "link": "Abrir Chat"
+    },
+    "analytics": {
+      "title": "Analíticas",
+      "description": "Analíticas e información completa del sistema",
+      "link": "Ver Analíticas"
+    },
+    "aiFeatures": {
+      "title": "Características de IA",
+      "description": "Herramientas avanzadas de IA para generación de imágenes, asistencia de código y más",
+      "link": "Explorar IA"
+    },
+    "collaborativeTools": {
+      "title": "Herramientas Colaborativas",
+      "description": "Características de colaboración en tiempo real",
+      "link": "Comenzar a Colaborar"
+    },
+    "pluginManager": {
+      "title": "Gestor de Complementos",
+      "description": "Instalar y gestionar complementos para extender la funcionalidad",
+      "link": "Gestionar Complementos"
+    },
+    "backupManagement": {
+      "title": "Gestión de Copias de Seguridad",
+      "description": "Crear, restaurar y gestionar copias de seguridad del sistema",
+      "link": "Gestionar Copias de Seguridad"
+    },
+    "authentication": {
+      "title": "Autenticación",
+      "description": "Gestionar tu cuenta y seguridad",
+      "link": "Iniciar Sesión/Registrarse"
+    }
+  },
+  "buttons": {
+    "logout": "Cerrar Sesión",
+    "close": "Cerrar",
+    "changeLanguage": "Cambiar Idioma"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ar": "العربية",
+    "zh": "中文"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "page": "Página",
+    "of": "de",
+    "items": "elementos"
+  }
+}

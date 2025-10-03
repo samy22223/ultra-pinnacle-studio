@@ -3,6 +3,7 @@ Safe model management that avoids segmentation faults
 """
 from typing import Dict, Any, Optional
 import json
+import os
 from pathlib import Path
 from functools import lru_cache
 from .logging_config import logger
@@ -16,6 +17,31 @@ try:
 except Exception as e:
     logger.warning(f"llama-cpp-python not available: {e}")
 
+# API-based model imports
+OPENAI_AVAILABLE = False
+try:
+    import openai
+    OPENAI_AVAILABLE = True
+    logger.info("OpenAI SDK available")
+except Exception as e:
+    logger.warning(f"OpenAI SDK not available: {e}")
+
+ANTHROPIC_AVAILABLE = False
+try:
+    import anthropic
+    ANTHROPIC_AVAILABLE = True
+    logger.info("Anthropic SDK available")
+except Exception as e:
+    logger.warning(f"Anthropic SDK not available: {e}")
+
+GOOGLE_AVAILABLE = False
+try:
+    import google.generativeai as genai
+    GOOGLE_AVAILABLE = True
+    logger.info("Google Generative AI SDK available")
+except Exception as e:
+    logger.warning(f"Google Generative AI SDK not available: {e}")
+
 # Only import torch/diffusers if explicitly enabled and safe
 DIFFUSION_AVAILABLE = False
 TORCH_AVAILABLE = False
@@ -23,24 +49,24 @@ TORCH_AVAILABLE = False
 def _enable_torch_diffusion():
     """Enable torch/diffusion imports only when explicitly requested"""
     global DIFFUSION_AVAILABLE, TORCH_AVAILABLE
-    
+
     if not TORCH_AVAILABLE:
         try:
             # Set environment variable to avoid numpy issues
             import os
             os.environ['NUMPY_EXPERIMENTAL_ARRAY_FUNCTION'] = '0'
-            
+
             import warnings
             warnings.filterwarnings("ignore", category=UserWarning)
             warnings.filterwarnings("ignore", message=".*numpy.*")
-            
+
             import torch
             TORCH_AVAILABLE = True
             logger.info("PyTorch imported successfully")
         except Exception as e:
             logger.warning(f"PyTorch not available: {e}")
             return False
-    
+
     if not DIFFUSION_AVAILABLE:
         try:
             from diffusers import StableDiffusionPipeline
@@ -49,7 +75,7 @@ def _enable_torch_diffusion():
         except Exception as e:
             logger.warning(f"Diffusers not available: {e}")
             return False
-    
+
     return True
 
 class ModelManager:
@@ -57,6 +83,7 @@ class ModelManager:
         self.config = config
         self.models = {}  # Cache for loaded models
         self.model_configs = {}  # Store configs for lazy loading
+        self.api_clients = {}  # Cache for API clients
         self._load_model_configs()
 
     def _load_model_configs(self):
@@ -67,9 +94,48 @@ class ModelManager:
             self.model_configs[model_name] = model_config
             logger.info(f"Registered model config: {model_name}")
 
+    def _get_api_client(self, model_type: str, api_key: str):
+        """Get or create API client for the specified type"""
+        if model_type not in self.api_clients:
+            if model_type == "openai" and OPENAI_AVAILABLE:
+                client = openai.OpenAI(api_key=api_key)
+                self.api_clients[model_type] = client
+                logger.info("Created OpenAI client")
+            elif model_type == "anthropic" and ANTHROPIC_AVAILABLE:
+                client = anthropic.Anthropic(api_key=api_key)
+                self.api_clients[model_type] = client
+                logger.info("Created Anthropic client")
+            elif model_type == "google" and GOOGLE_AVAILABLE:
+                genai.configure(api_key=api_key)
+                self.api_clients[model_type] = genai
+                logger.info("Configured Google Generative AI")
+            else:
+                logger.warning(f"API client for {model_type} not available")
+                return None
+        return self.api_clients.get(model_type)
+
     def _load_model(self, name: str, config: Dict[str, Any]):
         """Load a specific model"""
         model_type = config.get("type")
+
+        # Handle API-based models
+        if model_type in ["openai", "anthropic", "google"]:
+            api_key = config.get("api_key", "")
+            if not api_key or api_key.startswith("${"):
+                logger.warning(f"API key not configured for {name}, using mock mode")
+                self.models[name] = {"type": f"mock_{model_type}", "config": config}
+                return
+
+            client = self._get_api_client(model_type, api_key)
+            if client:
+                self.models[name] = {"type": model_type, "client": client, "config": config}
+                logger.info(f"Initialized {model_type} model: {name}")
+            else:
+                self.models[name] = {"type": f"mock_{model_type}", "config": config}
+                logger.warning(f"Using mock {model_type} model: {name}")
+            return
+
+        # Handle local models (existing logic)
         model_path = config.get("path")
 
         if not Path(model_path).exists():
@@ -117,7 +183,7 @@ class ModelManager:
                 self.models[name] = {"type": "diffusion", "config": config}
                 logger.warning(f"Diffusion not available, using config-only model: {name}")
         else:
-            logger.warning(f"Unsupported model type: {model_type} (LLAMA_AVAILABLE: {LLAMA_AVAILABLE})")
+            logger.warning(f"Unsupported model type: {model_type}")
             # For development/testing, create a mock model entry
             if model_type == "llama":
                 self.models[name] = {"type": "mock_llama", "config": config}
@@ -184,6 +250,57 @@ class ModelManager:
         if not model:
             raise ValueError(f"Model {model_name} not loaded")
 
+        model_type = model.get("type", "")
+        max_tokens = kwargs.get("max_tokens", 512)
+        temperature = kwargs.get("temperature", 0.7)
+
+        # Handle API-based models
+        if model_type == "openai" and OPENAI_AVAILABLE:
+            try:
+                client = model.get("client")
+                if client:
+                    response = client.chat.completions.create(
+                        model=model["config"]["model"],
+                        messages=[{"role": "user", "content": prompt}],
+                        max_tokens=max_tokens,
+                        temperature=temperature
+                    )
+                    return response.choices[0].message.content.strip()
+            except Exception as e:
+                logger.error(f"Error with OpenAI API: {e}")
+                return f"OpenAI API error: {prompt[:50]}..."
+
+        elif model_type == "anthropic" and ANTHROPIC_AVAILABLE:
+            try:
+                client = model.get("client")
+                if client:
+                    response = client.messages.create(
+                        model=model["config"]["model"],
+                        max_tokens=max_tokens,
+                        temperature=temperature,
+                        messages=[{"role": "user", "content": prompt}]
+                    )
+                    return response.content[0].text.strip()
+            except Exception as e:
+                logger.error(f"Error with Anthropic API: {e}")
+                return f"Anthropic API error: {prompt[:50]}..."
+
+        elif model_type == "google" and GOOGLE_AVAILABLE:
+            try:
+                client = model.get("client")
+                if client:
+                    gemini_model = client.GenerativeModel(model["config"]["model"])
+                    response = gemini_model.generate_content(prompt)
+                    return response.text.strip()
+            except Exception as e:
+                logger.error(f"Error with Google API: {e}")
+                return f"Google API error: {prompt[:50]}..."
+
+        # Handle mock API models
+        elif model_type in ["mock_openai", "mock_anthropic", "mock_google"]:
+            logger.debug(f"Using mock API response for {model_name}")
+            return f"Mock {model_type.replace('mock_', '').upper()} response to: {prompt[:100]}..."
+
         # Check if it's a real Llama model (only if Llama is available)
         if LLAMA_AVAILABLE and hasattr(model, '__class__'):
             try:
@@ -215,11 +332,73 @@ class ModelManager:
         return f"AI response to: {prompt[:100]}..."
 
     def generate_image(self, model_name: str, prompt: str, **kwargs) -> Optional[str]:
-        """Generate image using specified model (placeholder)"""
+        """Generate image using specified model"""
         model = self.get_model(model_name)
         if not model or model.get("type") != "diffusion":
             raise ValueError(f"Model {model_name} not available for image generation")
 
-        # Placeholder - would implement actual diffusion model inference
-        logger.info(f"Image generation requested for: {prompt}")
-        return f"Generated image for: {prompt}"  # Placeholder
+        if not DIFFUSION_AVAILABLE:
+            logger.warning("Diffusion models not available, returning placeholder")
+            return f"Image generation not available: {prompt}"
+
+        try:
+            # Enable torch/diffusion if not already enabled
+            if not _enable_torch_diffusion():
+                return f"Failed to initialize diffusion model: {prompt}"
+
+            from diffusers import StableDiffusionPipeline
+            import torch
+
+            # Get model config
+            model_config = model.get("config", {})
+            model_path = model_config.get("path", "")
+
+            # Use CPU by default for safety
+            device = "cpu"
+            if torch.cuda.is_available():
+                device = "cuda"
+                logger.info("Using CUDA for image generation")
+            else:
+                logger.info("Using CPU for image generation (may be slow)")
+
+            # Load pipeline (this would be cached in production)
+            logger.info(f"Loading Stable Diffusion pipeline from: {model_path}")
+            if model_path and Path(model_path).exists():
+                pipe = StableDiffusionPipeline.from_pretrained(model_path, torch_dtype=torch.float32)
+            else:
+                # Use default model if path not available
+                pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", torch_dtype=torch.float32)
+
+            pipe = pipe.to(device)
+
+            # Generate image
+            width = kwargs.get("width", 512)
+            height = kwargs.get("height", 512)
+            steps = kwargs.get("steps", 20)
+            guidance_scale = kwargs.get("guidance_scale", 7.5)
+            negative_prompt = kwargs.get("negative_prompt", "")
+
+            logger.info(f"Generating image with prompt: {prompt}")
+            image = pipe(
+                prompt=prompt,
+                negative_prompt=negative_prompt if negative_prompt else None,
+                width=width,
+                height=height,
+                num_inference_steps=steps,
+                guidance_scale=guidance_scale
+            ).images[0]
+
+            # Save image (in production, would save to proper location)
+            output_dir = Path("generated_images")
+            output_dir.mkdir(exist_ok=True)
+
+            timestamp = __import__('time').time()
+            image_path = output_dir / f"generated_{timestamp}.png"
+            image.save(image_path)
+
+            logger.info(f"Image generated and saved to: {image_path}")
+            return str(image_path)
+
+        except Exception as e:
+            logger.error(f"Error generating image: {e}")
+            return f"Image generation failed: {prompt} - Error: {str(e)}"

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Pinnacle Studio - Cross-Device Sync</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .sync-dashboard {
+            padding: 40px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .sync-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .overview-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .overview-card.connected {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .overview-card.disconnected {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        }
+
+        .overview-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .overview-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .overview-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .overview-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .controls-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .controls-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .controls-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #28a745;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .control-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .devices-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .device-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .device-card.connected {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .device-card.disconnected {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        }
+
+        .device-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .device-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .device-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-connected {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-disconnected {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-syncing {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .device-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .device-capabilities {
+            margin-bottom: 20px;
+        }
+
+        .capabilities-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .capabilities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .capability-badge {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .device-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .sync-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .sync-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sync-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .sync-status {
+            font-weight: 500;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-syncing {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .status-idle {
+            background: #6c757d;
+            color: white;
+        }
+
+        .sync-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .sync-item {
+            text-align: center;
+        }
+
+        .sync-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .sync-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .sync-progress {
+            margin-bottom: 20px;
+        }
+
+        .progress-text {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .back-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            display: none;
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #667eea 100%);
+        }
+
+        .device-types {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .device-types-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .device-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .device-type-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .device-type-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .device-type-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .device-type-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .device-type-description {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 Cross-Device Sync</h1>
+            <p>Real-time synchronization across phone, tablet, desktop, wearables, IoT, VR, XR</p>
+        </div>
+
+        <div class="sync-dashboard">
+            <div class="back-links">
+                <a href="../auto_install/setup_interface.html" class="back-link">← Auto-Install</a>
+                <a href="../domain_builder/domain_builder_ui.html" class="back-link">← Domain Builder</a>
+                <a href="../universal_hosting/hosting_dashboard.html" class="back-link">← Universal Hosting</a>
+                <a href="../auto_upgrader/updates_dashboard.html" class="back-link">← Auto-Updates</a>
+                <a href="../self_healing/healing_dashboard.html" class="back-link">← Self-Healing</a>
+            </div>
+
+            <div class="sync-overview">
+                <div class="overview-card connected" id="totalDevices">
+                    <div class="overview-icon">📱</div>
+                    <div class="overview-title">Total Devices</div>
+                    <div class="overview-value" id="totalDevicesValue">3</div>
+                    <div class="overview-description">Devices in sync network</div>
+                </div>
+
+                <div class="overview-card connected" id="connectedDevices">
+                    <div class="overview-icon">🔗</div>
+                    <div class="overview-title">Connected</div>
+                    <div class="overview-value" id="connectedDevicesValue">3</div>
+                    <div class="overview-description">Actively synchronized</div>
+                </div>
+
+                <div class="overview-card" id="syncStatus">
+                    <div class="overview-icon">⚡</div>
+                    <div class="overview-title">Sync Status</div>
+                    <div class="overview-value" id="syncStatusValue">Active</div>
+                    <div class="overview-description">Synchronization state</div>
+                </div>
+
+                <div class="overview-card" id="lastSync">
+                    <div class="overview-icon">🕐</div>
+                    <div class="overview-title">Last Sync</div>
+                    <div class="overview-value" id="lastSyncValue">Just now</div>
+                    <div class="overview-description">Most recent sync</div>
+                </div>
+            </div>
+
+            <div class="device-types">
+                <div class="device-types-title">📱 Supported Device Types</div>
+                <div class="device-types-grid">
+                    <div class="device-type-item">
+                        <div class="device-type-icon">📱</div>
+                        <div class="device-type-name">Phone</div>
+                        <div class="device-type-description">iOS & Android</div>
+                    </div>
+                    <div class="device-type-item">
+                        <div class="device-type-icon">📟</div>
+                        <div class="device-type-name">Tablet</div>
+                        <div class="device-type-description">iPad & Android tablets</div>
+                    </div>
+                    <div class="device-type-item">
+                        <div class="device-type-icon">💻</div>
+                        <div class="device-type-name">Desktop</div>
+                        <div class="device-type-description">Windows, macOS, Linux</div>
+                    </div>
+                    <div class="device-type-item">
+                        <div class="device-type-icon">⌚</div>
+                        <div class="device-type-name">Wearable</div>
+                        <div class="device-type-description">Smartwatches & fitness</div>
+                    </div>
+                    <div class="device-type-item">
+                        <div class="device-type-icon">🤖</div>
+                        <div class="device-type-name">IoT</div>
+                        <div class="device-type-description">Smart home & sensors</div>
+                    </div>
+                    <div class="device-type-item">
+                        <div class="device-type-icon">🥽</div>
+                        <div class="device-type-name">VR/AR</div>
+                        <div class="device-type-description">Virtual & augmented reality</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="controls-header">
+                    <div class="controls-title">⚙️ Sync Controls</div>
+                    <div class="controls-toggle">
+                        <span>Disabled</span>
+                        <div class="toggle-switch" onclick="toggleSync()">
+                            <div class="toggle-slider"></div>
+                        </div>
+                        <span>Enabled</span>
+                    </div>
+                </div>
+
+                <div class="controls-grid">
+                    <button class="control-button btn-primary" onclick="discoverDevices()">🔍 Discover Devices</button>
+                    <button class="control-button btn-secondary" onclick="forceSyncAll()">⚡ Force Sync All</button>
+                    <button class="control-button btn-primary" onclick="viewSyncHistory()">📊 Sync History</button>
+                    <button class="control-button btn-secondary" onclick="configureSync()">⚙️ Configure</button>
+                </div>
+            </div>
+
+            <div class="sync-section">
+                <div class="sync-header">
+                    <div class="sync-title">🔄 Real-Time Sync Status</div>
+                    <div class="sync-status status-syncing" id="realTimeStatus">Syncing</div>
+                </div>
+
+                <div class="sync-progress">
+                    <div class="progress-text" id="syncProgress">Synchronizing files and settings...</div>
+                </div>
+
+                <div class="sync-info">
+                    <div class="sync-item">
+                        <div class="sync-label">Sync Interval</div>
+                        <div class="sync-value" id="syncInterval">30 seconds</div>
+                    </div>
+                    <div class="sync-item">
+                        <div class="sync-label">Files Synced</div>
+                        <div class="sync-value" id="filesSynced">147</div>
+                    </div>
+                    <div class="sync-item">
+                        <div class="sync-label">Data Transfer</div>
+                        <div class="sync-value" id="dataTransfer">2.4 MB</div>
+                    </div>
+                    <div class="sync-item">
+                        <div class="sync-label">Conflicts Resolved</div>
+                        <div class="sync-value" id="conflictsResolved">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="devices-section">
+                <div class="section-title">📱 Connected Devices</div>
+                <div id="devicesContainer" class="devices-grid">
+                    <!-- Devices will appear here -->
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Discovering devices...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <span id="notificationMessage"></span>
+    </div>
+
+    <script>
+        class CrossDeviceSyncDashboard {
+            constructor() {
+                this.syncEnabled = false;
+                this.devices = [];
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadCurrentStatus();
+                this.startRealTimeUpdates();
+            }
+
+            setupEventListeners() {
+                // Sync toggle
+                document.querySelector('.toggle-switch').addEventListener('click', () => {
+                    this.toggleSync();
+                });
+            }
+
+            async loadCurrentStatus() {
+                try:
+                    // In a real implementation, this would fetch from the sync API
+                    const status = await this.getMockSyncStatus();
+                    this.updateOverviewDisplay(status);
+                    this.loadDevices();
+                } catch (error) {
+                    console.error('Failed to load status:', error);
+                }
+            }
+
+            async getMockSyncStatus() {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                return {
+                    total_devices: 3,
+                    connected_devices: 3,
+                    sync_enabled: true,
+                    last_sync: new Date(),
+                    files_synced: 147,
+                    data_transfer: 2.4
+                };
+            }
+
+            updateOverviewDisplay(status) {
+                document.getElementById('totalDevicesValue').textContent = status.total_devices;
+                document.getElementById('connectedDevicesValue').textContent = status.connected_devices;
+                document.getElementById('syncStatusValue').textContent = status.sync_enabled ? 'Active' : 'Disabled';
+                document.getElementById('lastSyncValue').textContent = 'Just now';
+                document.getElementById('filesSynced').textContent = status.files_synced;
+                document.getElementById('dataTransfer').textContent = status.data_transfer + ' MB';
+
+                // Update sync status
+                const syncStatus = document.getElementById('syncStatus');
+                const realTimeStatus = document.getElementById('realTimeStatus');
+
+                if (status.sync_enabled) {
+                    syncStatus.className = 'overview-card connected';
+                    realTimeStatus.textContent = 'Syncing';
+                    realTimeStatus.className = 'sync-status status-syncing';
+                } else {
+                    syncStatus.className = 'overview-card disconnected';
+                    realTimeStatus.textContent = 'Idle';
+                    realTimeStatus.className = 'sync-status status-idle';
+                }
+            }
+
+            async loadDevices() {
+                try:
+                    // In a real implementation, this would fetch from the devices API
+                    const devices = await this.getMockDevices();
+                    this.displayDevices(devices);
+                } catch (error) {
+                    console.error('Failed to load devices:', error);
+                }
+            }
+
+            async getMockDevices() {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                return [
+                    {
+                        device_id: 'phone_001',
+                        device_type: 'phone',
+                        device_name: 'iPhone 15 Pro',
+                        platform: 'iOS',
+                        status: 'connected',
+                        last_seen: new Date().toISOString(),
+                        capabilities: ['touch', 'camera', 'gps', 'biometric'],
+                        location: 'Living Room'
+                    },
+                    {
+                        device_id: 'desktop_001',
+                        device_type: 'desktop',
+                        device_name: 'Mac Studio',
+                        platform: 'macOS',
+                        status: 'connected',
+                        last_seen: new Date().toISOString(),
+                        capabilities: ['keyboard', 'mouse', 'large_screen', 'high_performance'],
+                        location: 'Home Office'
+                    },
+                    {
+                        device_id: 'vr_001',
+                        device_type: 'vr',
+                        device_name: 'Meta Quest 3',
+                        platform: 'Android',
+                        status: 'connected',
+                        last_seen: new Date().toISOString(),
+                        capabilities: ['immersive', 'head_tracking', 'hand_tracking'],
+                        location: 'VR Space'
+                    }
+                ];
+            }
+
+            displayDevices(devices) {
+                const container = document.getElementById('devicesContainer');
+                container.innerHTML = '';
+
+                devices.forEach((device, index) => {
+                    const deviceCard = this.createDeviceCard(device, index);
+                    container.appendChild(deviceCard);
+                });
+            }
+
+            createDeviceCard(device, index) {
+                const card = document.createElement('div');
+                card.className = `device-card ${device.status}`;
+
+                const statusClass = `status-${device.status}`;
+                const statusText = device.status.charAt(0).toUpperCase() + device.status.slice(1);
+
+                card.innerHTML = `
+                    <div class="device-header">
+                        <div class="device-name">${device.device_name}</div>
+                        <span class="device-status ${statusClass}">${statusText}</span>
+                    </div>
+
+                    <div class="device-info">
+                        <div class="info-item">
+                            <div class="info-label">Device Type</div>
+                            <div class="info-value">${device.device_type}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Platform</div>
+                            <div class="info-value">${device.platform}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Location</div>
+                            <div class="info-value">${device.location}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Last Seen</div>
+                            <div class="info-value">${new Date(device.last_seen).toLocaleTimeString()}</div>
+                        </div>
+                    </div>
+
+                    <div class="device-capabilities">
+                        <div class="capabilities-title">Capabilities</div>
+                        <div class="capabilities-list">
+                            ${device.capabilities.slice(0, 4).map(cap =>
+                                `<span class="capability-badge">${cap}</span>`
+                            ).join('')}
+                            ${device.capabilities.length > 4 ?
+                                `<span class="capability-badge">+${device.capabilities.length - 4} more</span>`
+                                : ''}
+                        </div>
+                    </div>
+
+                    <div class="device-actions">
+                        <button class="btn btn-secondary" onclick="syncDashboard.forceSyncDevice('${device.device_id}')">Force Sync</button>
+                        <button class="btn btn-primary" onclick="syncDashboard.viewDeviceDetails('${device.device_id}')">Details</button>
+                    </div>
+                `;
+
+                return card;
+            }
+
+            toggleSync() {
+                this.syncEnabled = !this.syncEnabled;
+                const toggleSwitch = document.querySelector('.toggle-switch');
+                const syncStatus = document.getElementById('syncStatus');
+                const realTimeStatus = document.getElementById('realTimeStatus');
+
+                if (this.syncEnabled) {
+                    toggleSwitch.classList.add('active');
+                    syncStatus.className = 'overview-card connected';
+                    realTimeStatus.textContent = 'Syncing';
+                    realTimeStatus.className = 'sync-status status-syncing';
+                    this.startSync();
+                    this.showNotification('Cross-device sync enabled', 'success');
+                } else {
+                    toggleSwitch.classList.remove('active');
+                    syncStatus.className = 'overview-card disconnected';
+                    realTimeStatus.textContent = 'Idle';
+                    realTimeStatus.className = 'sync-status status-idle';
+                    this.stopSync();
+                    this.showNotification('Cross-device sync disabled', 'warning');
+                }
+            }
+
+            startSync() {
+                this.log('🔄 Cross-device synchronization started');
+                this.log('📱 Syncing across all connected devices...');
+            }
+
+            stopSync() {
+                this.log('⏹️  Cross-device synchronization stopped');
+            }
+
+            startRealTimeUpdates() {
+                // Update sync info every 3 seconds
+                setInterval(() => {
+                    if (this.syncEnabled) {
+                        this.updateRealTimeInfo();
+                    }
+                }, 3000);
+            }
+
+            updateRealTimeInfo() {
+                // Simulate real-time updates
+                const filesSynced = parseInt(document.getElementById('filesSynced').textContent);
+                const dataTransfer = parseFloat(document.getElementById('dataTransfer').textContent);
+
+                document.getElementById('filesSynced').textContent = filesSynced + Math.floor(Math.random() * 3);
+                document.getElementById('dataTransfer').textContent = (dataTransfer + Math.random() * 0.1).toFixed(1) + ' MB';
+                document.getElementById('lastSyncValue').textContent = 'Just now';
+            }
+
+            async discoverDevices() {
+                const loading = document.getElementById('loading');
+                loading.style.display = 'block';
+
+                try:
+                    this.log('🔍 Discovering devices on network...');
+
+                    // Simulate device discovery
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+
+                    await this.loadDevices();
+                    this.log('✅ Device discovery completed');
+                    this.showNotification('Device discovery completed', 'success');
+
+                } catch (error) {
+                    this.log('❌ Device discovery failed');
+                    this.showNotification('Device discovery failed', 'error');
+                } finally {
+                    loading.style.display = 'none';
+                }
+            }
+
+            async forceSyncAll() {
+                this.log('⚡ Force syncing all devices...');
+
+                try:
+                    // Simulate force sync
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+
+                    this.log('✅ Force sync completed for all devices');
+                    this.showNotification('Force sync completed', 'success');
+                } catch (error) {
+                    this.log('❌ Force sync failed');
+                    this.showNotification('Force sync failed', 'error');
+                }
+            }
+
+            async forceSyncDevice(deviceId) {
+                this.log(`⚡ Force syncing device: ${deviceId}...`);
+
+                try:
+                    // Simulate device sync
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+
+                    this.log(`✅ Device ${deviceId} synced successfully`);
+                    this.showNotification(`Device synced successfully`, 'success');
+                } catch (error) {
+                    this.log(`❌ Device sync failed: ${deviceId}`);
+                    this.showNotification('Device sync failed', 'error');
+                }
+            }
+
+            viewDeviceDetails(deviceId) {
+                this.log(`📋 Viewing details for device: ${deviceId}`);
+                this.showNotification(`Device details: ${deviceId}`, 'info');
+            }
+
+            viewSyncHistory() {
+                this.log('📊 Opening sync history...');
+                this.showNotification('Sync history opened', 'info');
+            }
+
+            configureSync() {
+                this.log('⚙️ Opening sync configuration...');
+                this.showNotification('Sync configuration opened', 'info');
+            }
+
+            log(message) {
+                const syncProgress = document.getElementById('syncProgress');
+                syncProgress.textContent = message;
+            }
+
+            showNotification(message, type) {
+                const notification = document.getElementById('notification');
+                const notificationMessage = document.getElementById('notificationMessage');
+
+                notificationMessage.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.style.display = 'block';
+
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Initialize dashboard when page loads
+        let syncDashboard;
+        document.addEventListener('DOMContentLoaded', () => {
+            syncDashboard = new CrossDeviceSyncDashboard();
+        });
+
+        // Make globally available for onclick handlers
+        window.discoverDevices = function() {
+            syncDashboard.discoverDevices();
+        };
+
+        window.forceSyncAll = function() {
+            syncDashboard.forceSyncAll();
+        };
+
+        window.toggleSync = function() {
+            syncDashboard.toggleSync();
+        };
+
+        window.forceSyncDevice = function(deviceId) {
+            syncDashboard.forceSyncDevice(deviceId);
+        };
+
+        window.viewDeviceDetails = function(deviceId) {
+            syncDashboard.viewDeviceDetails(deviceId);
+        };
+
+        window.viewSyncHistory = function() {
+            syncDashboard.viewSyncHistory();
+        };
+
+        window.configureSync = function() {
+            syncDashboard.configureSync();
+        };
+    </script>
+</body>
+</html>

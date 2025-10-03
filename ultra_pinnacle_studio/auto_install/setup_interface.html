@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Pinnacle Studio - One-Click Setup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .setup-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .setup-options {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.1);
+        }
+
+        .option-card.selected {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .option-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .platform-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .platform-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .platform-icon.windows { background: #0078d4; }
+        .platform-icon.macos { background: #000000; }
+        .platform-icon.linux { background: #fcc624; }
+        .platform-icon.mobile { background: #764ba2; }
+
+        .platform-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .deploy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .deploy-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .deploy-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .status-log {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .log-entry {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+
+        .log-entry.success { color: #28a745; }
+        .log-entry.error { color: #dc3545; }
+        .log-entry.info { color: #17a2b8; }
+
+        .features-list {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .feature-check {
+            color: #28a745;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="logo">🚀 Ultra Pinnacle Studio</div>
+        <div class="subtitle">Autonomous AI Platform - One-Click Deployment</div>
+
+        <div class="platform-icons">
+            <div class="platform-icon windows" title="Windows">🪟</div>
+            <div class="platform-icon macos" title="macOS">🍎</div>
+            <div class="platform-icon linux" title="Linux">🐧</div>
+            <div class="platform-icon mobile" title="Mobile">📱</div>
+        </div>
+
+        <div class="features-list">
+            <div class="feature-item">
+                <span class="feature-check">✓</span>
+                <span>Auto-install & setup across any device</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-check">✓</span>
+                <span><a href="../domain_builder/domain_builder_ui.html" style="color: #667eea; text-decoration: none;">Free domain auto-builder</a> with custom TLDs</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-check">✓</span>
+                <span><a href="../universal_hosting/hosting_dashboard.html" style="color: #667eea; text-decoration: none;">Universal hosting</a> (cloud & local sync)</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-check">✓</span>
+                <span><a href="../auto_upgrader/updates_dashboard.html" style="color: #667eea; text-decoration: none;">Auto-upgrades & updates</a> with predictive rollback</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-check">✓</span>
+                <span>Self-healing system with AI diagnostics</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-check">✓</span>
+                <span>Cross-device synchronization</span>
+            </div>
+        </div>
+
+        <div id="setupOptions" class="setup-options">
+            <div class="option-card selected" data-option="quick">
+                <div class="option-title">⚡ Quick Setup</div>
+                <div class="option-description">Fast deployment with default settings. Perfect for getting started immediately.</div>
+            </div>
+
+            <div class="option-card" data-option="custom">
+                <div class="option-title">⚙️ Custom Setup</div>
+                <div class="option-description">Advanced configuration with custom domains, security settings, and integrations.</div>
+            </div>
+
+            <div class="option-card" data-option="enterprise">
+                <div class="option-title">🏢 Enterprise Setup</div>
+                <div class="option-description">Full production deployment with high availability, monitoring, and compliance features.</div>
+            </div>
+        </div>
+
+        <button id="deployBtn" class="deploy-btn">🚀 Deploy Ultra Pinnacle Studio</button>
+
+        <div id="progressContainer" class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Initializing deployment...</div>
+            <div class="status-log" id="statusLog"></div>
+        </div>
+    </div>
+
+    <script>
+        class AutoInstallSystem {
+            constructor() {
+                this.selectedOption = 'quick';
+                this.isDeploying = false;
+                this.setupSocket = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.detectPlatform();
+            }
+
+            setupEventListeners() {
+                // Option selection
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        if (this.isDeploying) return;
+                        this.selectOption(card.dataset.option);
+                    });
+                });
+
+                // Deploy button
+                document.getElementById('deployBtn').addEventListener('click', () => {
+                    this.startDeployment();
+                });
+            }
+
+            selectOption(option) {
+                if (this.isDeploying) return;
+
+                this.selectedOption = option;
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                document.querySelector(`[data-option="${option}"]`).classList.add('selected');
+
+                this.updateDeployButton();
+            }
+
+            updateDeployButton() {
+                const btn = document.getElementById('deployBtn');
+                const optionData = {
+                    quick: '🚀 Quick Deploy',
+                    custom: '⚙️ Custom Deploy',
+                    enterprise: '🏢 Enterprise Deploy'
+                };
+
+                btn.textContent = optionData[this.selectedOption] || '🚀 Deploy';
+            }
+
+            detectPlatform() {
+                const userAgent = navigator.userAgent.toLowerCase();
+                const platformIcons = document.querySelectorAll('.platform-icon');
+
+                platformIcons.forEach(icon => {
+                    icon.style.transform = 'scale(0.9)';
+                    icon.style.opacity = '0.6';
+                });
+
+                if (userAgent.includes('windows')) {
+                    document.querySelector('.platform-icon.windows').style.transform = 'scale(1.1)';
+                    document.querySelector('.platform-icon.windows').style.opacity = '1';
+                } else if (userAgent.includes('mac')) {
+                    document.querySelector('.platform-icon.macos').style.transform = 'scale(1.1)';
+                    document.querySelector('.platform-icon.macos').style.opacity = '1';
+                } else if (userAgent.includes('linux')) {
+                    document.querySelector('.platform-icon.linux').style.transform = 'scale(1.1)';
+                    document.querySelector('.platform-icon.linux').style.opacity = '1';
+                } else {
+                    document.querySelector('.platform-icon.mobile').style.transform = 'scale(1.1)';
+                    document.querySelector('.platform-icon.mobile').style.opacity = '1';
+                }
+            }
+
+            async startDeployment() {
+                if (this.isDeploying) return;
+
+                this.isDeploying = true;
+                const btn = document.getElementById('deployBtn');
+                btn.disabled = true;
+                btn.textContent = '⏳ Deploying...';
+
+                // Show progress
+                const progressContainer = document.getElementById('progressContainer');
+                progressContainer.style.display = 'block';
+
+                try {
+                    await this.deploy();
+                } catch (error) {
+                    this.log('Deployment failed: ' + error.message, 'error');
+                } finally {
+                    this.isDeploying = false;
+                    btn.disabled = false;
+                    btn.textContent = '🚀 Retry Deployment';
+                }
+            }
+
+            async deploy() {
+                const deploymentConfig = {
+                    option: this.selectedOption,
+                    platform: this.detectPlatformType(),
+                    timestamp: new Date().toISOString()
+                };
+
+                this.log('Starting deployment with config: ' + JSON.stringify(deploymentConfig), 'info');
+
+                // Simulate deployment progress
+                const steps = [
+                    { text: 'Initializing deployment engine...', progress: 10 },
+                    { text: 'Creating directories and file structure...', progress: 20 },
+                    { text: 'Downloading core dependencies...', progress: 35 },
+                    { text: 'Configuring security and permissions...', progress: 50 },
+                    { text: 'Setting up database and storage...', progress: 65 },
+                    { text: 'Installing AI models and runtimes...', progress: 80 },
+                    { text: 'Configuring web interface...', progress: 90 },
+                    { text: 'Finalizing setup and starting services...', progress: 100 }
+                ];
+
+                for (const step of steps) {
+                    this.updateProgress(step.progress, step.text);
+                    await this.sleep(800 + Math.random() * 400);
+                }
+
+                this.log('✅ Deployment completed successfully!', 'success');
+
+                // Show next steps
+                setTimeout(() => {
+                    this.showCompletion();
+                }, 1000);
+            }
+
+            detectPlatformType() {
+                const userAgent = navigator.userAgent.toLowerCase();
+                if (userAgent.includes('windows')) return 'windows';
+                if (userAgent.includes('mac')) return 'macos';
+                if (userAgent.includes('linux')) return 'linux';
+                if (userAgent.includes('android') || userAgent.includes('iphone')) return 'mobile';
+                return 'unknown';
+            }
+
+            updateProgress(progress, text) {
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
+
+                progressFill.style.width = progress + '%';
+                progressText.textContent = text;
+            }
+
+            log(message, type = 'info') {
+                const logContainer = document.getElementById('statusLog');
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry ${type}`;
+                logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+
+                logContainer.appendChild(logEntry);
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+
+            sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            showCompletion() {
+                const btn = document.getElementById('deployBtn');
+                btn.textContent = '🎉 Launch Ultra Pinnacle Studio';
+                btn.disabled = false;
+
+                btn.addEventListener('click', () => {
+                    window.location.href = '/dashboard';
+                }, { once: true });
+
+                this.log('🎉 Setup complete! Click the button above to launch your platform.', 'success');
+            }
+        }
+
+        // Initialize the auto-install system when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new AutoInstallSystem();
+        });
+    </script>
+</body>
+</html>

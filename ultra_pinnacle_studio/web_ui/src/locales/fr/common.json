@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Ultra Pinnacle Studio",
+    "welcome": "Bienvenue sur Ultra Pinnacle Studio"
+  },
+  "navigation": {
+    "dashboard": "Tableau de Bord",
+    "chat": "Chat",
+    "analytics": "Analyses",
+    "aiFeatures": "Fonctionnalités IA",
+    "plugins": "Plugins",
+    "backup": "Sauvegarde",
+    "collaborative": "Collaboratif",
+    "auth": "Authentification",
+    "navigation": "Navigation"
+  },
+  "dashboard": {
+    "aiChat": {
+      "title": "Chat IA",
+      "description": "Conversations collaboratives alimentées par l'IA",
+      "link": "Ouvrir le Chat"
+    },
+    "analytics": {
+      "title": "Analyses",
+      "description": "Analyses et informations complètes du système",
+      "link": "Voir les Analyses"
+    },
+    "aiFeatures": {
+      "title": "Fonctionnalités IA",
+      "description": "Outils IA avancés pour la génération d'images, l'assistance code et plus",
+      "link": "Explorer l'IA"
+    },
+    "collaborativeTools": {
+      "title": "Outils Collaboratifs",
+      "description": "Fonctionnalités de collaboration en temps réel",
+      "link": "Commencer à Collaborer"
+    },
+    "pluginManager": {
+      "title": "Gestionnaire de Plugins",
+      "description": "Installer et gérer les plugins pour étendre les fonctionnalités",
+      "link": "Gérer les Plugins"
+    },
+    "backupManagement": {
+      "title": "Gestion des Sauvegardes",
+      "description": "Créer, restaurer et gérer les sauvegardes système",
+      "link": "Gérer les Sauvegardes"
+    },
+    "authentication": {
+      "title": "Authentification",
+      "description": "Gérer votre compte et la sécurité",
+      "link": "Connexion/Inscription"
+    }
+  },
+  "buttons": {
+    "logout": "Déconnexion",
+    "close": "Fermer",
+    "changeLanguage": "Changer de Langue"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ar": "العربية",
+    "zh": "中文"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "page": "Page",
+    "of": "de",
+    "items": "éléments"
+  }
+}
