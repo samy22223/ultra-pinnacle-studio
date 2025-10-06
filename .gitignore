@@ -37,3 +37,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.swp
+# VSCode diagnostic artifacts
+ultra_pinnacle_studio/scripts/vscode_diag_*/
+ultra_pinnacle_studio/scripts/*.tar.gz
